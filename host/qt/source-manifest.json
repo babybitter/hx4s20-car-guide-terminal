@@ -1,0 +1,481 @@
+{
+  "schema": 1,
+  "source_root": "HX4S20_QtConsole",
+  "files": [
+    {
+      "path": ".gitignore",
+      "source": "HX4S20_QtConsole/.gitignore",
+      "source_sha256": "3cbfe6771ad758deb788f2f6c2849d89099f3f9aaf5e3c24ac5368224a5203f5",
+      "sha256": "621bb078a7ae6ce67d63d6782922b154a2ffeb5b5a1ed2543763e37aad9d1f98",
+      "modified_from_source": true
+    },
+    {
+      "path": "app/__init__.py",
+      "source": "HX4S20_QtConsole/app/__init__.py",
+      "source_sha256": "245825ff318baee96c761ca260445094a580cabcfec6864e010e8e6a02af574f",
+      "sha256": "245825ff318baee96c761ca260445094a580cabcfec6864e010e8e6a02af574f",
+      "modified_from_source": false
+    },
+    {
+      "path": "app/appearance.py",
+      "source": "HX4S20_QtConsole/app/appearance.py",
+      "source_sha256": "6692656ea27217cc76eb4ee582834c657445d451bb7a843ed42ce41981c13db3",
+      "sha256": "6692656ea27217cc76eb4ee582834c657445d451bb7a843ed42ce41981c13db3",
+      "modified_from_source": false
+    },
+    {
+      "path": "app/audio_labels.py",
+      "source": "HX4S20_QtConsole/app/audio_labels.py",
+      "source_sha256": "4c8bf34b6d4dec9726f75bcdabef80230402ecf2824d0bcd0f159672e48241e0",
+      "sha256": "4c8bf34b6d4dec9726f75bcdabef80230402ecf2824d0bcd0f159672e48241e0",
+      "modified_from_source": false
+    },
+    {
+      "path": "app/backend.py",
+      "source": "HX4S20_QtConsole/app/backend.py",
+      "source_sha256": "f4402649b48f62d4b620bac560885d678d0945fccf6f920da3c64c081f49e460",
+      "sha256": "f4402649b48f62d4b620bac560885d678d0945fccf6f920da3c64c081f49e460",
+      "modified_from_source": false
+    },
+    {
+      "path": "app/presets.py",
+      "source": "HX4S20_QtConsole/app/presets.py",
+      "source_sha256": "f5fdf06d7f1a2410f07620c088974257f302d95e730cccc5054af143ff7911ab",
+      "sha256": "f5fdf06d7f1a2410f07620c088974257f302d95e730cccc5054af143ff7911ab",
+      "modified_from_source": false
+    },
+    {
+      "path": "app/theme.py",
+      "source": "HX4S20_QtConsole/app/theme.py",
+      "source_sha256": "51f74f1c21558d55a80da640d8189a1fb6813c242ac9deada4828c40943d5e62",
+      "sha256": "51f74f1c21558d55a80da640d8189a1fb6813c242ac9deada4828c40943d5e62",
+      "modified_from_source": false
+    },
+    {
+      "path": "app/ui.py",
+      "source": "HX4S20_QtConsole/app/ui.py",
+      "source_sha256": "932490462201484d8d9c8aec9ecd66340f2d5131f6f2201505f1e4a036c42d25",
+      "sha256": "932490462201484d8d9c8aec9ecd66340f2d5131f6f2201505f1e4a036c42d25",
+      "modified_from_source": false
+    },
+    {
+      "path": "app/widgets.py",
+      "source": "HX4S20_QtConsole/app/widgets.py",
+      "source_sha256": "6cb94c2a2df4d6ed79abe92c7abf86c791b80578c87b3abe8cee2fc3099f440a",
+      "sha256": "6cb94c2a2df4d6ed79abe92c7abf86c791b80578c87b3abe8cee2fc3099f440a",
+      "modified_from_source": false
+    },
+    {
+      "path": "assets/app.ico",
+      "source": "HX4S20_QtConsole/assets/app.ico",
+      "source_sha256": "0303555015437e09fc739e3a6897a5134b32cd00958c026ea9a7fb4ad86c3f49",
+      "sha256": "0303555015437e09fc739e3a6897a5134b32cd00958c026ea9a7fb4ad86c3f49",
+      "modified_from_source": false
+    },
+    {
+      "path": "assets/app.png",
+      "source": "HX4S20_QtConsole/assets/app.png",
+      "source_sha256": "6cd9efa05bc13edccbcd1be47fcc0dc1c28632d299fcc61a2b1ac5efa17c65d6",
+      "sha256": "6cd9efa05bc13edccbcd1be47fcc0dc1c28632d299fcc61a2b1ac5efa17c65d6",
+      "modified_from_source": false
+    },
+    {
+      "path": "build_exe.py",
+      "source": "HX4S20_QtConsole/build_exe.py",
+      "source_sha256": "5f7d1882e645cf5e71ef66874e397742d7b6625d84b191fa0bf4909b5ec29bec",
+      "sha256": "7c5e0d6a84f6a4b3f1c981ca8aac1fc3c3b0d867aab2b4bc074853a21d16d17f",
+      "modified_from_source": true
+    },
+    {
+      "path": "docs/中文使用说明.md",
+      "source": "HX4S20_QtConsole/docs/中文使用说明.md",
+      "source_sha256": "ba1d3cb852edf1cb85d1551d65d55d2fb5b16ee6fa9128a476335bffadf0b6db",
+      "sha256": "981f07ea699a95c32e5e2166615792fc37f657ca993e4570b7d07f05e492e288",
+      "modified_from_source": true,
+      "optional_local_document": true
+    },
+    {
+      "path": "docs/功能覆盖表.md",
+      "source": "HX4S20_QtConsole/docs/功能覆盖表.md",
+      "source_sha256": "862693e4064e3b2f0125d58ea96316824908cf7b3e0d9bddd55d96595830ffae",
+      "sha256": "e4950c574dcce730c1c1c8a0e9ca1360536c8befa48b42cbca9beec21474c047",
+      "modified_from_source": true,
+      "optional_local_document": true
+    },
+    {
+      "path": "docs/工程隔离说明.md",
+      "source": "HX4S20_QtConsole/docs/工程隔离说明.md",
+      "source_sha256": "6814f4d444b81f8c56f97c05a5cd6979b7f8e9e322a98ad208d279698c3654e4",
+      "sha256": "a6ad31918822b2281fab1f591e0ef211d065055b75cddc42c7149e16929908b5",
+      "modified_from_source": true,
+      "optional_local_document": true
+    },
+    {
+      "path": "docs/测试单.md",
+      "source": "HX4S20_QtConsole/docs/测试单.md",
+      "source_sha256": "560aa6ab89efff45fb70816268a7c426e85b5d8bc14db489f5deb903831439a0",
+      "sha256": "2c647ccc3052e56c3a44488daa6cf5b66d67df7992098f00d84bdb220fa2dd9a",
+      "modified_from_source": true,
+      "optional_local_document": true
+    },
+    {
+      "path": "docs/第三方组件说明.md",
+      "source": "HX4S20_QtConsole/docs/第三方组件说明.md",
+      "source_sha256": "775c6fc2e40c77b3cb099a0588a41d5027d8e3109769f28d0a71780781f6fdb2",
+      "sha256": "775c6fc2e40c77b3cb099a0588a41d5027d8e3109769f28d0a71780781f6fdb2",
+      "modified_from_source": false,
+      "optional_local_document": true
+    },
+    {
+      "path": "docs/验证结果.md",
+      "source": "HX4S20_QtConsole/docs/验证结果.md",
+      "source_sha256": "cfaeb1cd6ae1281f9eb6e4310d861842045b4d3ef484e5eecde29517b1694e29",
+      "sha256": "19fad9da9568a636ff71389d271c77d9425509da818961a3d61162cd867a52c4",
+      "modified_from_source": true,
+      "optional_local_document": true
+    },
+    {
+      "path": "legacy/assets/catalog_manifest.json",
+      "source": "HX4S20_QtConsole/legacy/assets/catalog_manifest.json",
+      "source_sha256": "c559f7c2c5550655c81d94144f5c5f0fe679b919935f12aacfb17ceba57e0adf",
+      "sha256": "c559f7c2c5550655c81d94144f5c5f0fe679b919935f12aacfb17ceba57e0adf",
+      "modified_from_source": false
+    },
+    {
+      "path": "legacy/tools/bmp/output_bmp/catalog/001.BMP",
+      "source": "HX4S20_QtConsole/legacy/tools/bmp/output_bmp/catalog/001.BMP",
+      "source_sha256": "a85c6e9c745c7e1aa895119e5ce2ff681b1283ebe3e94144c6f6ee0af4423d1c",
+      "sha256": "a85c6e9c745c7e1aa895119e5ce2ff681b1283ebe3e94144c6f6ee0af4423d1c",
+      "modified_from_source": false
+    },
+    {
+      "path": "legacy/tools/bmp/output_bmp/catalog/002.BMP",
+      "source": "HX4S20_QtConsole/legacy/tools/bmp/output_bmp/catalog/002.BMP",
+      "source_sha256": "001225c8d6c667c906f46e49bc1e0afd8e00ad89a695ec864695518faa51a55b",
+      "sha256": "001225c8d6c667c906f46e49bc1e0afd8e00ad89a695ec864695518faa51a55b",
+      "modified_from_source": false
+    },
+    {
+      "path": "legacy/tools/bmp/output_bmp/catalog/003.BMP",
+      "source": "HX4S20_QtConsole/legacy/tools/bmp/output_bmp/catalog/003.BMP",
+      "source_sha256": "d266315ff487705732ddf4e6a125b22e82b8bba2c5516c30a302e6f470e9fc96",
+      "sha256": "d266315ff487705732ddf4e6a125b22e82b8bba2c5516c30a302e6f470e9fc96",
+      "modified_from_source": false
+    },
+    {
+      "path": "legacy/tools/bmp/output_bmp/catalog/004.BMP",
+      "source": "HX4S20_QtConsole/legacy/tools/bmp/output_bmp/catalog/004.BMP",
+      "source_sha256": "327306b84e8aba234a1b7f3e00e2415c8231e786dea329fa8a501041e0caacbc",
+      "sha256": "327306b84e8aba234a1b7f3e00e2415c8231e786dea329fa8a501041e0caacbc",
+      "modified_from_source": false
+    },
+    {
+      "path": "legacy/tools/bmp/output_bmp/catalog/005.BMP",
+      "source": "HX4S20_QtConsole/legacy/tools/bmp/output_bmp/catalog/005.BMP",
+      "source_sha256": "f3bf9d7cd94807bdccf010f340e8a45f403195d8b0ea3fe92d7049f9f5016436",
+      "sha256": "f3bf9d7cd94807bdccf010f340e8a45f403195d8b0ea3fe92d7049f9f5016436",
+      "modified_from_source": false
+    },
+    {
+      "path": "legacy/tools/bmp/output_bmp/catalog/006.BMP",
+      "source": "HX4S20_QtConsole/legacy/tools/bmp/output_bmp/catalog/006.BMP",
+      "source_sha256": "d2e205f807ee577f797175d037be6682b2350674696f98639277d3b3095a3862",
+      "sha256": "d2e205f807ee577f797175d037be6682b2350674696f98639277d3b3095a3862",
+      "modified_from_source": false
+    },
+    {
+      "path": "legacy/tools/bmp/output_bmp/catalog/007.BMP",
+      "source": "HX4S20_QtConsole/legacy/tools/bmp/output_bmp/catalog/007.BMP",
+      "source_sha256": "d0a9c0a65e635d863bfdebc019c8b556e21c2134e0e0dfaccb1f11b4970b2a23",
+      "sha256": "d0a9c0a65e635d863bfdebc019c8b556e21c2134e0e0dfaccb1f11b4970b2a23",
+      "modified_from_source": false
+    },
+    {
+      "path": "legacy/tools/bmp/output_bmp/catalog/008.BMP",
+      "source": "HX4S20_QtConsole/legacy/tools/bmp/output_bmp/catalog/008.BMP",
+      "source_sha256": "04ba2ddda7cc25c0bfaa312fa1fbad3e031787b0d72525e8949b249bf0808bd3",
+      "sha256": "04ba2ddda7cc25c0bfaa312fa1fbad3e031787b0d72525e8949b249bf0808bd3",
+      "modified_from_source": false
+    },
+    {
+      "path": "legacy/tools/console/audio_cli.py",
+      "source": "HX4S20_QtConsole/legacy/tools/console/audio_cli.py",
+      "source_sha256": "730d3fe91334d236568fbb1dea4f6623bcbe6705f373747d451b815341adae94",
+      "sha256": "730d3fe91334d236568fbb1dea4f6623bcbe6705f373747d451b815341adae94",
+      "modified_from_source": false
+    },
+    {
+      "path": "legacy/tools/console/examples/s17_transitions.json",
+      "source": "HX4S20_QtConsole/legacy/tools/console/examples/s17_transitions.json",
+      "source_sha256": "343c97ce70f58f236afe93d3816c26314be27a7f5c8f5e22aa13fd366021c29b",
+      "sha256": "343c97ce70f58f236afe93d3816c26314be27a7f5c8f5e22aa13fd366021c29b",
+      "modified_from_source": false
+    },
+    {
+      "path": "legacy/tools/console/fixtures/audio-content-manifest.json",
+      "source": "HX4S20_QtConsole/legacy/tools/console/fixtures/audio-content-manifest.json",
+      "source_sha256": "c71b70f0e736c39853f15b658cf4ec95ae8fb905ebbe6840897df3bc2527e56b",
+      "sha256": "c71b70f0e736c39853f15b658cf4ec95ae8fb905ebbe6840897df3bc2527e56b",
+      "modified_from_source": false
+    },
+    {
+      "path": "legacy/tools/console/fixtures/uart-replies.log",
+      "source": "HX4S20_QtConsole/legacy/tools/console/fixtures/uart-replies.log",
+      "source_sha256": "31baf640c9a4f99a8a8c17ce1e8d081312ddb6813089c38932ac47583a8343bc",
+      "sha256": "31baf640c9a4f99a8a8c17ce1e8d081312ddb6813089c38932ac47583a8343bc",
+      "modified_from_source": false
+    },
+    {
+      "path": "legacy/tools/console/fixtures/uart-v2-replies.log",
+      "source": "HX4S20_QtConsole/legacy/tools/console/fixtures/uart-v2-replies.log",
+      "source_sha256": "842047821e1e82be28293fc065d163636d3db94ca6bcfbb0e53e3b64ba377ec5",
+      "sha256": "842047821e1e82be28293fc065d163636d3db94ca6bcfbb0e53e3b64ba377ec5",
+      "modified_from_source": false
+    },
+    {
+      "path": "legacy/tools/console/local_preview.py",
+      "source": "HX4S20_QtConsole/legacy/tools/console/local_preview.py",
+      "source_sha256": "2e0247e4d0544297f5e04c9a8b349c18bc2b2f9656fc1c6ece78a18d618c987e",
+      "sha256": "2e0247e4d0544297f5e04c9a8b349c18bc2b2f9656fc1c6ece78a18d618c987e",
+      "modified_from_source": false
+    },
+    {
+      "path": "legacy/tools/console/protocol.py",
+      "source": "HX4S20_QtConsole/legacy/tools/console/protocol.py",
+      "source_sha256": "a1e43fd052d10cdd78ced19c074970f3c8f0590598289484c870b6a905c1443c",
+      "sha256": "a1e43fd052d10cdd78ced19c074970f3c8f0590598289484c870b6a905c1443c",
+      "modified_from_source": false
+    },
+    {
+      "path": "legacy/tools/console/README.md",
+      "source": "HX4S20_QtConsole/legacy/tools/console/README.md",
+      "source_sha256": "d975a3efdd6a87fdba2ecb645a28b6d7be9ee580ee41f002f2931f76c5593c1b",
+      "sha256": "183480811487cc95cb821a84bb8b55cb0d8d45a6a706c504867fb1202455dcd1",
+      "modified_from_source": true
+    },
+    {
+      "path": "legacy/tools/console/requirements.txt",
+      "source": "HX4S20_QtConsole/legacy/tools/console/requirements.txt",
+      "source_sha256": "2de0221f189755bb4732578c7d55effedb6d538b316c60da50034898fcc55334",
+      "sha256": "2de0221f189755bb4732578c7d55effedb6d538b316c60da50034898fcc55334",
+      "modified_from_source": false
+    },
+    {
+      "path": "legacy/tools/console/run_tests.py",
+      "source": "HX4S20_QtConsole/legacy/tools/console/run_tests.py",
+      "source_sha256": "3d7e8ebf40a9adb11c6e74901610ac10c9b460720fba3537f01d93a166cebefd",
+      "sha256": "ed5b34c97ce931123ea8af01099bcaaf56fd898c1652d76100254ea9a27bedd9",
+      "modified_from_source": true
+    },
+    {
+      "path": "legacy/tools/console/sequence.py",
+      "source": "HX4S20_QtConsole/legacy/tools/console/sequence.py",
+      "source_sha256": "8d98538f45e231419da94d207870148209fb7012271c69cbc02531ecedd7c269",
+      "sha256": "8d98538f45e231419da94d207870148209fb7012271c69cbc02531ecedd7c269",
+      "modified_from_source": false
+    },
+    {
+      "path": "legacy/tools/console/sequence.schema.json",
+      "source": "HX4S20_QtConsole/legacy/tools/console/sequence.schema.json",
+      "source_sha256": "c26647579e187b65765836a8291a75a04752a33cf4c598472cd9553dadd19f77",
+      "sha256": "c26647579e187b65765836a8291a75a04752a33cf4c598472cd9553dadd19f77",
+      "modified_from_source": false
+    },
+    {
+      "path": "legacy/tools/console/subtitle_bitmap.py",
+      "source": "HX4S20_QtConsole/legacy/tools/console/subtitle_bitmap.py",
+      "source_sha256": "cef75100d2e1c041efc733fc10e74f187c1aa386d9ca4b0904f5e3fa87612ae5",
+      "sha256": "cef75100d2e1c041efc733fc10e74f187c1aa386d9ca4b0904f5e3fa87612ae5",
+      "modified_from_source": false
+    },
+    {
+      "path": "legacy/tools/console/subtitle_cli.py",
+      "source": "HX4S20_QtConsole/legacy/tools/console/subtitle_cli.py",
+      "source_sha256": "441a9606038a490642a2831cfa889735251280debdfffeaafdd83b2922218717",
+      "sha256": "441a9606038a490642a2831cfa889735251280debdfffeaafdd83b2922218717",
+      "modified_from_source": false
+    },
+    {
+      "path": "legacy/tools/console/tests/test_audio_protocol.py",
+      "source": "HX4S20_QtConsole/legacy/tools/console/tests/test_audio_protocol.py",
+      "source_sha256": "ef82aa93e529af2ad4408c0408c85dd795bf26c7c5faeb188d5187b05be07318",
+      "sha256": "c02a3b21d6c0fa20102d4679450c272275df1b002a485d8053f585b6a588a2ca",
+      "modified_from_source": true
+    },
+    {
+      "path": "legacy/tools/console/tests/test_console.py",
+      "source": "HX4S20_QtConsole/legacy/tools/console/tests/test_console.py",
+      "source_sha256": "ef09c8df01d9ea2d18860600bff1c189dca79fa318a4a75405b17be0dd4ddbed",
+      "sha256": "7c4060372d925024dd52e63082a6e21fbd2f6586250d5966f3061fc602f84a57",
+      "modified_from_source": true
+    },
+    {
+      "path": "legacy/tools/console/tests/test_local_preview.py",
+      "source": "HX4S20_QtConsole/legacy/tools/console/tests/test_local_preview.py",
+      "source_sha256": "f2ba60fb3d6c66894fad9a02962832f444b9d44496554999d17c64221d1c0078",
+      "sha256": "10846d451944f77cf24a13ee114aae28abb5fc30b28aafedbe4890134f62ef71",
+      "modified_from_source": true
+    },
+    {
+      "path": "legacy/tools/console/tests/test_protocol.py",
+      "source": "HX4S20_QtConsole/legacy/tools/console/tests/test_protocol.py",
+      "source_sha256": "6cc18a81b8856350305a96b6bad44fed6c349c98a8861549c4140d537e3e14b8",
+      "sha256": "6cc18a81b8856350305a96b6bad44fed6c349c98a8861549c4140d537e3e14b8",
+      "modified_from_source": false
+    },
+    {
+      "path": "legacy/tools/console/tests/test_sequence.py",
+      "source": "HX4S20_QtConsole/legacy/tools/console/tests/test_sequence.py",
+      "source_sha256": "a5c4695dedab1783ca086e8d21640dbb4726c7a8915baeb1763f79a5998d1e77",
+      "sha256": "a5c4695dedab1783ca086e8d21640dbb4726c7a8915baeb1763f79a5998d1e77",
+      "modified_from_source": false
+    },
+    {
+      "path": "legacy/tools/console/tests/test_subtitle_bitmap.py",
+      "source": "HX4S20_QtConsole/legacy/tools/console/tests/test_subtitle_bitmap.py",
+      "source_sha256": "2c785d3960432838d3d76eff86012d9f8dc740c7253aa97258a66f86a6c08888",
+      "sha256": "2c785d3960432838d3d76eff86012d9f8dc740c7253aa97258a66f86a6c08888",
+      "modified_from_source": false
+    },
+    {
+      "path": "legacy/tools/console/tests/test_v2_protocol.py",
+      "source": "HX4S20_QtConsole/legacy/tools/console/tests/test_v2_protocol.py",
+      "source_sha256": "0ac0323650c55ac0f420f86015a89e3b32a86ee72b196878eac0d50aa445a507",
+      "sha256": "0ac0323650c55ac0f420f86015a89e3b32a86ee72b196878eac0d50aa445a507",
+      "modified_from_source": false
+    },
+    {
+      "path": "main.py",
+      "source": "HX4S20_QtConsole/main.py",
+      "source_sha256": "7eff16f2622d66fff0a49e512a86e5669de24f8ee01af7d51e816657a17a724b",
+      "sha256": "7eff16f2622d66fff0a49e512a86e5669de24f8ee01af7d51e816657a17a724b",
+      "modified_from_source": false
+    },
+    {
+      "path": "README.md",
+      "source": "HX4S20_QtConsole/README.md",
+      "source_sha256": "4df48776163e607b4de530be48f19f7f91173cea3698502b79991b0d8a06cd2a",
+      "sha256": "6b8cced4d70fe4695c21690cd99dd7509cea5f70dcc7d20cddc070be3b7afd45",
+      "modified_from_source": true
+    },
+    {
+      "path": "requirements-build.txt",
+      "source": "HX4S20_QtConsole/requirements-build.txt",
+      "source_sha256": "1341ca14cfa5b624a21b86d8efa0680de2f050b0c756d6da6d8749a5c6406e71",
+      "sha256": "1341ca14cfa5b624a21b86d8efa0680de2f050b0c756d6da6d8749a5c6406e71",
+      "modified_from_source": false
+    },
+    {
+      "path": "requirements-lock.txt",
+      "source": "HX4S20_QtConsole/requirements-lock.txt",
+      "source_sha256": "163ec6069d5de31174ecbccdb8939f754597440c6bd7c9480d9cde21959f1e44",
+      "sha256": "163ec6069d5de31174ecbccdb8939f754597440c6bd7c9480d9cde21959f1e44",
+      "modified_from_source": false
+    },
+    {
+      "path": "requirements.txt",
+      "source": "HX4S20_QtConsole/requirements.txt",
+      "source_sha256": "58ae07b2b6f21188c162f202090ce71b0de6f881c0100e7bb8dab60abdf8fc4a",
+      "sha256": "58ae07b2b6f21188c162f202090ce71b0de6f881c0100e7bb8dab60abdf8fc4a",
+      "modified_from_source": false
+    },
+    {
+      "path": "tests/audit_isolation.py",
+      "source": "HX4S20_QtConsole/tests/audit_isolation.py",
+      "source_sha256": "cee091f58ed581ac141da73437b7d52cd1018c4bfc0005e0cf447438f82927c3",
+      "sha256": "9b4efb33f1df039bdeae377d1bb6b42df19491bb20b864ee663b0027ed44f077",
+      "modified_from_source": true
+    },
+    {
+      "path": "tests/capture_ui.py",
+      "source": "HX4S20_QtConsole/tests/capture_ui.py",
+      "source_sha256": "4617307f3d65ff83d57be1da0c1fefdce386a18247b16b8c04e93c29aad2131a",
+      "sha256": "4617307f3d65ff83d57be1da0c1fefdce386a18247b16b8c04e93c29aad2131a",
+      "modified_from_source": false
+    },
+    {
+      "path": "tests/run_all.py",
+      "source": "HX4S20_QtConsole/tests/run_all.py",
+      "source_sha256": "705d8de493b3994a3914c419d6fc491442916bc82eadb2d1fedcaad554940d85",
+      "sha256": "705d8de493b3994a3914c419d6fc491442916bc82eadb2d1fedcaad554940d85",
+      "modified_from_source": false
+    },
+    {
+      "path": "tests/test_appearance.py",
+      "source": "HX4S20_QtConsole/tests/test_appearance.py",
+      "source_sha256": "a3e52c7a8ddfdd9ca78a4e4f3287cfa10744bd5972bcbb3aeceb31254bf40e2f",
+      "sha256": "a3e52c7a8ddfdd9ca78a4e4f3287cfa10744bd5972bcbb3aeceb31254bf40e2f",
+      "modified_from_source": false
+    },
+    {
+      "path": "tests/test_backend.py",
+      "source": "HX4S20_QtConsole/tests/test_backend.py",
+      "source_sha256": "54c5b4ba051dd911388300f1ec901559868e6529c8e814b903a50ff893dee66b",
+      "sha256": "54c5b4ba051dd911388300f1ec901559868e6529c8e814b903a50ff893dee66b",
+      "modified_from_source": false
+    },
+    {
+      "path": "tests/test_integration.py",
+      "source": "HX4S20_QtConsole/tests/test_integration.py",
+      "source_sha256": "1bf462a6f73fa58f426c94cee6e654ebfb660c0a27f7ffdf58a3d12f5263373c",
+      "sha256": "1bf462a6f73fa58f426c94cee6e654ebfb660c0a27f7ffdf58a3d12f5263373c",
+      "modified_from_source": false
+    },
+    {
+      "path": "tests/test_ui.py",
+      "source": "HX4S20_QtConsole/tests/test_ui.py",
+      "source_sha256": "a57c522b482d175a52514c666dd433e2ef20156ae0f7ab330b62cd7516ab7203",
+      "sha256": "a57c522b482d175a52514c666dd433e2ef20156ae0f7ab330b62cd7516ab7203",
+      "modified_from_source": false
+    },
+    {
+      "path": "tests/verify_release.py",
+      "source": "HX4S20_QtConsole/tests/verify_release.py",
+      "source_sha256": "01b153650bd32889a15641d135a8dd998616860ee445dcb97f983e4c61c62b8a",
+      "sha256": "082db22893414142e92b0baf1f1d202c4b8bdeec3cefd59d166320d235355fc6",
+      "modified_from_source": true
+    },
+    {
+      "path": "启动上位机.bat",
+      "source": "HX4S20_QtConsole/启动上位机.bat",
+      "source_sha256": "fdd49915c82857dcfdf051589beeac578c5376a67be29f2ef768b740e43c80e4",
+      "sha256": "fdd49915c82857dcfdf051589beeac578c5376a67be29f2ef768b740e43c80e4",
+      "modified_from_source": false
+    },
+    {
+      "path": "预览界面.bat",
+      "source": "HX4S20_QtConsole/预览界面.bat",
+      "source_sha256": "3fee4c3724d107cdd7d7b0363f21c337e15d7d6f9d9ccc4c9a9ede4da9670304",
+      "sha256": "3fee4c3724d107cdd7d7b0363f21c337e15d7d6f9d9ccc4c9a9ede4da9670304",
+      "modified_from_source": false
+    },
+    {
+      "path": "legacy/tools/console/audio_labels.py",
+      "source": "HX4S20_QtConsole/app/audio_labels.py",
+      "source_sha256": "4c8bf34b6d4dec9726f75bcdabef80230402ecf2824d0bcd0f159672e48241e0",
+      "sha256": "4c8bf34b6d4dec9726f75bcdabef80230402ecf2824d0bcd0f159672e48241e0",
+      "modified_from_source": false
+    },
+    {
+      "path": "第三方组件说明.md",
+      "source": "HX4S20_QtConsole/docs/第三方组件说明.md",
+      "source_sha256": "775c6fc2e40c77b3cb099a0588a41d5027d8e3109769f28d0a71780781f6fdb2",
+      "sha256": "5bafe336db6289cd39c457fd18e6aa29f6a537eac76e59d84888188d2d27b036",
+      "modified_from_source": true
+    },
+    {
+      "path": "pyserial-LICENSE.txt",
+      "source": "https://raw.githubusercontent.com/pyserial/pyserial/v3.5/LICENSE.txt",
+      "source_sha256": "f91cb9813de6a5b142b8f7f2dede630b5134160aedaeaf55f4d6a7e2593ca3f3",
+      "sha256": "f91cb9813de6a5b142b8f7f2dede630b5134160aedaeaf55f4d6a7e2593ca3f3",
+      "modified_from_source": false
+    },
+    {
+      "path": "legacy/tools/console/examples/s43_qt_demo.json",
+      "source": "project/tools/console/examples/s43_qt_demo.json",
+      "source_sha256": "0cd4d3add94f10136b0b9b7e65be944110da8970e17f334fb24c78132a452352",
+      "sha256": "0cd4d3add94f10136b0b9b7e65be944110da8970e17f334fb24c78132a452352",
+      "modified_from_source": false
+    }
+  ]
+}

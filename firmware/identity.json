@@ -1,0 +1,13 @@
+{
+  "file": "car_guide_terminal.bit",
+  "original_file": "car_guide_terminal.bit",
+  "sha256": "898df1af01ca8c49e11b1b4dea630efcc8e4c583ce31de46a3850d26ea6b211d",
+  "bytes": 665721,
+  "source_stage": "s47_sdram_timing_strategy",
+  "source_commit": "fcdd2cc40baf21489005cb9e35abadfa0c9eaaec",
+  "tool": "Anlogic TD 6.2.168116",
+  "device": "EG4S20BG256",
+  "origin": "User GUI build of car_guide_terminal before requested UI changes",
+  "board_feedback": "User explicitly reports this project tested with no problems on 2026-11-01",
+  "feedback_limits": "Exact stress duration not specified"
+}

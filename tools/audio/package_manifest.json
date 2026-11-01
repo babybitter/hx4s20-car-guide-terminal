@@ -1,0 +1,1483 @@
+{
+  "format": "s19-flat-mulaw-v1",
+  "filename": "AUDIO.BIN",
+  "sample_rate": 16000,
+  "channels": 1,
+  "bits_per_code": 8,
+  "codec": "g711-mulaw",
+  "alignment": 512,
+  "byte_count": 1267200,
+  "crc32": "3D3C83B2",
+  "sha256": "c89321a770c12f99aa9347ce0e2b1d79aff2dee0036804a1975a19316e34ec0d",
+  "active_mask": "83FFFFFF",
+  "slots": [
+    {
+      "id": 0,
+      "byte_offset": 0,
+      "sample_count": 18418,
+      "storage_bytes": 18432,
+      "crc32": "89042540"
+    },
+    {
+      "id": 1,
+      "byte_offset": 18432,
+      "sample_count": 20334,
+      "storage_bytes": 20480,
+      "crc32": "ADEC9B3A"
+    },
+    {
+      "id": 2,
+      "byte_offset": 38912,
+      "sample_count": 41241,
+      "storage_bytes": 41472,
+      "crc32": "AB510BFE"
+    },
+    {
+      "id": 3,
+      "byte_offset": 80384,
+      "sample_count": 39050,
+      "storage_bytes": 39424,
+      "crc32": "ED1F0E09"
+    },
+    {
+      "id": 4,
+      "byte_offset": 119808,
+      "sample_count": 39906,
+      "storage_bytes": 39936,
+      "crc32": "46673929"
+    },
+    {
+      "id": 5,
+      "byte_offset": 159744,
+      "sample_count": 43693,
+      "storage_bytes": 44032,
+      "crc32": "4E4D0A7A"
+    },
+    {
+      "id": 6,
+      "byte_offset": 203776,
+      "sample_count": 36897,
+      "storage_bytes": 37376,
+      "crc32": "60EDF719"
+    },
+    {
+      "id": 7,
+      "byte_offset": 241152,
+      "sample_count": 42888,
+      "storage_bytes": 43008,
+      "crc32": "939E1DE4"
+    },
+    {
+      "id": 8,
+      "byte_offset": 284160,
+      "sample_count": 39375,
+      "storage_bytes": 39424,
+      "crc32": "8768CE04"
+    },
+    {
+      "id": 9,
+      "byte_offset": 323584,
+      "sample_count": 38250,
+      "storage_bytes": 38400,
+      "crc32": "6D1B0232"
+    },
+    {
+      "id": 10,
+      "byte_offset": 361984,
+      "sample_count": 27630,
+      "storage_bytes": 27648,
+      "crc32": "0099EDAF"
+    },
+    {
+      "id": 11,
+      "byte_offset": 389632,
+      "sample_count": 28477,
+      "storage_bytes": 28672,
+      "crc32": "86969566"
+    },
+    {
+      "id": 12,
+      "byte_offset": 418304,
+      "sample_count": 16880,
+      "storage_bytes": 16896,
+      "crc32": "6E44941D"
+    },
+    {
+      "id": 13,
+      "byte_offset": 435200,
+      "sample_count": 22406,
+      "storage_bytes": 22528,
+      "crc32": "DEF426D6"
+    },
+    {
+      "id": 14,
+      "byte_offset": 457728,
+      "sample_count": 23411,
+      "storage_bytes": 23552,
+      "crc32": "4D0E5758"
+    },
+    {
+      "id": 15,
+      "byte_offset": 481280,
+      "sample_count": 21455,
+      "storage_bytes": 21504,
+      "crc32": "C958F9B3"
+    },
+    {
+      "id": 16,
+      "byte_offset": 502784,
+      "sample_count": 27893,
+      "storage_bytes": 28160,
+      "crc32": "5A33902E"
+    },
+    {
+      "id": 17,
+      "byte_offset": 530944,
+      "sample_count": 27937,
+      "storage_bytes": 28160,
+      "crc32": "4C611323"
+    },
+    {
+      "id": 18,
+      "byte_offset": 559104,
+      "sample_count": 21131,
+      "storage_bytes": 21504,
+      "crc32": "C3BE2B11"
+    },
+    {
+      "id": 19,
+      "byte_offset": 580608,
+      "sample_count": 29353,
+      "storage_bytes": 29696,
+      "crc32": "0A40A393"
+    },
+    {
+      "id": 20,
+      "byte_offset": 610304,
+      "sample_count": 22300,
+      "storage_bytes": 22528,
+      "crc32": "384B5243"
+    },
+    {
+      "id": 21,
+      "byte_offset": 632832,
+      "sample_count": 24231,
+      "storage_bytes": 24576,
+      "crc32": "9EF4A52C"
+    },
+    {
+      "id": 22,
+      "byte_offset": 657408,
+      "sample_count": 17857,
+      "storage_bytes": 17920,
+      "crc32": "18258E77"
+    },
+    {
+      "id": 23,
+      "byte_offset": 675328,
+      "sample_count": 25757,
+      "storage_bytes": 26112,
+      "crc32": "D57761F8"
+    },
+    {
+      "id": 24,
+      "byte_offset": 701440,
+      "sample_count": 31014,
+      "storage_bytes": 31232,
+      "crc32": "FF2AF2CB"
+    },
+    {
+      "id": 25,
+      "byte_offset": 732672,
+      "sample_count": 22331,
+      "storage_bytes": 22528,
+      "crc32": "B0EE1E55"
+    },
+    {
+      "id": 26,
+      "byte_offset": 0,
+      "sample_count": 0,
+      "storage_bytes": 0
+    },
+    {
+      "id": 27,
+      "byte_offset": 0,
+      "sample_count": 0,
+      "storage_bytes": 0
+    },
+    {
+      "id": 28,
+      "byte_offset": 0,
+      "sample_count": 0,
+      "storage_bytes": 0
+    },
+    {
+      "id": 29,
+      "byte_offset": 0,
+      "sample_count": 0,
+      "storage_bytes": 0
+    },
+    {
+      "id": 30,
+      "byte_offset": 0,
+      "sample_count": 0,
+      "storage_bytes": 0
+    },
+    {
+      "id": 31,
+      "byte_offset": 755200,
+      "sample_count": 512000,
+      "storage_bytes": 512000,
+      "crc32": "39B4341D"
+    }
+  ],
+  "source_manifest_sha256": "a8e2c4b08319cd59d37120c2b9260052e4020d929e5842a083c18ead424c20e8",
+  "tts_provenance_sha256": "33e01128b7996747bf44967109d0abbcf545df40016c2b9e5c197d3202e581ac",
+  "entries": [
+    {
+      "id": 0,
+      "key": "boot",
+      "kind": "speech",
+      "text": "欢迎乘车。",
+      "trigger": "本次启动音频包有效且显示尚未就绪；每次复位最多一次",
+      "priority": 2,
+      "cooldown_ms": 60000,
+      "settle_ms": 0,
+      "max_age_ms": 4000,
+      "sample_count": 18418,
+      "seconds": 1.151125,
+      "peak": 23198,
+      "peak_dbfs": -3.0,
+      "rms_dbfs": -23.85,
+      "dc_mean": 0.7241,
+      "clip_count": 0,
+      "processing": {
+        "raw_sample_count": 29440,
+        "trim_start": 1634,
+        "trim_end_exclusive": 17492,
+        "removed_dc": 131.15891,
+        "gain_db": -1.929624,
+        "active_rms_dbfs": -23.2
+      },
+      "decoded": {
+        "sample_count": 18418,
+        "seconds": 1.151125,
+        "peak": 22908,
+        "peak_dbfs": -3.109,
+        "rms_dbfs": -23.842,
+        "dc_mean": -1.2644,
+        "clip_count": 0
+      },
+      "lossy_error": {
+        "snr_db": 37.394,
+        "max_abs_error": 497
+      },
+      "mulaw_crc32": "89042540",
+      "mulaw_sha256": "3273179bba6997e74dcd2bfb39d36989ad332ba3435c2c7c793fe3c3c3abcc53"
+    },
+    {
+      "id": 1,
+      "key": "ready",
+      "kind": "speech",
+      "text": "导览已就绪。",
+      "trigger": "显示与音频均就绪的首次上升沿；每次复位一次",
+      "priority": 2,
+      "cooldown_ms": 60000,
+      "settle_ms": 0,
+      "max_age_ms": 6000,
+      "sample_count": 20334,
+      "seconds": 1.270875,
+      "peak": 23198,
+      "peak_dbfs": -3.0,
+      "rms_dbfs": -22.471,
+      "dc_mean": 0.686,
+      "clip_count": 0,
+      "processing": {
+        "raw_sample_count": 32320,
+        "trim_start": 2012,
+        "trim_end_exclusive": 19786,
+        "removed_dc": 141.411275,
+        "gain_db": -2.228622,
+        "active_rms_dbfs": -21.886
+      },
+      "decoded": {
+        "sample_count": 20334,
+        "seconds": 1.270875,
+        "peak": 22908,
+        "peak_dbfs": -3.109,
+        "rms_dbfs": -22.471,
+        "dc_mean": -1.0422,
+        "clip_count": 0
+      },
+      "lossy_error": {
+        "snr_db": 37.421,
+        "max_abs_error": 497
+      },
+      "mulaw_crc32": "ADEC9B3A",
+      "mulaw_sha256": "0a108da42eb5fc94dd267f7c57e0f74a0d51f7ab8c0ab43a9a662cde798c0751"
+    },
+    {
+      "id": 2,
+      "key": "page_0_route",
+      "kind": "speech",
+      "page_index": 0,
+      "text": "线路总览，沿途风景。",
+      "trigger": "页面0实际提交并稳定",
+      "priority": 1,
+      "cooldown_ms": 20000,
+      "settle_ms": 700,
+      "max_age_ms": 4000,
+      "sample_count": 41241,
+      "seconds": 2.577562,
+      "peak": 23198,
+      "peak_dbfs": -3.0,
+      "rms_dbfs": -22.312,
+      "dc_mean": 0.635,
+      "clip_count": 0,
+      "processing": {
+        "raw_sample_count": 52560,
+        "trim_start": 1641,
+        "trim_end_exclusive": 40322,
+        "removed_dc": 122.41744,
+        "gain_db": 3.607556,
+        "active_rms_dbfs": -22.034
+      },
+      "decoded": {
+        "sample_count": 41241,
+        "seconds": 2.577562,
+        "peak": 22908,
+        "peak_dbfs": -3.109,
+        "rms_dbfs": -22.309,
+        "dc_mean": -2.7332,
+        "clip_count": 0
+      },
+      "lossy_error": {
+        "snr_db": 37.237,
+        "max_abs_error": 495
+      },
+      "mulaw_crc32": "AB510BFE",
+      "mulaw_sha256": "55221b2567db45019110519da31d16fdff2d837012f20d253d16bf757920aebd"
+    },
+    {
+      "id": 3,
+      "key": "page_1_lakeside",
+      "kind": "speech",
+      "page_index": 1,
+      "text": "湖畔步道，水岸漫行。",
+      "trigger": "页面1实际提交并稳定",
+      "priority": 1,
+      "cooldown_ms": 20000,
+      "settle_ms": 700,
+      "max_age_ms": 4000,
+      "sample_count": 39050,
+      "seconds": 2.440625,
+      "peak": 23198,
+      "peak_dbfs": -3.0,
+      "rms_dbfs": -21.638,
+      "dc_mean": 0.4088,
+      "clip_count": 0,
+      "processing": {
+        "raw_sample_count": 50080,
+        "trim_start": 1623,
+        "trim_end_exclusive": 38113,
+        "removed_dc": 115.396163,
+        "gain_db": 1.533556,
+        "active_rms_dbfs": -21.343
+      },
+      "decoded": {
+        "sample_count": 39050,
+        "seconds": 2.440625,
+        "peak": 22908,
+        "peak_dbfs": -3.109,
+        "rms_dbfs": -21.633,
+        "dc_mean": -2.3777,
+        "clip_count": 0
+      },
+      "lossy_error": {
+        "snr_db": 37.195,
+        "max_abs_error": 507
+      },
+      "mulaw_crc32": "ED1F0E09",
+      "mulaw_sha256": "b3fa3593c0199ddaead145037dab07abada84292b79223db0b33749ad652d2ef"
+    },
+    {
+      "id": 4,
+      "key": "page_2_garden",
+      "kind": "speech",
+      "page_index": 2,
+      "text": "林间展园，亲近自然。",
+      "trigger": "页面2实际提交并稳定",
+      "priority": 1,
+      "cooldown_ms": 20000,
+      "settle_ms": 700,
+      "max_age_ms": 4000,
+      "sample_count": 39906,
+      "seconds": 2.494125,
+      "peak": 23198,
+      "peak_dbfs": -3.0,
+      "rms_dbfs": -23.185,
+      "dc_mean": 0.7504,
+      "clip_count": 0,
+      "processing": {
+        "raw_sample_count": 51760,
+        "trim_start": 2345,
+        "trim_end_exclusive": 39691,
+        "removed_dc": 128.701815,
+        "gain_db": 4.825243,
+        "active_rms_dbfs": -22.897
+      },
+      "decoded": {
+        "sample_count": 39906,
+        "seconds": 2.494125,
+        "peak": 22908,
+        "peak_dbfs": -3.109,
+        "rms_dbfs": -23.174,
+        "dc_mean": -1.2988,
+        "clip_count": 0
+      },
+      "lossy_error": {
+        "snr_db": 37.415,
+        "max_abs_error": 512
+      },
+      "mulaw_crc32": "46673929",
+      "mulaw_sha256": "c7036f28a5fc167b3512a22c8d38f0e8382bfab5a0574b062b3f889ce1dc878d"
+    },
+    {
+      "id": 5,
+      "key": "page_3_civil",
+      "kind": "speech",
+      "page_index": 3,
+      "text": "文明乘车，请坐稳扶好。",
+      "trigger": "页面3实际提交并稳定",
+      "priority": 1,
+      "cooldown_ms": 20000,
+      "settle_ms": 700,
+      "max_age_ms": 4000,
+      "sample_count": 43693,
+      "seconds": 2.730812,
+      "peak": 23198,
+      "peak_dbfs": -3.0,
+      "rms_dbfs": -23.986,
+      "dc_mean": 0.379,
+      "clip_count": 0,
+      "processing": {
+        "raw_sample_count": 55280,
+        "trim_start": 2180,
+        "trim_end_exclusive": 43313,
+        "removed_dc": 108.846692,
+        "gain_db": 2.471023,
+        "active_rms_dbfs": -23.723
+      },
+      "decoded": {
+        "sample_count": 43693,
+        "seconds": 2.730812,
+        "peak": 22908,
+        "peak_dbfs": -3.109,
+        "rms_dbfs": -23.98,
+        "dc_mean": -1.5042,
+        "clip_count": 0
+      },
+      "lossy_error": {
+        "snr_db": 37.229,
+        "max_abs_error": 514
+      },
+      "mulaw_crc32": "4E4D0A7A",
+      "mulaw_sha256": "e54dfde5c95eb6adc8763f246e2c10812c49f9fecf5a2ac47789a232d5f7e028"
+    },
+    {
+      "id": 6,
+      "key": "page_4_culture",
+      "kind": "speech",
+      "page_index": 4,
+      "text": "沿途人文，听听故事。",
+      "trigger": "页面4实际提交并稳定",
+      "priority": 1,
+      "cooldown_ms": 20000,
+      "settle_ms": 700,
+      "max_age_ms": 4000,
+      "sample_count": 36897,
+      "seconds": 2.306062,
+      "peak": 23198,
+      "peak_dbfs": -3.0,
+      "rms_dbfs": -22.381,
+      "dc_mean": 0.8388,
+      "clip_count": 0,
+      "processing": {
+        "raw_sample_count": 49200,
+        "trim_start": 2497,
+        "trim_end_exclusive": 36834,
+        "removed_dc": 110.11623,
+        "gain_db": 7.187483,
+        "active_rms_dbfs": -22.068
+      },
+      "decoded": {
+        "sample_count": 36897,
+        "seconds": 2.306062,
+        "peak": 22908,
+        "peak_dbfs": -3.109,
+        "rms_dbfs": -22.372,
+        "dc_mean": -1.779,
+        "clip_count": 0
+      },
+      "lossy_error": {
+        "snr_db": 37.218,
+        "max_abs_error": 508
+      },
+      "mulaw_crc32": "60EDF719",
+      "mulaw_sha256": "c4bff38887e22dd636f908aeae21a684fbcaa8296948d50e595ee73b014bb94f"
+    },
+    {
+      "id": 7,
+      "key": "page_5_rain",
+      "kind": "speech",
+      "page_index": 5,
+      "text": "雨天出行，小心慢行。",
+      "trigger": "页面5实际提交并稳定",
+      "priority": 1,
+      "cooldown_ms": 20000,
+      "settle_ms": 700,
+      "max_age_ms": 4000,
+      "sample_count": 42888,
+      "seconds": 2.6805,
+      "peak": 23198,
+      "peak_dbfs": -3.0,
+      "rms_dbfs": -25.439,
+      "dc_mean": 0.4089,
+      "clip_count": 0,
+      "processing": {
+        "raw_sample_count": 54880,
+        "trim_start": 2349,
+        "trim_end_exclusive": 42677,
+        "removed_dc": 109.763167,
+        "gain_db": 0.950337,
+        "active_rms_dbfs": -25.171
+      },
+      "decoded": {
+        "sample_count": 42888,
+        "seconds": 2.6805,
+        "peak": 22908,
+        "peak_dbfs": -3.109,
+        "rms_dbfs": -25.433,
+        "dc_mean": -2.3422,
+        "clip_count": 0
+      },
+      "lossy_error": {
+        "snr_db": 37.127,
+        "max_abs_error": 504
+      },
+      "mulaw_crc32": "939E1DE4",
+      "mulaw_sha256": "21db81f58023e9784de26b78d40db21f3d60b93d475f226e6026ad6a15b601b0"
+    },
+    {
+      "id": 8,
+      "key": "page_6_courtesy",
+      "kind": "speech",
+      "page_index": 6,
+      "text": "礼让同行，关爱他人。",
+      "trigger": "页面6实际提交并稳定",
+      "priority": 1,
+      "cooldown_ms": 20000,
+      "settle_ms": 700,
+      "max_age_ms": 4000,
+      "sample_count": 39375,
+      "seconds": 2.460938,
+      "peak": 23198,
+      "peak_dbfs": -3.0,
+      "rms_dbfs": -24.461,
+      "dc_mean": 0.2842,
+      "clip_count": 0,
+      "processing": {
+        "raw_sample_count": 51120,
+        "trim_start": 2257,
+        "trim_end_exclusive": 39072,
+        "removed_dc": 141.944235,
+        "gain_db": -2.81137,
+        "active_rms_dbfs": -24.169
+      },
+      "decoded": {
+        "sample_count": 39375,
+        "seconds": 2.460938,
+        "peak": 22908,
+        "peak_dbfs": -3.109,
+        "rms_dbfs": -24.455,
+        "dc_mean": -1.4123,
+        "clip_count": 0
+      },
+      "lossy_error": {
+        "snr_db": 37.237,
+        "max_abs_error": 505
+      },
+      "mulaw_crc32": "8768CE04",
+      "mulaw_sha256": "ef7d852819671143270648e723763586658cd96b2610a9e8cfa73cbfd3363fe8"
+    },
+    {
+      "id": 9,
+      "key": "page_7_departure",
+      "kind": "speech",
+      "page_index": 7,
+      "text": "离车检查，带好物品。",
+      "trigger": "页面7实际提交并稳定；若同时有24则抑制本条",
+      "priority": 1,
+      "cooldown_ms": 20000,
+      "settle_ms": 700,
+      "max_age_ms": 4000,
+      "sample_count": 38250,
+      "seconds": 2.390625,
+      "peak": 23198,
+      "peak_dbfs": -3.0,
+      "rms_dbfs": -24.263,
+      "dc_mean": 0.2965,
+      "clip_count": 0,
+      "processing": {
+        "raw_sample_count": 50320,
+        "trim_start": 2345,
+        "trim_end_exclusive": 38035,
+        "removed_dc": 115.469936,
+        "gain_db": -2.362328,
+        "active_rms_dbfs": -23.962
+      },
+      "decoded": {
+        "sample_count": 38250,
+        "seconds": 2.390625,
+        "peak": 22908,
+        "peak_dbfs": -3.109,
+        "rms_dbfs": -24.256,
+        "dc_mean": -1.2762,
+        "clip_count": 0
+      },
+      "lossy_error": {
+        "snr_db": 37.328,
+        "max_abs_error": 503
+      },
+      "mulaw_crc32": "6D1B0232",
+      "mulaw_sha256": "7eed0fde54532c7b1184f7b362c16f211444aca4166898db58a7912537decb6e"
+    },
+    {
+      "id": 10,
+      "key": "manual",
+      "kind": "speech",
+      "text": "已切换手动播放。",
+      "trigger": "普通轮播自动态变为手动态；故事暂停不算",
+      "priority": 2,
+      "cooldown_ms": 5000,
+      "settle_ms": 400,
+      "max_age_ms": 3000,
+      "sample_count": 27630,
+      "seconds": 1.726875,
+      "peak": 23198,
+      "peak_dbfs": -3.0,
+      "rms_dbfs": -21.981,
+      "dc_mean": 0.6105,
+      "clip_count": 0,
+      "processing": {
+        "raw_sample_count": 39440,
+        "trim_start": 2267,
+        "trim_end_exclusive": 27337,
+        "removed_dc": 148.317351,
+        "gain_db": -0.888419,
+        "active_rms_dbfs": -21.559
+      },
+      "decoded": {
+        "sample_count": 27630,
+        "seconds": 1.726875,
+        "peak": 22908,
+        "peak_dbfs": -3.109,
+        "rms_dbfs": -21.978,
+        "dc_mean": -0.9585,
+        "clip_count": 0
+      },
+      "lossy_error": {
+        "snr_db": 37.463,
+        "max_abs_error": 510
+      },
+      "mulaw_crc32": "0099EDAF",
+      "mulaw_sha256": "9dc6be3783dc65b9530ee3996136b904df1bb31a45a9a74632546a865f08d70e"
+    },
+    {
+      "id": 11,
+      "key": "automatic",
+      "kind": "speech",
+      "text": "自动播放已开启。",
+      "trigger": "普通轮播由关变开；故事开始不算",
+      "priority": 2,
+      "cooldown_ms": 5000,
+      "settle_ms": 400,
+      "max_age_ms": 3000,
+      "sample_count": 28477,
+      "seconds": 1.779813,
+      "peak": 23198,
+      "peak_dbfs": -3.0,
+      "rms_dbfs": -23.473,
+      "dc_mean": 0.4677,
+      "clip_count": 0,
+      "processing": {
+        "raw_sample_count": 40240,
+        "trim_start": 1922,
+        "trim_end_exclusive": 27839,
+        "removed_dc": 137.412278,
+        "gain_db": -2.38537,
+        "active_rms_dbfs": -23.064
+      },
+      "decoded": {
+        "sample_count": 28477,
+        "seconds": 1.779813,
+        "peak": 22908,
+        "peak_dbfs": -3.109,
+        "rms_dbfs": -23.466,
+        "dc_mean": -1.1496,
+        "clip_count": 0
+      },
+      "lossy_error": {
+        "snr_db": 37.086,
+        "max_abs_error": 505
+      },
+      "mulaw_crc32": "86969566",
+      "mulaw_sha256": "b4949d6a086b1d5fa69ff3c86580d9f00be3191f86f59a61d77ef042aaa19e87"
+    },
+    {
+      "id": 12,
+      "key": "story_start",
+      "kind": "speech",
+      "text": "故事开始。",
+      "trigger": "故事开始请求实际生效",
+      "priority": 2,
+      "cooldown_ms": 5000,
+      "settle_ms": 300,
+      "max_age_ms": 4000,
+      "sample_count": 16880,
+      "seconds": 1.055,
+      "peak": 23198,
+      "peak_dbfs": -3.0,
+      "rms_dbfs": -21.261,
+      "dc_mean": 1.2707,
+      "clip_count": 0,
+      "processing": {
+        "raw_sample_count": 28640,
+        "trim_start": 1931,
+        "trim_end_exclusive": 16251,
+        "removed_dc": 106.725419,
+        "gain_db": 3.990305,
+        "active_rms_dbfs": -20.546
+      },
+      "decoded": {
+        "sample_count": 16880,
+        "seconds": 1.055,
+        "peak": 22908,
+        "peak_dbfs": -3.109,
+        "rms_dbfs": -21.25,
+        "dc_mean": -0.9443,
+        "clip_count": 0
+      },
+      "lossy_error": {
+        "snr_db": 37.175,
+        "max_abs_error": 508
+      },
+      "mulaw_crc32": "6E44941D",
+      "mulaw_sha256": "66649bb565643155663d38ab2311924048cccc40df2a0187305ab504dbf006b5"
+    },
+    {
+      "id": 13,
+      "key": "story_pause",
+      "kind": "speech",
+      "text": "故事已暂停。",
+      "trigger": "用户主动暂停故事；提示窗内部暂停不播",
+      "priority": 2,
+      "cooldown_ms": 4000,
+      "settle_ms": 300,
+      "max_age_ms": 3000,
+      "sample_count": 22406,
+      "seconds": 1.400375,
+      "peak": 23198,
+      "peak_dbfs": -3.0,
+      "rms_dbfs": -22.102,
+      "dc_mean": 0.8604,
+      "clip_count": 0,
+      "processing": {
+        "raw_sample_count": 33840,
+        "trim_start": 1931,
+        "trim_end_exclusive": 21777,
+        "removed_dc": 114.90522,
+        "gain_db": 2.531978,
+        "active_rms_dbfs": -21.575
+      },
+      "decoded": {
+        "sample_count": 22406,
+        "seconds": 1.400375,
+        "peak": 22908,
+        "peak_dbfs": -3.109,
+        "rms_dbfs": -22.1,
+        "dc_mean": -0.5231,
+        "clip_count": 0
+      },
+      "lossy_error": {
+        "snr_db": 37.535,
+        "max_abs_error": 504
+      },
+      "mulaw_crc32": "DEF426D6",
+      "mulaw_sha256": "d116321a1e56470dd14d08787b07cb119c3225a7eb60b1eae400f32c59b95d4f"
+    },
+    {
+      "id": 14,
+      "key": "story_resume",
+      "kind": "speech",
+      "text": "继续播放故事。",
+      "trigger": "用户主动恢复故事",
+      "priority": 2,
+      "cooldown_ms": 4000,
+      "settle_ms": 300,
+      "max_age_ms": 3000,
+      "sample_count": 23411,
+      "seconds": 1.463188,
+      "peak": 23198,
+      "peak_dbfs": -3.0,
+      "rms_dbfs": -23.101,
+      "dc_mean": 0.7016,
+      "clip_count": 0,
+      "processing": {
+        "raw_sample_count": 35040,
+        "trim_start": 1801,
+        "trim_end_exclusive": 22652,
+        "removed_dc": 140.946238,
+        "gain_db": -0.595063,
+        "active_rms_dbfs": -22.598
+      },
+      "decoded": {
+        "sample_count": 23411,
+        "seconds": 1.463188,
+        "peak": 22908,
+        "peak_dbfs": -3.109,
+        "rms_dbfs": -23.089,
+        "dc_mean": -1.3483,
+        "clip_count": 0
+      },
+      "lossy_error": {
+        "snr_db": 37.168,
+        "max_abs_error": 509
+      },
+      "mulaw_crc32": "4D0E5758",
+      "mulaw_sha256": "0c5484f6ff4fb5ae5faf40edcf1ecafd56dee65ab1f5097e7248ffd50dd2efb7"
+    },
+    {
+      "id": 15,
+      "key": "story_stop",
+      "kind": "speech",
+      "text": "故事已停止。",
+      "trigger": "故事停止或手动切页退出实际生效",
+      "priority": 2,
+      "cooldown_ms": 4000,
+      "settle_ms": 300,
+      "max_age_ms": 3000,
+      "sample_count": 21455,
+      "seconds": 1.340937,
+      "peak": 23198,
+      "peak_dbfs": -3.0,
+      "rms_dbfs": -23.457,
+      "dc_mean": 1.1278,
+      "clip_count": 0,
+      "processing": {
+        "raw_sample_count": 33200,
+        "trim_start": 1931,
+        "trim_end_exclusive": 20826,
+        "removed_dc": 96.738608,
+        "gain_db": 5.849846,
+        "active_rms_dbfs": -22.905
+      },
+      "decoded": {
+        "sample_count": 21455,
+        "seconds": 1.340937,
+        "peak": 22908,
+        "peak_dbfs": -3.109,
+        "rms_dbfs": -23.452,
+        "dc_mean": -0.6911,
+        "clip_count": 0
+      },
+      "lossy_error": {
+        "snr_db": 37.231,
+        "max_abs_error": 511
+      },
+      "mulaw_crc32": "C958F9B3",
+      "mulaw_sha256": "ed7312d4cd5c620aa1b6bc4b33a46b38b79a01fb1f3d7068cb2458d3146ab087"
+    },
+    {
+      "id": 16,
+      "key": "normal_mode",
+      "kind": "speech",
+      "text": "已切换普通模式。",
+      "trigger": "SW3修饰操作模式退出且稳定；不是每次E0命令",
+      "priority": 2,
+      "cooldown_ms": 6000,
+      "settle_ms": 800,
+      "max_age_ms": 3000,
+      "sample_count": 27893,
+      "seconds": 1.743313,
+      "peak": 23198,
+      "peak_dbfs": -3.0,
+      "rms_dbfs": -24.708,
+      "dc_mean": 0.4705,
+      "clip_count": 0,
+      "processing": {
+        "raw_sample_count": 40000,
+        "trim_start": 2267,
+        "trim_end_exclusive": 27600,
+        "removed_dc": 131.213003,
+        "gain_db": -2.046777,
+        "active_rms_dbfs": -24.29
+      },
+      "decoded": {
+        "sample_count": 27893,
+        "seconds": 1.743313,
+        "peak": 22908,
+        "peak_dbfs": -3.109,
+        "rms_dbfs": -24.703,
+        "dc_mean": -1.0479,
+        "clip_count": 0
+      },
+      "lossy_error": {
+        "snr_db": 37.508,
+        "max_abs_error": 509
+      },
+      "mulaw_crc32": "5A33902E",
+      "mulaw_sha256": "bb51ec607c952c81004be71d391b3f1716e9a2188729270d60c9382fed8bbf60"
+    },
+    {
+      "id": 17,
+      "key": "effect_mode",
+      "kind": "speech",
+      "text": "已切换效果模式。",
+      "trigger": "SW3修饰操作模式进入且稳定；不是每次E1命令",
+      "priority": 2,
+      "cooldown_ms": 6000,
+      "settle_ms": 800,
+      "max_age_ms": 3000,
+      "sample_count": 27937,
+      "seconds": 1.746063,
+      "peak": 23198,
+      "peak_dbfs": -3.0,
+      "rms_dbfs": -22.693,
+      "dc_mean": 0.5433,
+      "clip_count": 0,
+      "processing": {
+        "raw_sample_count": 40160,
+        "trim_start": 2267,
+        "trim_end_exclusive": 27644,
+        "removed_dc": 148.054419,
+        "gain_db": -1.733803,
+        "active_rms_dbfs": -22.275
+      },
+      "decoded": {
+        "sample_count": 27937,
+        "seconds": 1.746063,
+        "peak": 22908,
+        "peak_dbfs": -3.109,
+        "rms_dbfs": -22.685,
+        "dc_mean": -1.1255,
+        "clip_count": 0
+      },
+      "lossy_error": {
+        "snr_db": 37.493,
+        "max_abs_error": 503
+      },
+      "mulaw_crc32": "4C611323",
+      "mulaw_sha256": "3446467ea386c9bdfc8234a3da56be6ac637e393bb91ff89a09c56ee84852046"
+    },
+    {
+      "id": 18,
+      "key": "filter_changed",
+      "kind": "speech",
+      "text": "滤镜已切换。",
+      "trigger": "F实际生效值变化并稳定；旋钮连续变化只保留最后一次",
+      "priority": 1,
+      "cooldown_ms": 10000,
+      "settle_ms": 800,
+      "max_age_ms": 2500,
+      "sample_count": 21131,
+      "seconds": 1.320688,
+      "peak": 23198,
+      "peak_dbfs": -3.0,
+      "rms_dbfs": -24.844,
+      "dc_mean": 0.8965,
+      "clip_count": 0,
+      "processing": {
+        "raw_sample_count": 33120,
+        "trim_start": 2181,
+        "trim_end_exclusive": 20752,
+        "removed_dc": 134.042001,
+        "gain_db": 0.975319,
+        "active_rms_dbfs": -24.284
+      },
+      "decoded": {
+        "sample_count": 21131,
+        "seconds": 1.320688,
+        "peak": 22908,
+        "peak_dbfs": -3.109,
+        "rms_dbfs": -24.834,
+        "dc_mean": -0.6832,
+        "clip_count": 0
+      },
+      "lossy_error": {
+        "snr_db": 37.192,
+        "max_abs_error": 491
+      },
+      "mulaw_crc32": "C3BE2B11",
+      "mulaw_sha256": "cd53a6de6d01bcf1c6286e6d7bd160a97a86404813b2b7b2fa670cab873a90e6"
+    },
+    {
+      "id": 19,
+      "key": "transition_changed",
+      "kind": "speech",
+      "text": "转场效果已切换。",
+      "trigger": "T或X实际生效值变化并稳定；同一操作合并",
+      "priority": 1,
+      "cooldown_ms": 10000,
+      "settle_ms": 800,
+      "max_age_ms": 2500,
+      "sample_count": 29353,
+      "seconds": 1.834563,
+      "peak": 23198,
+      "peak_dbfs": -3.0,
+      "rms_dbfs": -21.999,
+      "dc_mean": 0.484,
+      "clip_count": 0,
+      "processing": {
+        "raw_sample_count": 41040,
+        "trim_start": 1865,
+        "trim_end_exclusive": 28658,
+        "removed_dc": 120.960251,
+        "gain_db": -0.634139,
+        "active_rms_dbfs": -21.603
+      },
+      "decoded": {
+        "sample_count": 29353,
+        "seconds": 1.834563,
+        "peak": 22908,
+        "peak_dbfs": -3.109,
+        "rms_dbfs": -21.992,
+        "dc_mean": -1.2529,
+        "clip_count": 0
+      },
+      "lossy_error": {
+        "snr_db": 37.356,
+        "max_abs_error": 509
+      },
+      "mulaw_crc32": "0A40A393",
+      "mulaw_sha256": "e0928ae99e8938bc724cc5d0caad024143152ba09fe0f7c6b2e16382bd275621"
+    },
+    {
+      "id": 20,
+      "key": "zoom_in",
+      "kind": "speech",
+      "text": "画面已放大。",
+      "trigger": "Z由原始变为中心两倍缩放且稳定",
+      "priority": 2,
+      "cooldown_ms": 6000,
+      "settle_ms": 800,
+      "max_age_ms": 3000,
+      "sample_count": 22300,
+      "seconds": 1.39375,
+      "peak": 23198,
+      "peak_dbfs": -3.0,
+      "rms_dbfs": -22.052,
+      "dc_mean": 0.6552,
+      "clip_count": 0,
+      "processing": {
+        "raw_sample_count": 33040,
+        "trim_start": 1634,
+        "trim_end_exclusive": 21374,
+        "removed_dc": 149.612715,
+        "gain_db": -2.259333,
+        "active_rms_dbfs": -21.522
+      },
+      "decoded": {
+        "sample_count": 22300,
+        "seconds": 1.39375,
+        "peak": 22908,
+        "peak_dbfs": -3.109,
+        "rms_dbfs": -22.046,
+        "dc_mean": -1.5905,
+        "clip_count": 0
+      },
+      "lossy_error": {
+        "snr_db": 37.21,
+        "max_abs_error": 501
+      },
+      "mulaw_crc32": "384B5243",
+      "mulaw_sha256": "a4aa7d174990f48368abecb1b0d43c44dbc33758c06ece97927358b1db65acef"
+    },
+    {
+      "id": 21,
+      "key": "zoom_restore",
+      "kind": "speech",
+      "text": "画面已还原。",
+      "trigger": "Z由缩放变为原始且稳定",
+      "priority": 2,
+      "cooldown_ms": 6000,
+      "settle_ms": 800,
+      "max_age_ms": 3000,
+      "sample_count": 24231,
+      "seconds": 1.514438,
+      "peak": 23198,
+      "peak_dbfs": -3.0,
+      "rms_dbfs": -23.458,
+      "dc_mean": 0.5774,
+      "clip_count": 0,
+      "processing": {
+        "raw_sample_count": 35440,
+        "trim_start": 1634,
+        "trim_end_exclusive": 23305,
+        "removed_dc": 146.006183,
+        "gain_db": -2.258292,
+        "active_rms_dbfs": -22.973
+      },
+      "decoded": {
+        "sample_count": 24231,
+        "seconds": 1.514438,
+        "peak": 22908,
+        "peak_dbfs": -3.109,
+        "rms_dbfs": -23.454,
+        "dc_mean": -1.352,
+        "clip_count": 0
+      },
+      "lossy_error": {
+        "snr_db": 37.075,
+        "max_abs_error": 506
+      },
+      "mulaw_crc32": "9EF4A52C",
+      "mulaw_sha256": "29cacac0cf85608da14260716b5d3a69f4ac28c6fab2eb803b640733000cde81"
+    },
+    {
+      "id": 22,
+      "key": "operation_ok",
+      "kind": "speech",
+      "text": "操作成功。",
+      "trigger": "明确离散事务完成且无专用播报，例如故事表真正发布；不依据ACK，不用于旋钮",
+      "priority": 1,
+      "cooldown_ms": 10000,
+      "settle_ms": 300,
+      "max_age_ms": 2500,
+      "sample_count": 17857,
+      "seconds": 1.116062,
+      "peak": 23198,
+      "peak_dbfs": -3.0,
+      "rms_dbfs": -22.65,
+      "dc_mean": 0.7497,
+      "clip_count": 0,
+      "processing": {
+        "raw_sample_count": 29200,
+        "trim_start": 1891,
+        "trim_end_exclusive": 17188,
+        "removed_dc": 148.00876,
+        "gain_db": -2.785313,
+        "active_rms_dbfs": -21.978
+      },
+      "decoded": {
+        "sample_count": 17857,
+        "seconds": 1.116062,
+        "peak": 22908,
+        "peak_dbfs": -3.109,
+        "rms_dbfs": -22.641,
+        "dc_mean": -0.7078,
+        "clip_count": 0
+      },
+      "lossy_error": {
+        "snr_db": 37.336,
+        "max_abs_error": 506
+      },
+      "mulaw_crc32": "18258E77",
+      "mulaw_sha256": "114244f3ff9b6b53e99adc35b1b3e97dfbe6f45dbdb500a9be6b88e473675542"
+    },
+    {
+      "id": 23,
+      "key": "media_error",
+      "kind": "speech",
+      "text": "素材读取失败。",
+      "trigger": "媒体故障新边沿且语音缓存已验证有效；持续故障不反复播",
+      "priority": 3,
+      "cooldown_ms": 15000,
+      "settle_ms": 0,
+      "max_age_ms": 5000,
+      "sample_count": 25757,
+      "seconds": 1.609813,
+      "peak": 23198,
+      "peak_dbfs": -3.0,
+      "rms_dbfs": -20.889,
+      "dc_mean": 0.952,
+      "clip_count": 0,
+      "processing": {
+        "raw_sample_count": 36960,
+        "trim_start": 1631,
+        "trim_end_exclusive": 24828,
+        "removed_dc": 132.505884,
+        "gain_db": 3.26714,
+        "active_rms_dbfs": -20.434
+      },
+      "decoded": {
+        "sample_count": 25757,
+        "seconds": 1.609813,
+        "peak": 22908,
+        "peak_dbfs": -3.109,
+        "rms_dbfs": -20.886,
+        "dc_mean": -1.1149,
+        "clip_count": 0
+      },
+      "lossy_error": {
+        "snr_db": 37.221,
+        "max_abs_error": 511
+      },
+      "mulaw_crc32": "D57761F8",
+      "mulaw_sha256": "9b9f606dba8c75f6cfba593e8da32dd569c1c0bd417239cc6e133d44615c7256"
+    },
+    {
+      "id": 24,
+      "key": "alight_safely",
+      "kind": "speech",
+      "text": "下车请注意安全。",
+      "trigger": "明确离车提醒或第八页安全提示窗新开；无车速或到站推断",
+      "priority": 4,
+      "cooldown_ms": 15000,
+      "settle_ms": 0,
+      "max_age_ms": 6000,
+      "sample_count": 31014,
+      "seconds": 1.938375,
+      "peak": 23198,
+      "peak_dbfs": -3.0,
+      "rms_dbfs": -23.071,
+      "dc_mean": 0.5426,
+      "clip_count": 0,
+      "processing": {
+        "raw_sample_count": 42160,
+        "trim_start": 1641,
+        "trim_end_exclusive": 30095,
+        "removed_dc": 140.701589,
+        "gain_db": -0.548,
+        "active_rms_dbfs": -22.697
+      },
+      "decoded": {
+        "sample_count": 31014,
+        "seconds": 1.938375,
+        "peak": 22908,
+        "peak_dbfs": -3.109,
+        "rms_dbfs": -23.061,
+        "dc_mean": -1.2682,
+        "clip_count": 0
+      },
+      "lossy_error": {
+        "snr_db": 37.158,
+        "max_abs_error": 507
+      },
+      "mulaw_crc32": "FF2AF2CB",
+      "mulaw_sha256": "4d4df5feae35da3b879a3a4f1d628e26dc081d3a2145942360d39520eafb73bf"
+    },
+    {
+      "id": 25,
+      "key": "travel_prompt",
+      "kind": "speech",
+      "text": "请坐稳扶好。",
+      "trigger": "一般乘车提示窗新开；离车提示使用24",
+      "priority": 3,
+      "cooldown_ms": 12000,
+      "settle_ms": 0,
+      "max_age_ms": 4000,
+      "sample_count": 22331,
+      "seconds": 1.395687,
+      "peak": 23198,
+      "peak_dbfs": -3.0,
+      "rms_dbfs": -22.529,
+      "dc_mean": 0.7747,
+      "clip_count": 0,
+      "processing": {
+        "raw_sample_count": 33360,
+        "trim_start": 1621,
+        "trim_end_exclusive": 21392,
+        "removed_dc": 105.612311,
+        "gain_db": 2.309197,
+        "active_rms_dbfs": -22.0
+      },
+      "decoded": {
+        "sample_count": 22331,
+        "seconds": 1.395687,
+        "peak": 22908,
+        "peak_dbfs": -3.109,
+        "rms_dbfs": -22.523,
+        "dc_mean": -1.1417,
+        "clip_count": 0
+      },
+      "lossy_error": {
+        "snr_db": 37.297,
+        "max_abs_error": 510
+      },
+      "mulaw_crc32": "B0EE1E55",
+      "mulaw_sha256": "fd89ee0849d9911256791a0c47e24a80ee83f91f7097570e21d3d4e0bc9cfbba"
+    },
+    {
+      "id": 31,
+      "key": "idle_bgm",
+      "kind": "bgm",
+      "text": "",
+      "title": "湖岸微风（原创合成循环）",
+      "trigger": "空闲BGM策略见scheduler_proposal",
+      "priority": 0,
+      "cooldown_ms": 0,
+      "settle_ms": 8000,
+      "max_age_ms": 0,
+      "duration_seconds": 32,
+      "loop": true,
+      "sample_count": 512000,
+      "seconds": 32.0,
+      "peak": 7644,
+      "peak_dbfs": -12.643,
+      "rms_dbfs": -27.0,
+      "dc_mean": -0.0002,
+      "clip_count": 0,
+      "processing": {
+        "title": "湖岸微风",
+        "composition": "本次原创算法编排，未引用曲谱、MIDI、采样或第三方曲调",
+        "bpm": 60,
+        "bars": 8,
+        "meter": "4/4",
+        "duration_seconds": 32,
+        "oscillator": "32bit DDS, 4096-entry sine table, fundamental + soft harmonics",
+        "chords_midi": [
+          [
+            48,
+            55,
+            59,
+            62,
+            64
+          ],
+          [
+            45,
+            52,
+            55,
+            59,
+            60
+          ],
+          [
+            41,
+            48,
+            52,
+            55,
+            57
+          ],
+          [
+            43,
+            50,
+            55,
+            57,
+            62
+          ],
+          [
+            40,
+            47,
+            50,
+            55,
+            59
+          ],
+          [
+            41,
+            48,
+            52,
+            57,
+            60
+          ],
+          [
+            38,
+            45,
+            48,
+            52,
+            57
+          ],
+          [
+            43,
+            50,
+            55,
+            57,
+            62
+          ]
+        ],
+        "melody_midi_and_bar_seconds": [
+          [
+            72,
+            0.4
+          ],
+          [
+            76,
+            2.0
+          ],
+          [
+            71,
+            0.6000000000000001
+          ],
+          [
+            67,
+            2.4000000000000004
+          ],
+          [
+            69,
+            0.4
+          ],
+          [
+            72,
+            2.2
+          ],
+          [
+            74,
+            0.8
+          ],
+          [
+            69,
+            2.4000000000000004
+          ],
+          [
+            71,
+            0.4
+          ],
+          [
+            67,
+            2.0
+          ],
+          [
+            72,
+            0.8
+          ],
+          [
+            76,
+            2.4000000000000004
+          ],
+          [
+            69,
+            0.6000000000000001
+          ],
+          [
+            65,
+            2.2
+          ],
+          [
+            67,
+            0.4
+          ],
+          [
+            74,
+            2.0
+          ]
+        ],
+        "loop": "Periodic event ring; overlapping chord tails and delay taps wrap across seam",
+        "gain_db": -7.912436
+      },
+      "decoded": {
+        "sample_count": 512000,
+        "seconds": 32.0,
+        "peak": 7676,
+        "peak_dbfs": -12.606,
+        "rms_dbfs": -26.987,
+        "dc_mean": -1.5193,
+        "clip_count": 0
+      },
+      "lossy_error": {
+        "snr_db": 36.882,
+        "max_abs_error": 131
+      },
+      "mulaw_crc32": "39B4341D",
+      "mulaw_sha256": "daafb31bc1c9a3555bfe2d588d8f60a33c3f1e6a88c995bf93c70df09dc9ac91"
+    }
+  ]
+}

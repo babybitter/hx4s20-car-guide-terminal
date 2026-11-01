@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "entries": [
+    {"source_id": 1, "title_id": 1, "dwell_ms": 2000, "transition": 5, "cue": 0, "prompt": false},
+    {"source_id": 2, "title_id": 2, "dwell_ms": 2000, "transition": 6, "cue": 1, "prompt": false},
+    {"source_id": 3, "title_id": 3, "dwell_ms": 2000, "transition": 7, "cue": 2, "prompt": false},
+    {"source_id": 8, "title_id": 8, "dwell_ms": 2000, "transition": 0, "cue": 3, "prompt": false}
+  ]
+}

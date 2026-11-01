@@ -1,0 +1,11 @@
+.venv/
+.cache/
+build/
+dist/
+release/
+config/
+__pycache__/
+*.pyc
+evidence/
+docs/
+legacy/tools/console/.test-tmp/

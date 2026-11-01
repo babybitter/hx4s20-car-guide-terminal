@@ -1,0 +1,536 @@
+{
+  "schema_version": 1,
+  "task_id": "CONTENT-01",
+  "generated_at_utc": "2026-10-30T17:48:49.428Z",
+  "workspace_root": "E:/BaiduNetdiskDownload/HX4S20_CarTerminal/project",
+  "status": "four_assets_generated_saved_and_bmp_verified",
+  "prompt_source": {
+    "path": "docs/车载导览终端_四页图片生成提示词.md",
+    "sha256_at_read": "9c8afccf3a42bcc8ac933f4c84877e51f2865058c81c6f2c381af1a9cf3b6c80",
+    "sections": [
+      "05",
+      "06",
+      "07",
+      "08"
+    ]
+  },
+  "generation": {
+    "provider": "built-in image_gen",
+    "metadata_discovered_before_first_call": true,
+    "api_fallback_used": false,
+    "returned_base64_and_windows_local_path": true,
+    "all_returned_paths_accessible": true,
+    "generated_count": 6,
+    "selected_final_count": 4
+  },
+  "conversion": {
+    "tool_path": "tools/bmp/convert_images_to_bmp.py",
+    "tool_sha256": "8dc1ec7eb91ecc2fabb74d18268660d629279794b210efa00e1f81434d93711d",
+    "official_source_manifest": "tools/bmp/source-manifest.csv",
+    "matches_official_record": true,
+    "output_directory": "tools/bmp/output_bmp/extended",
+    "method": "explicit per-file input/output arguments; RGB conversion and LANCZOS resizing only",
+    "final_format": {
+      "width": 640,
+      "height": 480,
+      "bits_per_pixel": 24,
+      "compression": 0,
+      "compression_name": "BI_RGB",
+      "pixel_offset": 54,
+      "file_size": 921654
+    }
+  },
+  "generation_calls": [
+    {
+      "call_key": "05",
+      "tool": "image_gen.imagegen",
+      "mode": "generate",
+      "started_at_utc": "2026-10-30T17:41:38.880Z",
+      "completed_at_utc": "2026-10-30T17:42:09.226Z",
+      "arguments": {
+        "prompt": "为虚构的“青岚湖接驳环线”车载导览终端设计第五张展示图，横向4:3，建议1280×960，最终缩小到640×480。主题是沿途建筑与人文导览。画面中部偏右是一座尺度亲切的现代木质游客驿站，浅色木材、深青绿色金属屋檐、简洁大窗；左侧是石板步道、小型景观庭院和一两位缓步参观的游客，远处以低饱和湖蓝树影和水面呼应原湖畔页。构图突出一座建筑和一条步道，不堆放多个地标；采用清晰的半写实旅行插画，形体简洁，光线柔和均匀，木色与暖白作为主体，深青绿与湖蓝构成背景，少量珊瑚橘用于导览图形。左上中部可以放大标题“沿途人文”，不编造历史年份、文保等级、真实建筑名称或经营信息。文字不可靠时完全留空，后期人工排版。按最终尺寸将主体和重要文字限制在x32至608、y52至368，顶部48像素、底部100像素只延续安静背景；四边留32像素以上。避免密集砖纹、细小窗格、人物特写、二维码、水印、真实商标、动态到站提示、播放器界面和黑暗高反差光影。不透明背景，色彩在缩小和24位BMP转换后仍清楚。",
+        "transparent_background": false
+      },
+      "exact_prompt_path": "tools/images/prompts/05.txt",
+      "returned": {
+        "keys": [
+          "image_url",
+          "output_hint"
+        ],
+        "image_url_format": "data:image/png;base64",
+        "output_hint": "Generated images are saved to C:\\Users\\Marve1ous\\.codex\\generated_images\\01a18de4-e9f8-7391-8106-8d9f93dc8707 as C:\\Users\\Marve1ous\\.codex\\generated_images\\01a18de4-e9f8-7391-8106-8d9f93dc8707\\exec-502ef2a1-310c-4477-b5a4-02b765345cf9.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      },
+      "generated_local_path": "C:/Users/Marve1ous/.codex/generated_images/01a18de4-e9f8-7391-8106-8d9f93dc8707/exec-502ef2a1-310c-4477-b5a4-02b765345cf9.png",
+      "saved_path": "tools/images/05_沿途人文.png",
+      "copy_sha256_matches_source": true
+    },
+    {
+      "call_key": "06",
+      "tool": "image_gen.imagegen",
+      "mode": "generate",
+      "started_at_utc": "2026-10-30T17:42:22.401Z",
+      "completed_at_utc": "2026-10-30T17:43:10.043Z",
+      "arguments": {
+        "prompt": "为同一套车载导览终端设计第六张图片，主题“雨天出行”，横向4:3、建议1280×960，供缩小到640×480后在显示器清晰阅读。画面是温和细雨中的接驳车站旁步道和浅色雨棚，背景以柔和湖蓝、浅灰绿和暖白为主，不压暗整幅图。中部安排两个宽松、清晰的提示卡片：左卡以收拢雨伞与接水袋的简明图标表示“收好雨伞”，右卡以穿鞋的脚和清楚的防滑步道轮廓表示“小心慢行”。图标用粗轮廓、大色块、高对比浅底深青绿，不只靠颜色区分含义。少量珊瑚橘突出提示圆角标签。雨丝只在背景轻微表现，不覆盖文字，不制造噪点。均匀阴天漫射光，氛围温和有序，无摔倒、碰撞或紧急事故。若中文准确，只生成标题“雨天出行”和两项短语；否则保留文字空白供人工补排。所有重要内容在最终x32至608、y52至368内，顶部48像素和底部100像素留简洁背景，四周32像素安全边距。禁止天气预报、实时温度、降雨百分比、自动监测标识、日期、到站倒计时、小字说明、细密雨点、二维码和水印。此图是常识提示，不表现终端具有实时天气数据；背景完全不透明。",
+        "transparent_background": false
+      },
+      "exact_prompt_path": "tools/images/prompts/06.txt",
+      "returned": {
+        "keys": [
+          "image_url",
+          "output_hint"
+        ],
+        "image_url_format": "data:image/png;base64",
+        "output_hint": "Generated images are saved to C:\\Users\\Marve1ous\\.codex\\generated_images\\01a18de4-e9f8-7391-8106-8d9f93dc8707 as C:\\Users\\Marve1ous\\.codex\\generated_images\\01a18de4-e9f8-7391-8106-8d9f93dc8707\\exec-bc2bc156-a963-45fc-8927-2ed24ce7e48d.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      },
+      "generated_local_path": "C:/Users/Marve1ous/.codex/generated_images/01a18de4-e9f8-7391-8106-8d9f93dc8707/exec-bc2bc156-a963-45fc-8927-2ed24ce7e48d.png",
+      "saved_path": "tools/images/06_雨天出行.png",
+      "copy_sha256_matches_source": true
+    },
+    {
+      "call_key": "07",
+      "tool": "image_gen.imagegen",
+      "mode": "generate",
+      "started_at_utc": "2026-10-30T17:43:30.166Z",
+      "completed_at_utc": "2026-10-30T17:44:02.398Z",
+      "arguments": {
+        "prompt": "为车载导览乘车提示终端设计第七张展示图，横向4:3、建议1280×960，缩小640×480后仍可读。主题“礼让同行”。中部画面呈现明亮整洁的接驳车车门与平整站台，一位使用轮椅的乘客从容通过宽敞通道，旁边两位乘客友好留出空间，人物与辅助器具比例自然，平等尊重，不表现怜悯、救助表演或危险跨越。构图用车门、站台和开放通道形成清楚方向；用一个较大的轮椅通行图标和一个让行图标辅助理解，不铺满标识。沿用深青绿、湖蓝、暖白和少量珊瑚橘，半写实简洁插画，柔和车内日光，人物服装简洁，背景窗外仅有浅色树影。若文字正确，在上中部以大字写“礼让同行”，可配短语“保持通道畅通”；否则不生成文字并留出排版空位。核心人物、图标、文字都位于最终x32至608、y52至368；顶部48像素、底部100像素留无重要内容的安静背景，边缘32像素留白。避免真实运营品牌、票价、医疗承诺、自动识别乘客身份提示、拥挤人群、小号长文、复杂机械细节、透明背景、二维码和水印。图标轮廓粗而清楚，颜色不过度饱和，适合24位BMP转换。",
+        "transparent_background": false
+      },
+      "exact_prompt_path": "tools/images/prompts/07.txt",
+      "returned": {
+        "keys": [
+          "image_url",
+          "output_hint"
+        ],
+        "image_url_format": "data:image/png;base64",
+        "output_hint": "Generated images are saved to C:\\Users\\Marve1ous\\.codex\\generated_images\\01a18de4-e9f8-7391-8106-8d9f93dc8707 as C:\\Users\\Marve1ous\\.codex\\generated_images\\01a18de4-e9f8-7391-8106-8d9f93dc8707\\exec-5ccf79e8-64bb-4c2e-bb9e-8287f11b3fa8.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      },
+      "generated_local_path": "C:/Users/Marve1ous/.codex/generated_images/01a18de4-e9f8-7391-8106-8d9f93dc8707/exec-5ccf79e8-64bb-4c2e-bb9e-8287f11b3fa8.png",
+      "saved_path": "tools/images/07_礼让同行.png",
+      "copy_sha256_matches_source": true
+    },
+    {
+      "call_key": "08",
+      "tool": "image_gen.imagegen",
+      "mode": "generate",
+      "started_at_utc": "2026-10-30T17:44:18.742Z",
+      "completed_at_utc": "2026-10-30T17:44:43.933Z",
+      "arguments": {
+        "prompt": "为“青岚湖接驳环线”车载导览终端设计第八张结束提示图，横向4:3、建议1280×960，目标640×480显示。画面主题“离车前请检查”。主体为干净明亮的车内座椅一角与窗外安静站台，前景用三个等大、轮廓明确的独立图形展示手机、小背包和水杯，间距宽松；一位乘客的自然手势表示查看随身物品，不出现遗失焦虑或事故情节。主构图简洁，物品占中部，窗外浅湖蓝景色呼应系列第一张线路图，形成舒缓的结束感。采用深青绿文字区域、暖白背景、浅木色座椅、少量珊瑚橘强调框，柔和上午日光，半写实旅行信息插画。若中文准确，只写“离车前请检查”和“随身物品别遗漏”；不写实时“已到终点”、具体到站时间或未经确认的失物联系电话。无法生成准确文字时留空供人工排字。最终x32至608、y52至368是重要信息安全区，顶部48像素、底部100像素保持安静背景，四周32像素安全边距。避免设备界面按钮、自动到站图标、真实车牌、品牌Logo、二维码、水印、细密纹理、小字号说明和透明边缘。图像缩小并转为24位BMP后，三个物品应仍一眼可认。",
+        "transparent_background": false
+      },
+      "exact_prompt_path": "tools/images/prompts/08.txt",
+      "returned": {
+        "keys": [
+          "image_url",
+          "output_hint"
+        ],
+        "image_url_format": "data:image/png;base64",
+        "output_hint": "Generated images are saved to C:\\Users\\Marve1ous\\.codex\\generated_images\\01a18de4-e9f8-7391-8106-8d9f93dc8707 as C:\\Users\\Marve1ous\\.codex\\generated_images\\01a18de4-e9f8-7391-8106-8d9f93dc8707\\exec-169a223f-1800-4260-9a14-445fff215494.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      },
+      "generated_local_path": "C:/Users/Marve1ous/.codex/generated_images/01a18de4-e9f8-7391-8106-8d9f93dc8707/exec-169a223f-1800-4260-9a14-445fff215494.png",
+      "saved_path": "tools/images/08_离车检查.png",
+      "copy_sha256_matches_source": true
+    },
+    {
+      "call_key": "07v2",
+      "tool": "image_gen.imagegen",
+      "mode": "edit",
+      "started_at_utc": "2026-10-30T17:45:17.738Z",
+      "completed_at_utc": "2026-10-30T17:46:07.696Z",
+      "arguments": {
+        "prompt": "编辑这张现有07礼让同行图，仅修正构图的安全区，不改主题、配色、插画风格、文字内容和两个图标含义。保持横向4:3且不透明。\n将三个完整人物、轮椅、两个图标和车门通道整体缩小并向画面中部收拢；以最终640×480坐标计，完整人物包括所有鞋底与轮椅车轮必须落在x=70..570、y=150..350之内，左右人物不能贴边或被裁断，三人从头到脚都完整可见。下部y=370..479必须全部只有平静低细节的浅色站台地面，不出现人物、轮椅、图标、文字、盲道或关键门槛。顶部y=0..48只有安静背景。保留大标题“礼让同行”和短语“保持通道畅通”，所有字形和图标清晰正确，文字区域在y=65..140。使用轮椅的乘客仍朝向敞开车门，平整无台阶通道；其余两位乘客在两旁从容留出空间，无救助表演。除此之外尽量保留原图。不添加任何额外文字、品牌或按钮。",
+        "transparent_background": false,
+        "referenced_image_paths": [
+          "E:/BaiduNetdiskDownload/HX4S20_CarTerminal/project/tools/images/07_礼让同行.png"
+        ]
+      },
+      "exact_prompt_path": "tools/images/prompts/07v2.txt",
+      "returned": {
+        "keys": [
+          "image_url",
+          "output_hint"
+        ],
+        "image_url_format": "data:image/png;base64",
+        "output_hint": "Generated images are saved to C:\\Users\\Marve1ous\\.codex\\generated_images\\01a18de4-e9f8-7391-8106-8d9f93dc8707 as C:\\Users\\Marve1ous\\.codex\\generated_images\\01a18de4-e9f8-7391-8106-8d9f93dc8707\\exec-1850b413-8b24-4be3-addb-3422935fa364.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      },
+      "generated_local_path": "C:/Users/Marve1ous/.codex/generated_images/01a18de4-e9f8-7391-8106-8d9f93dc8707/exec-1850b413-8b24-4be3-addb-3422935fa364.png",
+      "saved_path": "tools/images/07_礼让同行-v2.png",
+      "copy_sha256_matches_source": true
+    },
+    {
+      "call_key": "06v2",
+      "tool": "image_gen.imagegen",
+      "mode": "edit",
+      "started_at_utc": "2026-10-30T17:46:38.509Z",
+      "completed_at_utc": "2026-10-30T17:47:31.473Z",
+      "arguments": {
+        "prompt": "对这张06雨天出行图片做局部清理：只去掉画面左侧背景车站竖立站牌上的所有微小文字、伪字或细小刻度，保留站牌上的大号公交车图标，公交车图标以下整块站牌改为干净纯深青绿色。不要重画或改变其他内容。精确保留三处中文“雨天出行”“收好雨伞”“小心慢行”的正确字形、位置、大小，保留两张提示卡、图标、颜色、雨天站点环境、4:3比例与不透明背景。除这三处正文外全图不得有任何其他文字或类文字痕迹。",
+        "transparent_background": false,
+        "referenced_image_paths": [
+          "E:/BaiduNetdiskDownload/HX4S20_CarTerminal/project/tools/images/06_雨天出行.png"
+        ]
+      },
+      "exact_prompt_path": "tools/images/prompts/06v2.txt",
+      "returned": {
+        "keys": [
+          "image_url",
+          "output_hint"
+        ],
+        "image_url_format": "data:image/png;base64",
+        "output_hint": "Generated images are saved to C:\\Users\\Marve1ous\\.codex\\generated_images\\01a18de4-e9f8-7391-8106-8d9f93dc8707 as C:\\Users\\Marve1ous\\.codex\\generated_images\\01a18de4-e9f8-7391-8106-8d9f93dc8707\\exec-e0af94c5-2aa5-4d50-9a15-f02b4547f2b2.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      },
+      "generated_local_path": "C:/Users/Marve1ous/.codex/generated_images/01a18de4-e9f8-7391-8106-8d9f93dc8707/exec-e0af94c5-2aa5-4d50-9a15-f02b4547f2b2.png",
+      "saved_path": "tools/images/06_雨天出行-v2.png",
+      "copy_sha256_matches_source": true
+    }
+  ],
+  "assets": [
+    {
+      "logical_page_id": 5,
+      "page_label": "05",
+      "theme": "人文 / 沿途人文",
+      "selected_generation_call": "05",
+      "status": "generated_saved_converted_verified",
+      "png": {
+        "path": "tools/images/05_沿途人文.png",
+        "absolute_path": "E:/BaiduNetdiskDownload/HX4S20_CarTerminal/project/tools/images/05_沿途人文.png",
+        "bytes": 2863450,
+        "sha256": "2a2dd85991c77a459d2734efaf52bae8037984bb1c27fdc301bddddcb2bf3a1f",
+        "width": 1448,
+        "height": 1086,
+        "mode": "RGB",
+        "format": "PNG",
+        "opaque": true,
+        "aspect_ratio_4_3": true
+      },
+      "bmp": {
+        "path": "tools/bmp/output_bmp/extended/05_沿途人文.bmp",
+        "absolute_path": "E:/BaiduNetdiskDownload/HX4S20_CarTerminal/project/tools/bmp/output_bmp/extended/05_沿途人文.bmp",
+        "bytes": 921654,
+        "sha256": "f3bf9d7cd94807bdccf010f340e8a45f403195d8b0ea3fe92d7049f9f5016436",
+        "width": 640,
+        "height": 480,
+        "mode": "RGB",
+        "format": "BMP",
+        "opaque": true,
+        "aspect_ratio_4_3": true,
+        "signature": "BM",
+        "dib_size": 40,
+        "planes": 1,
+        "bits_per_pixel": 24,
+        "compression": 0,
+        "pixel_offset": 54,
+        "bottom_up": true,
+        "official_readonly_verification": "PASS",
+        "verifier": "tools/verify_assets.py"
+      },
+      "exact_text_checked": [
+        "沿途人文"
+      ],
+      "visual_review": {
+        "method": "manual inspection of actual 640x480 BMP via view_image",
+        "result": "legible; OSD integration pending",
+        "notes": "建筑、步道与游客清晰，标题逐字核对；建筑背景延伸到右边缘，上下预留区保留景物纹理，未做像素级低纹理判定。"
+      },
+      "conversion_command": "python -X utf8 tools/bmp/convert_images_to_bmp.py \"tools/images/05_沿途人文.png\" \"tools/bmp/output_bmp/extended/05_沿途人文.bmp\"",
+      "verification_command": "python -X utf8 tools/verify_assets.py \"tools/bmp/output_bmp/extended/05_沿途人文.bmp\""
+    },
+    {
+      "logical_page_id": 6,
+      "page_label": "06",
+      "theme": "雨天 / 雨天出行",
+      "selected_generation_call": "06v2",
+      "status": "generated_saved_converted_verified",
+      "png": {
+        "path": "tools/images/06_雨天出行-v2.png",
+        "absolute_path": "E:/BaiduNetdiskDownload/HX4S20_CarTerminal/project/tools/images/06_雨天出行-v2.png",
+        "bytes": 2038848,
+        "sha256": "de2dc4f5ed9a36291c4cdf53e2a0526ae77582ec60424fb6a5de4d0a96009a40",
+        "width": 1448,
+        "height": 1086,
+        "mode": "RGB",
+        "format": "PNG",
+        "opaque": true,
+        "aspect_ratio_4_3": true
+      },
+      "bmp": {
+        "path": "tools/bmp/output_bmp/extended/06_雨天出行-v2.bmp",
+        "absolute_path": "E:/BaiduNetdiskDownload/HX4S20_CarTerminal/project/tools/bmp/output_bmp/extended/06_雨天出行-v2.bmp",
+        "bytes": 921654,
+        "sha256": "d2e205f807ee577f797175d037be6682b2350674696f98639277d3b3095a3862",
+        "width": 640,
+        "height": 480,
+        "mode": "RGB",
+        "format": "BMP",
+        "opaque": true,
+        "aspect_ratio_4_3": true,
+        "signature": "BM",
+        "dib_size": 40,
+        "planes": 1,
+        "bits_per_pixel": 24,
+        "compression": 0,
+        "pixel_offset": 54,
+        "bottom_up": true,
+        "official_readonly_verification": "PASS",
+        "verifier": "tools/verify_assets.py"
+      },
+      "exact_text_checked": [
+        "雨天出行",
+        "收好雨伞",
+        "小心慢行"
+      ],
+      "visual_review": {
+        "method": "manual inspection of actual 640x480 BMP via view_image",
+        "result": "legible; OSD integration pending",
+        "notes": "v2清除背景站牌微小疑似伪字；两个提示图标和三处中文可辨。文字下缘接近y=368，卡片底边延伸到约y=390，实际OSD遮挡仍须复核。"
+      },
+      "conversion_command": "python -X utf8 tools/bmp/convert_images_to_bmp.py \"tools/images/06_雨天出行-v2.png\" \"tools/bmp/output_bmp/extended/06_雨天出行-v2.bmp\"",
+      "verification_command": "python -X utf8 tools/verify_assets.py \"tools/bmp/output_bmp/extended/06_雨天出行-v2.bmp\""
+    },
+    {
+      "logical_page_id": 7,
+      "page_label": "07",
+      "theme": "无障碍 / 礼让同行",
+      "selected_generation_call": "07v2",
+      "status": "generated_saved_converted_verified",
+      "png": {
+        "path": "tools/images/07_礼让同行-v2.png",
+        "absolute_path": "E:/BaiduNetdiskDownload/HX4S20_CarTerminal/project/tools/images/07_礼让同行-v2.png",
+        "bytes": 1898689,
+        "sha256": "82f9d17e0ed11cbb4680ab10f2537245c4490780e0798b9b414f184dde6169e7",
+        "width": 1448,
+        "height": 1086,
+        "mode": "RGB",
+        "format": "PNG",
+        "opaque": true,
+        "aspect_ratio_4_3": true
+      },
+      "bmp": {
+        "path": "tools/bmp/output_bmp/extended/07_礼让同行-v2.bmp",
+        "absolute_path": "E:/BaiduNetdiskDownload/HX4S20_CarTerminal/project/tools/bmp/output_bmp/extended/07_礼让同行-v2.bmp",
+        "bytes": 921654,
+        "sha256": "d0a9c0a65e635d863bfdebc019c8b556e21c2134e0e0dfaccb1f11b4970b2a23",
+        "width": 640,
+        "height": 480,
+        "mode": "RGB",
+        "format": "BMP",
+        "opaque": true,
+        "aspect_ratio_4_3": true,
+        "signature": "BM",
+        "dib_size": 40,
+        "planes": 1,
+        "bits_per_pixel": 24,
+        "compression": 0,
+        "pixel_offset": 54,
+        "bottom_up": true,
+        "official_readonly_verification": "PASS",
+        "verifier": "tools/verify_assets.py"
+      },
+      "exact_text_checked": [
+        "礼让同行",
+        "保持通道畅通"
+      ],
+      "visual_review": {
+        "method": "manual inspection of actual 640x480 BMP via view_image",
+        "result": "legible; OSD integration pending",
+        "notes": "v2缩小收拢人物与轮椅；640×480预览中鞋底约y=355，轮椅车轮约y=339；底部100像素为站台，无人物或必读文字。坐标为目视估计。"
+      },
+      "conversion_command": "python -X utf8 tools/bmp/convert_images_to_bmp.py \"tools/images/07_礼让同行-v2.png\" \"tools/bmp/output_bmp/extended/07_礼让同行-v2.bmp\"",
+      "verification_command": "python -X utf8 tools/verify_assets.py \"tools/bmp/output_bmp/extended/07_礼让同行-v2.bmp\""
+    },
+    {
+      "logical_page_id": 8,
+      "page_label": "08",
+      "theme": "离车 / 离车前请检查",
+      "selected_generation_call": "08",
+      "status": "generated_saved_converted_verified",
+      "png": {
+        "path": "tools/images/08_离车检查.png",
+        "absolute_path": "E:/BaiduNetdiskDownload/HX4S20_CarTerminal/project/tools/images/08_离车检查.png",
+        "bytes": 1810292,
+        "sha256": "4153c69b631acc1dfd1ea4768ddd8c8928a623dbdb1b6db12035476e5fe4904b",
+        "width": 1448,
+        "height": 1086,
+        "mode": "RGB",
+        "format": "PNG",
+        "opaque": true,
+        "aspect_ratio_4_3": true
+      },
+      "bmp": {
+        "path": "tools/bmp/output_bmp/extended/08_离车检查.bmp",
+        "absolute_path": "E:/BaiduNetdiskDownload/HX4S20_CarTerminal/project/tools/bmp/output_bmp/extended/08_离车检查.bmp",
+        "bytes": 921654,
+        "sha256": "04ba2ddda7cc25c0bfaa312fa1fbad3e031787b0d72525e8949b249bf0808bd3",
+        "width": 640,
+        "height": 480,
+        "mode": "RGB",
+        "format": "BMP",
+        "opaque": true,
+        "aspect_ratio_4_3": true,
+        "signature": "BM",
+        "dib_size": 40,
+        "planes": 1,
+        "bits_per_pixel": 24,
+        "compression": 0,
+        "pixel_offset": 54,
+        "bottom_up": true,
+        "official_readonly_verification": "PASS",
+        "verifier": "tools/verify_assets.py"
+      },
+      "exact_text_checked": [
+        "离车前请检查",
+        "随身物品别遗漏"
+      ],
+      "visual_review": {
+        "method": "manual inspection of actual 640x480 BMP via view_image",
+        "result": "legible; OSD integration pending",
+        "notes": "两行中文与手机、背包、水杯可辨；标题上缘接近y=52安全线，左侧辅助人物延伸到画面边缘和底部，主提示未放在底部；实际OSD遮挡仍须复核。"
+      },
+      "conversion_command": "python -X utf8 tools/bmp/convert_images_to_bmp.py \"tools/images/08_离车检查.png\" \"tools/bmp/output_bmp/extended/08_离车检查.bmp\"",
+      "verification_command": "python -X utf8 tools/verify_assets.py \"tools/bmp/output_bmp/extended/08_离车检查.bmp\""
+    }
+  ],
+  "superseded_variants": [
+    {
+      "page_label": "06",
+      "call_key": "06",
+      "png": {
+        "path": "tools/images/06_雨天出行.png",
+        "absolute_path": "E:/BaiduNetdiskDownload/HX4S20_CarTerminal/project/tools/images/06_雨天出行.png",
+        "bytes": 2057701,
+        "sha256": "b65d5431b20200d8d98d63f904e7949aaf20c18161bc8ced59bb721cd1bce1ff",
+        "width": 1448,
+        "height": 1086,
+        "mode": "RGB",
+        "format": "PNG",
+        "opaque": true,
+        "aspect_ratio_4_3": true
+      },
+      "bmp": {
+        "path": "tools/images/review-drafts/06_雨天出行-v1.bmp",
+        "absolute_path": "E:/BaiduNetdiskDownload/HX4S20_CarTerminal/project/tools/images/review-drafts/06_雨天出行-v1.bmp",
+        "bytes": 921654,
+        "sha256": "16b9bde0c537f8b0c1dfcdb22986bfc386b8e6adfa543ce212b12a8b3f6ca1c3",
+        "width": 640,
+        "height": 480,
+        "mode": "RGB",
+        "format": "BMP",
+        "opaque": true,
+        "aspect_ratio_4_3": true,
+        "signature": "BM",
+        "dib_size": 40,
+        "planes": 1,
+        "bits_per_pixel": 24,
+        "compression": 0,
+        "pixel_offset": 54,
+        "bottom_up": true
+      },
+      "reason": "背景站牌出现疑似伪字；v2已清理",
+      "selected": false
+    },
+    {
+      "page_label": "07",
+      "call_key": "07",
+      "png": {
+        "path": "tools/images/07_礼让同行.png",
+        "absolute_path": "E:/BaiduNetdiskDownload/HX4S20_CarTerminal/project/tools/images/07_礼让同行.png",
+        "bytes": 1925280,
+        "sha256": "97c6f249ff45c16647ec231252e437b02e4a855c531e30f5c3df3902b2394d8f",
+        "width": 1448,
+        "height": 1086,
+        "mode": "RGB",
+        "format": "PNG",
+        "opaque": true,
+        "aspect_ratio_4_3": true
+      },
+      "bmp": {
+        "path": "tools/images/review-drafts/07_礼让同行-v1.bmp",
+        "absolute_path": "E:/BaiduNetdiskDownload/HX4S20_CarTerminal/project/tools/images/review-drafts/07_礼让同行-v1.bmp",
+        "bytes": 921654,
+        "sha256": "9f93463f95cdc2e3ba956470355c180c47eacb2b7887b20d94cabb2e6dcfd10a",
+        "width": 640,
+        "height": 480,
+        "mode": "RGB",
+        "format": "BMP",
+        "opaque": true,
+        "aspect_ratio_4_3": true,
+        "signature": "BM",
+        "dib_size": 40,
+        "planes": 1,
+        "bits_per_pixel": 24,
+        "compression": 0,
+        "pixel_offset": 54,
+        "bottom_up": true
+      },
+      "reason": "人物与轮椅进入底部预留区；v2重新收拢构图",
+      "selected": false
+    }
+  ],
+  "preservation": {
+    "original_eight_files": [
+      {
+        "path": "tools/images/文明乘车指南.png",
+        "bytes": 1757249,
+        "sha256": "091c52c71359a706117765efe34f74339f9becb98dc15ee306f70d9a6069d5a1",
+        "unchanged": true
+      },
+      {
+        "path": "tools/images/林间展园：静谧花园之旅.png",
+        "bytes": 3307710,
+        "sha256": "36a81a087d5b7add149f7b0ba9df19df8c1350a952d8c4e639f67a73318d42e6",
+        "unchanged": true
+      },
+      {
+        "path": "tools/images/湖畔步道，静享山水.png",
+        "bytes": 2602996,
+        "sha256": "bd364450791148beac8fb23fca5923835369702058af39af405b70df81647685",
+        "unchanged": true
+      },
+      {
+        "path": "tools/images/青岚湖畔接驳风光.png",
+        "bytes": 2551557,
+        "sha256": "e5e0d011cf57677a7947562bcb3c9c82230368cab2f6556779fb497d0340c5b1",
+        "unchanged": true
+      },
+      {
+        "path": "tools/bmp/output_bmp/01_线路总览.bmp",
+        "bytes": 921654,
+        "sha256": "a85c6e9c745c7e1aa895119e5ce2ff681b1283ebe3e94144c6f6ee0af4423d1c",
+        "unchanged": true
+      },
+      {
+        "path": "tools/bmp/output_bmp/02_湖畔步道.bmp",
+        "bytes": 921654,
+        "sha256": "001225c8d6c667c906f46e49bc1e0afd8e00ad89a695ec864695518faa51a55b",
+        "unchanged": true
+      },
+      {
+        "path": "tools/bmp/output_bmp/03_林间展园.bmp",
+        "bytes": 921654,
+        "sha256": "d266315ff487705732ddf4e6a125b22e82b8bba2c5516c30a302e6f470e9fc96",
+        "unchanged": true
+      },
+      {
+        "path": "tools/bmp/output_bmp/04_文明乘车.bmp",
+        "bytes": 921654,
+        "sha256": "327306b84e8aba234a1b7f3e00e2415c8231e786dea329fa8a501041e0caacbc",
+        "unchanged": true
+      }
+    ],
+    "all_unchanged": true,
+    "no_preexisting_asset_overwritten": true
+  },
+  "limitations": [
+    "素材与BMP格式已在电脑验证，未进行TF/Flash写入、固件集成或上板显示测试。",
+    "安全区仅做640×480目视审查；未声称全部像素严格符合x32..608/y52..368，不代替OSD-04实际图层遮挡测试。",
+    "文件名与logical_page_id用于素材登记，不能保证当前物理扇区扫描固件的播放次序。"
+  ],
+  "actions_not_performed": {
+    "tf_or_flash_write": true,
+    "sync_to_sd_execution": true,
+    "tasks_or_top_or_al_edit": true
+  },
+  "evidence_path": "docs/test-results/content-extended.md"
+}

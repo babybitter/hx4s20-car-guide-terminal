@@ -1,0 +1,183 @@
+{
+    "engine":  "System.Speech",
+    "voice":  "Microsoft Huihui Desktop",
+    "culture":  "zh-CN",
+    "rate":  0,
+    "volume":  100,
+    "sample_rate":  16000,
+    "pcm_bits":  16,
+    "channels":  1,
+    "assembly":  "System.Speech, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35",
+    "powershell":  "5.1.19041.6456",
+    "os":  "Microsoft Windows NT 10.0.19045.0",
+    "installed_voices":  [
+                             {
+                                 "name":  "Microsoft Huihui Desktop",
+                                 "culture":  "zh-CN",
+                                 "enabled":  true
+                             },
+                             {
+                                 "name":  "Microsoft Zira Desktop",
+                                 "culture":  "en-US",
+                                 "enabled":  true
+                             }
+                         ],
+    "records":  [
+                    {
+                        "id":  0,
+                        "file":  "00_boot.wav",
+                        "text":  "欢迎乘车。",
+                        "sha256":  "799f1436d4a837f452b22958fdc297787948117c50a3ace735ed655988c7140f"
+                    },
+                    {
+                        "id":  1,
+                        "file":  "01_ready.wav",
+                        "text":  "导览已就绪。",
+                        "sha256":  "e21cd99fd58246088e27fa8b6e223aae41be6c5ddf647adbb51ddcc831d4e020"
+                    },
+                    {
+                        "id":  2,
+                        "file":  "02_page_0_route.wav",
+                        "text":  "线路总览，沿途风景。",
+                        "sha256":  "4ca42b4cb3aa849e3ce18dfa2c6386518721ddc0a77b655ea769629bf76bde59"
+                    },
+                    {
+                        "id":  3,
+                        "file":  "03_page_1_lakeside.wav",
+                        "text":  "湖畔步道，水岸漫行。",
+                        "sha256":  "5f8026100c768685f027bef85fffe19af0af2114da634ed65a1dd47e29164977"
+                    },
+                    {
+                        "id":  4,
+                        "file":  "04_page_2_garden.wav",
+                        "text":  "林间展园，亲近自然。",
+                        "sha256":  "376e10df7d8eb3b5f38067eb9976d961cb104a5ee28ff1cb5c0d636f541ba7a7"
+                    },
+                    {
+                        "id":  5,
+                        "file":  "05_page_3_civil.wav",
+                        "text":  "文明乘车，请坐稳扶好。",
+                        "sha256":  "2377ca0502213736be072096acee729e079fff50b25edb0d498ff19fb00043f2"
+                    },
+                    {
+                        "id":  6,
+                        "file":  "06_page_4_culture.wav",
+                        "text":  "沿途人文，听听故事。",
+                        "sha256":  "a58e5d41aa71e85b8e132dd76f41e151ef752e383cf9f888d1f4976620023c52"
+                    },
+                    {
+                        "id":  7,
+                        "file":  "07_page_5_rain.wav",
+                        "text":  "雨天出行，小心慢行。",
+                        "sha256":  "e7aeb0f1c9c6b6db8dbf298534ae9f244b846bd1d04566eaca669eda7d356753"
+                    },
+                    {
+                        "id":  8,
+                        "file":  "08_page_6_courtesy.wav",
+                        "text":  "礼让同行，关爱他人。",
+                        "sha256":  "7b79031852616fe609fc211822c76b7dcabb41e7660e3ba88fb17201979924f9"
+                    },
+                    {
+                        "id":  9,
+                        "file":  "09_page_7_departure.wav",
+                        "text":  "离车检查，带好物品。",
+                        "sha256":  "14cc828674cf51fb092e67cbf61bf9fc3acad5a68c628dacaf11faa6b4bd948e"
+                    },
+                    {
+                        "id":  10,
+                        "file":  "10_manual.wav",
+                        "text":  "已切换手动播放。",
+                        "sha256":  "2813741ed1ee5d32e0d4d3753430bc22767eaf461405967d083806756eeab61e"
+                    },
+                    {
+                        "id":  11,
+                        "file":  "11_automatic.wav",
+                        "text":  "自动播放已开启。",
+                        "sha256":  "95e2626c62241858164c83600098d821873ee4fc3bf3383e08e258f196b861bf"
+                    },
+                    {
+                        "id":  12,
+                        "file":  "12_story_start.wav",
+                        "text":  "故事开始。",
+                        "sha256":  "0ccbeef78b912353e3b288365b3e16e80b67508f72510590223e0c6c5f676b43"
+                    },
+                    {
+                        "id":  13,
+                        "file":  "13_story_pause.wav",
+                        "text":  "故事已暂停。",
+                        "sha256":  "8b1d8faf8deb1b6f2b8cf1307ee4d630edb1eec85e101e31331f8af44f672d15"
+                    },
+                    {
+                        "id":  14,
+                        "file":  "14_story_resume.wav",
+                        "text":  "继续播放故事。",
+                        "sha256":  "c8bfc39a720f62257a67e60308b8e21a6dd08df9cb86eedced04358d4696bdd5"
+                    },
+                    {
+                        "id":  15,
+                        "file":  "15_story_stop.wav",
+                        "text":  "故事已停止。",
+                        "sha256":  "796fd03e000c86151ed4c3ecc2f71aa21bd00ac34cf219aff524da0634edf7d1"
+                    },
+                    {
+                        "id":  16,
+                        "file":  "16_normal_mode.wav",
+                        "text":  "已切换普通模式。",
+                        "sha256":  "24ac59bc86ebda9d4ee6f9cd22a999e1ad46cef12a87e71717e9525b8c75d97c"
+                    },
+                    {
+                        "id":  17,
+                        "file":  "17_effect_mode.wav",
+                        "text":  "已切换效果模式。",
+                        "sha256":  "5482c83fea90349cdb68f418c57c75e673055768be31a3308dfaba41ed251588"
+                    },
+                    {
+                        "id":  18,
+                        "file":  "18_filter_changed.wav",
+                        "text":  "滤镜已切换。",
+                        "sha256":  "5b2b2c1728b9c7ab555ffad521b494ed711337a3aaf958848615be40fe2c492c"
+                    },
+                    {
+                        "id":  19,
+                        "file":  "19_transition_changed.wav",
+                        "text":  "转场效果已切换。",
+                        "sha256":  "14b7183d0cf51c3b488267bbbe7bbc5bfd79d068f89d03a65c452cace4e4a7e2"
+                    },
+                    {
+                        "id":  20,
+                        "file":  "20_zoom_in.wav",
+                        "text":  "画面已放大。",
+                        "sha256":  "60711d0e91b8f8a8da3919609e91d5ee7440b041a6a45f4cdc7e8279d90de85c"
+                    },
+                    {
+                        "id":  21,
+                        "file":  "21_zoom_restore.wav",
+                        "text":  "画面已还原。",
+                        "sha256":  "080c901820d45c254c83668961743a22321c7ebe0a771ba3e1ac7725247aa099"
+                    },
+                    {
+                        "id":  22,
+                        "file":  "22_operation_ok.wav",
+                        "text":  "操作成功。",
+                        "sha256":  "d3b1b15c3d0cff04ed1f2ee598cdafa5f0c2b3a0798416e3cfce737509ee718a"
+                    },
+                    {
+                        "id":  23,
+                        "file":  "23_media_error.wav",
+                        "text":  "素材读取失败。",
+                        "sha256":  "23a632da5391c79236ce273b05ef614cdbfe52430ffc3117f32657f343a58fc7"
+                    },
+                    {
+                        "id":  24,
+                        "file":  "24_alight_safely.wav",
+                        "text":  "下车请注意安全。",
+                        "sha256":  "f231865555f0236496717988a13373ed4b4416eb2c140fe283a52609e8ccf0a2"
+                    },
+                    {
+                        "id":  25,
+                        "file":  "25_travel_prompt.wav",
+                        "text":  "请坐稳扶好。",
+                        "sha256":  "411a9542d4bacc8bdaac693ad2b91faeab05191ecf5afe01c9cd0251452489f3"
+                    }
+                ]
+}

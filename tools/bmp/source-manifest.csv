@@ -1,0 +1,2 @@
+source_path,source_sha256,workspace_copy,workspace_sha256,match,notes
+reference/lab_ex5_i2s/doc/convert/convert_images_to_bmp.py,8DC1EC7EB91ECC2FABB74D18268660D629279794B210EFA00E1F81434D93711D,tools/bmp/convert_images_to_bmp.py,8DC1EC7EB91ECC2FABB74D18268660D629279794B210EFA00E1F81434D93711D,YES,Byte-identical SHA256; copied official script is unmodified

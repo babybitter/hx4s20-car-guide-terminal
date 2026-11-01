@@ -1,0 +1,14 @@
+{
+  "stage": "s47_sdram_timing_strategy",
+  "source_commit": "fcdd2cc40baf21489005cb9e35abadfa0c9eaaec",
+  "fpga_inputs": "s47-inputs.json",
+  "al_origin": "sealed portable AL from Git",
+  "gui_al_preserved": true,
+  "rtl_modified_for_packaging": false,
+  "renamed_project": "car_guide_terminal",
+  "metadata_changes": "AL filename and internal project name, compile.tcl project variable and messages only",
+  "docs_excluded_by_user": true,
+  "historical_manifest_note": "s47-inputs.json is ancestral seal, source-manifest.json identifies this repository baseline",
+  "baseline": "User-tested car_guide_terminal before compact UI update",
+  "portable_al": "Current GUI compile order and settings retained; absolute project Path changed to dot and XML ampersands escaped"
+}

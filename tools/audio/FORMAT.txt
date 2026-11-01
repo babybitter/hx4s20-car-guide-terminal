@@ -1,0 +1,92 @@
+S19 AUDIO.BIN / ROM 候选接口约定（flat-mulaw-v1）
+
+本目录是语音素材与生成工具；S19播放链路正在集成验证，板测状态见docs。
+以本文件及package_manifest.json为准：最初讨论的S19A头部/32项文件索引
+方案已取消；BGM固定ID31、32秒，不使用旧ID30或40秒版本。
+
+1. 固定ID
+0启动，1就绪，2..9依次对应现有页面0..7；10手动，11自动；
+12故事开始，13暂停，14继续，15停止；16普通模式，17效果模式；
+18滤镜切换，19转场切换，20放大，21还原，22操作成功，23媒体错误；
+24下车安全，25普通乘车提示；26..30保留；31空闲BGM。
+完整文字、触发、优先级、冷却及稳定等待见manifest.json。
+
+2. 纯数据布局
+AUDIO.BIN没有头部、指令、文件内索引、WAV封装或字符串。
+固定16000 samples/s、mono、unsigned 8bit G.711 μ-law，每字节一采样。
+片段按ID升序连续放置。byte_offset相对于AUDIO.BIN第0字节；无SDRAM绝对地址。
+每段byte_offset为512倍数；storage_bytes=ceil(sample_count/512)*512。
+尾部以0xFF（解码为0）填满，不包含在sample_count中。
+下一段从byte_offset+storage_bytes开始；文件总长512对齐，严格小于2097152。
+起始offset=0是有效地址，必须以sample_count=0或active_mask判断空ID。
+保留ID的offset/count均为0，不占文件空间。
+BGM sample_count=512000=32*16000=1000*512，不需要片段尾填充。
+循环使用[0,511999]的采样下标，下一采样回到0，不能把整个包循环。
+
+3. 元数据与CRC
+package_manifest.json是电脑侧索引和审计结果，板端不解析它。
+audio_asset_rom.v以128x16bit单端同步只读数组实现逻辑64x32bit索引，全部显式初始化，无外部readmemh依赖。
+addr={ID[4:0],2'd0/1}：依次返回offset_byte低16位/高16位。
+addr={ID[4:0],2'd2/3}：依次返回sample_count低16位/高16位。
+地址在时钟边沿前稳定，q在该边沿后更新；上层同边沿寄存消费会看到前一拍q。
+上层依序读取四个半字、等待每次同步读生效后组装；新接口addr为7bit、q为16bit。
+ROM无复位、单读口、2048bit；block属性只是推断提示。
+目标一个BRAM9K，实际映射/时序须由对应工程TD报告验证，不能由本目录仿真保证。
+package_bytes/package_crc32/active_mask为32bit常量输出，不额外占ROM读地址。
+audio_asset_rom.hex是同64项的诊断文本，每行8位十六进制；它不是板端包的一部分。
+
+整包校验包含全部填充字节。算法CRC-32/ISO-HDLC：
+poly=0x04C11DB7，反射更新poly=0xEDB88320；初值0xFFFFFFFF；
+输入/输出反射，最终xor=0xFFFFFFFF；输入按文件顺序逐字节。
+等价Python zlib.crc32(full_file)&0xFFFFFFFF；"123456789"应为0xCBF43926。
+不要把zlib的初始参数0误作硬件内部CRC寄存器初值0。
+板端必须将精确文件长度和最终CRC同时与已编译常量比较；通过后才允许播放。
+CRC不包含ROM或manifest，也不是认证签名。外部字节只进入音频数据通路。
+包/ROM/manifest必须作为一组更新，不能替换其中一个。
+
+4. 解码与地址
+code为无符号8bit；u=code XOR 0xFF。
+t=(((u & 15)<<3)+132) << ((u>>4)&7)。
+signed_pcm16 = (u&0x80) ? (132-t) : (t-132)。
+中间t请用至少17bit无符号计算，最后有符号减法并截为16bit；输出范围±32124。
+0xFF/0x7F均为零，0x80为+32124，0x00为-32124，0xFE为+8，0x7E为-8。
+无需256项解码ROM；mulaw_decode_16.hex仅是软件测试/RTL对照向量。
+本项目固定32bit SDRAM word：filebyte0->[7:0]、filebyte1->[15:8]、
+filebyte2->[23:16]、filebyte3->[31:24]；随后四字节进入下一个word。
+片段起点512byte对齐，故offset_word=offset_byte>>2，byte_sel=sample_index[1:0]。
+word_addr=audio_base_word+offset_word+(sample_index>>2)。
+byte_sel为0/1/2/3时分别选择word[7:0]/[15:8]/[23:16]/[31:24]。
+audio_base_word为32bit字地址，不能把offset_byte直接当字地址。
+对现有48kHz/24bit HDMI：可每个16k采样保持3个有效48k tick，mono复制到左右；
+signed16提升到signed24后左移8位，音量/淡入淡出在有符号域内处理。
+这只是最低资源重采样建议，最终听感和HDMI链路仍须上板确认。
+
+5. 素材规划时的调度建议（未全部采用，不是当前RTL功能声明）
+当前实现是四类有界待播槽、普通配置1.5秒起播冷却、约8ms淡变、空闲3秒音乐。
+最新页面允许替换和打断旧页面；没有实现下面全部逐ID过期、700ms等待与500ms淡入建议。
+实际操作和验收以docs/board-tests/s19_voice_audio.md为准，建议本身不能记为已完成。
+语音优先：P4下车，P3提示/错误，P2模式/故事，P1页介绍/低频确认，P0 BGM。
+冷却按ID最近实际起播时间计算；只保留一个最新有效待播事件，有过期时间。
+按键/旋钮高频变化等待稳定后合并；亮度、对比度、音量等不逐步播报。
+依据实际状态提交，不能以ACK或GUI输入值确认成功。
+页面介绍稳定700ms后再播；快速切页使旧介绍失效时10ms淡出丢弃，不追播。
+剩余驻留不足“实际时长+700ms”则抑制介绍，避免2秒轮播积压3秒语音。
+禁止同级语音互相抢断，只有P3/P4允许淡出后抢占更低级语音。
+BGM：空闲开始；语音到来20ms淡出；淡出期间样本仍推进，完成后保存下一采样位置；
+暂停期间不推进，空闲恢复从该位置500ms淡入。循环接缝不做整段淡出/静音。
+BGM播放不需要与语音混音，可用同一解码器和数据通路。
+音频首次加载失败时不能依赖坏包播23；退回原有提示/界面状态。
+具体冷却、过期、一次操作去重以及安全提醒触发条件详见manifest.json。
+
+6. 复现与边界
+build.ps1使用本机System.Speech，明确选择Microsoft Huihui Desktop，rate=0，volume=100。
+仅离线合成，无网络TTS、串口、TF、Flash操作；Python生成部分仅用标准库。
+TTS原始PCM及provenance保留；指定相同Windows语音引擎版本时可复现。
+不同Windows语音版本可能改变字节/长度，必须重建整组文件并重新验证CRC。
+处理：定位有效语音边界、保留15ms保护、去直流、8ms边缘淡变，前60ms/后100ms静音；
+目标有效段RMS -20dBFS，受-3dBFS峰值上限和+12dB最大增益约束，不硬削波。
+该归一策略不保证每条达到相同RMS，峰值限制优先。统计见package_manifest.json。
+BGM为本次原创8小节60BPM DDS和弦/稀疏音符，软包络及周期尾音回卷；
+整段RMS -27dBFS、峰值上限-12dBFS。无歌词、无外部采样、无第三方曲调。
+原始/处理后PCM、μ-law及包提取解码WAV均保留供试听。
+客观检查不能替代人耳听感、板端循环、单BRAM映射或整机验收。

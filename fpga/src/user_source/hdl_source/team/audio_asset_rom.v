@@ -1,0 +1,152 @@
+// Generated from AUDIO.BIN; data only, no event logic. Do not edit.
+// Logical 64 x 32 = 2048 bits, stored as 128 x 16 with ONE read port.
+// addr={clip_id[4:0],field[1:0]}: offset lo/hi, sample count lo/hi.
+// q updates after the rising edge; caller must account for registered latency.
+// Narrow storage avoids two underfilled wide RAMs on the EG4 mapper.
+module audio_asset_rom (
+    input wire clk,
+    input wire [6:0] addr,
+    output reg [15:0] q,
+    output wire [31:0] package_bytes,
+    output wire [31:0] package_crc32,
+    output wire [31:0] active_mask
+);
+    localparam [31:0] AUDIO_BYTES = 32'd1267200;
+    localparam [31:0] AUDIO_CRC32 = 32'h3D3C83B2;
+    localparam [31:0] AUDIO_ACTIVE_MASK = 32'h83FFFFFF;
+    assign package_bytes = AUDIO_BYTES;
+    assign package_crc32 = AUDIO_CRC32;
+    assign active_mask = AUDIO_ACTIVE_MASK;
+    (* ram_style = "block" *) reg [15:0] rom [0:127];
+    initial begin
+        rom[  0] = 16'h0000; // low half
+        rom[  1] = 16'h0000; // ID 00 byte offset
+        rom[  2] = 16'h47F2; // low half
+        rom[  3] = 16'h0000; // ID 00 count
+        rom[  4] = 16'h4800; // low half
+        rom[  5] = 16'h0000; // ID 01 byte offset
+        rom[  6] = 16'h4F6E; // low half
+        rom[  7] = 16'h0000; // ID 01 count
+        rom[  8] = 16'h9800; // low half
+        rom[  9] = 16'h0000; // ID 02 byte offset
+        rom[ 10] = 16'hA119; // low half
+        rom[ 11] = 16'h0000; // ID 02 count
+        rom[ 12] = 16'h3A00; // low half
+        rom[ 13] = 16'h0001; // ID 03 byte offset
+        rom[ 14] = 16'h988A; // low half
+        rom[ 15] = 16'h0000; // ID 03 count
+        rom[ 16] = 16'hD400; // low half
+        rom[ 17] = 16'h0001; // ID 04 byte offset
+        rom[ 18] = 16'h9BE2; // low half
+        rom[ 19] = 16'h0000; // ID 04 count
+        rom[ 20] = 16'h7000; // low half
+        rom[ 21] = 16'h0002; // ID 05 byte offset
+        rom[ 22] = 16'hAAAD; // low half
+        rom[ 23] = 16'h0000; // ID 05 count
+        rom[ 24] = 16'h1C00; // low half
+        rom[ 25] = 16'h0003; // ID 06 byte offset
+        rom[ 26] = 16'h9021; // low half
+        rom[ 27] = 16'h0000; // ID 06 count
+        rom[ 28] = 16'hAE00; // low half
+        rom[ 29] = 16'h0003; // ID 07 byte offset
+        rom[ 30] = 16'hA788; // low half
+        rom[ 31] = 16'h0000; // ID 07 count
+        rom[ 32] = 16'h5600; // low half
+        rom[ 33] = 16'h0004; // ID 08 byte offset
+        rom[ 34] = 16'h99CF; // low half
+        rom[ 35] = 16'h0000; // ID 08 count
+        rom[ 36] = 16'hF000; // low half
+        rom[ 37] = 16'h0004; // ID 09 byte offset
+        rom[ 38] = 16'h956A; // low half
+        rom[ 39] = 16'h0000; // ID 09 count
+        rom[ 40] = 16'h8600; // low half
+        rom[ 41] = 16'h0005; // ID 10 byte offset
+        rom[ 42] = 16'h6BEE; // low half
+        rom[ 43] = 16'h0000; // ID 10 count
+        rom[ 44] = 16'hF200; // low half
+        rom[ 45] = 16'h0005; // ID 11 byte offset
+        rom[ 46] = 16'h6F3D; // low half
+        rom[ 47] = 16'h0000; // ID 11 count
+        rom[ 48] = 16'h6200; // low half
+        rom[ 49] = 16'h0006; // ID 12 byte offset
+        rom[ 50] = 16'h41F0; // low half
+        rom[ 51] = 16'h0000; // ID 12 count
+        rom[ 52] = 16'hA400; // low half
+        rom[ 53] = 16'h0006; // ID 13 byte offset
+        rom[ 54] = 16'h5786; // low half
+        rom[ 55] = 16'h0000; // ID 13 count
+        rom[ 56] = 16'hFC00; // low half
+        rom[ 57] = 16'h0006; // ID 14 byte offset
+        rom[ 58] = 16'h5B73; // low half
+        rom[ 59] = 16'h0000; // ID 14 count
+        rom[ 60] = 16'h5800; // low half
+        rom[ 61] = 16'h0007; // ID 15 byte offset
+        rom[ 62] = 16'h53CF; // low half
+        rom[ 63] = 16'h0000; // ID 15 count
+        rom[ 64] = 16'hAC00; // low half
+        rom[ 65] = 16'h0007; // ID 16 byte offset
+        rom[ 66] = 16'h6CF5; // low half
+        rom[ 67] = 16'h0000; // ID 16 count
+        rom[ 68] = 16'h1A00; // low half
+        rom[ 69] = 16'h0008; // ID 17 byte offset
+        rom[ 70] = 16'h6D21; // low half
+        rom[ 71] = 16'h0000; // ID 17 count
+        rom[ 72] = 16'h8800; // low half
+        rom[ 73] = 16'h0008; // ID 18 byte offset
+        rom[ 74] = 16'h528B; // low half
+        rom[ 75] = 16'h0000; // ID 18 count
+        rom[ 76] = 16'hDC00; // low half
+        rom[ 77] = 16'h0008; // ID 19 byte offset
+        rom[ 78] = 16'h72A9; // low half
+        rom[ 79] = 16'h0000; // ID 19 count
+        rom[ 80] = 16'h5000; // low half
+        rom[ 81] = 16'h0009; // ID 20 byte offset
+        rom[ 82] = 16'h571C; // low half
+        rom[ 83] = 16'h0000; // ID 20 count
+        rom[ 84] = 16'hA800; // low half
+        rom[ 85] = 16'h0009; // ID 21 byte offset
+        rom[ 86] = 16'h5EA7; // low half
+        rom[ 87] = 16'h0000; // ID 21 count
+        rom[ 88] = 16'h0800; // low half
+        rom[ 89] = 16'h000A; // ID 22 byte offset
+        rom[ 90] = 16'h45C1; // low half
+        rom[ 91] = 16'h0000; // ID 22 count
+        rom[ 92] = 16'h4E00; // low half
+        rom[ 93] = 16'h000A; // ID 23 byte offset
+        rom[ 94] = 16'h649D; // low half
+        rom[ 95] = 16'h0000; // ID 23 count
+        rom[ 96] = 16'hB400; // low half
+        rom[ 97] = 16'h000A; // ID 24 byte offset
+        rom[ 98] = 16'h7926; // low half
+        rom[ 99] = 16'h0000; // ID 24 count
+        rom[100] = 16'h2E00; // low half
+        rom[101] = 16'h000B; // ID 25 byte offset
+        rom[102] = 16'h573B; // low half
+        rom[103] = 16'h0000; // ID 25 count
+        rom[104] = 16'h0000; // low half
+        rom[105] = 16'h0000; // ID 26 byte offset
+        rom[106] = 16'h0000; // low half
+        rom[107] = 16'h0000; // ID 26 count
+        rom[108] = 16'h0000; // low half
+        rom[109] = 16'h0000; // ID 27 byte offset
+        rom[110] = 16'h0000; // low half
+        rom[111] = 16'h0000; // ID 27 count
+        rom[112] = 16'h0000; // low half
+        rom[113] = 16'h0000; // ID 28 byte offset
+        rom[114] = 16'h0000; // low half
+        rom[115] = 16'h0000; // ID 28 count
+        rom[116] = 16'h0000; // low half
+        rom[117] = 16'h0000; // ID 29 byte offset
+        rom[118] = 16'h0000; // low half
+        rom[119] = 16'h0000; // ID 29 count
+        rom[120] = 16'h0000; // low half
+        rom[121] = 16'h0000; // ID 30 byte offset
+        rom[122] = 16'h0000; // low half
+        rom[123] = 16'h0000; // ID 30 count
+        rom[124] = 16'h8600; // low half
+        rom[125] = 16'h000B; // ID 31 byte offset
+        rom[126] = 16'hD000; // low half
+        rom[127] = 16'h0007; // ID 31 count
+    end
+    always @(posedge clk) q <= rom[addr];
+endmodule

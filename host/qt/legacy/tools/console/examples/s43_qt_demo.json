@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "entries": [
+    {"source_id": 1, "title_id": 1, "dwell_ms": 3000, "transition": 5, "cue": 4, "prompt": false},
+    {"source_id": 2, "title_id": 2, "dwell_ms": 3000, "transition": 6, "cue": 4, "prompt": false},
+    {"source_id": 3, "title_id": 3, "dwell_ms": 3000, "transition": 7, "cue": 4, "prompt": false},
+    {"source_id": 4, "title_id": 4, "dwell_ms": 3000, "transition": 1, "cue": 4, "prompt": false},
+    {"source_id": 5, "title_id": 5, "dwell_ms": 3000, "transition": 2, "cue": 4, "prompt": false},
+    {"source_id": 6, "title_id": 6, "dwell_ms": 3000, "transition": 3, "cue": 4, "prompt": false},
+    {"source_id": 7, "title_id": 7, "dwell_ms": 3000, "transition": 4, "cue": 4, "prompt": false},
+    {"source_id": 8, "title_id": 8, "dwell_ms": 3000, "transition": 5, "cue": 4, "prompt": false}
+  ]
+}
