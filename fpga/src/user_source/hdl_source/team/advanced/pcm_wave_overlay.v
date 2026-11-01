@@ -23,13 +23,14 @@ module pcm_wave_overlay #(parameter ADAPTIVE_LAYOUT=0,LOCAL_ENABLES=0,DYNAMIC_CO
   {3'b111,frame_left_color[23:19],3'b111,frame_left_color[15:11],3'b111,frame_left_color[7:3]} : 24'hE8EEF4;
  wire [23:0] right_color=DYNAMIC_COLOR ?
   {3'b100,frame_right_color[23:19],3'b111,frame_right_color[15:11],3'b111,frame_right_color[7:3]} : 24'h9DECF5;
- // Two 128x12 snapshots fit in the unused depth of the SAME one 9K BRAM.
+ // Two 152x12 snapshots use the unused depth of the SAME one 9K BRAM.
+ // Each bank has a 256-word stride; only addresses 0..151 are populated.
  // Only the back bank is written; a complete capture waits for frame start.
  // No RAM reset loop, extra port, copy pass or read/write forwarding mux.
- (* ram_style = "block" *) reg [11:0] samples [0:255];
+ (* ram_style = "block" *) reg [11:0] samples [0:511];
  reg display_bank,display_valid,capture_ready;
- reg [6:0] wr;
- // 48 kHz / 6 = 8 kHz scope history (16 ms, 128 samples).
+ reg [7:0] wr;
+ // 48 kHz / 5 = 9.6 kHz scope history (15.83 ms, 152 samples).
  reg [2:0] sample_div;
  reg [9:0] x;
  reg [8:0] y; // Active raster has 480 rows; ten bits are unnecessary.
@@ -41,40 +42,71 @@ module pcm_wave_overlay #(parameter ADAPTIVE_LAYOUT=0,LOCAL_ENABLES=0,DYNAMIC_CO
  wire [9:0] panel_right=10'd624;
  wire in_x=px>=panel_left && px<panel_right;
  wire box=in_x && py>=9'd343 && py<9'd399;
- // index=floor(4*column/19): repeating 5+5+5+4 pixels, all 128 points.
- reg [6:0] index;
- reg [4:0] phase;
- wire advance=phase==5'd4 || phase==5'd9 || phase==5'd14 || phase==5'd18;
- wire [9:0] next_px=I_de ? px+10'd1 : 10'd0;
- wire next_in_x=next_px>=panel_left && next_px<panel_right;
- wire [6:0] next_index=in_x ? index+{6'd0,advance} : 7'd0;
+ // 608 columns = 152 four-pixel segments. No divider or variable step.
+ reg [7:0] index;
+ reg [1:0] phase;
+ wire advance=phase==2'd3;
+ // Prefetch the two endpoints before x16, then fetch once per segment.
+ // Clamp the last endpoint: never join sample151 to sample0.
+ wire [7:0] endpoint_index=index>=8'd150 ? 8'd151 : index+8'd2;
+ wire [7:0] read_index=px==10'd14 ? 8'd0 : (px==10'd15 ? 8'd1 : endpoint_index);
  wire capture_enable=!LOCAL_ENABLES || (snapshot ? enable : shown_enable);
- wire read_enable=!LOCAL_ENABLES || (shown_enable && I_de && next_in_x && py>=9'd343 && py<9'd399);
- wire write_sample=audio_valid && sample_div==3'd5 && capture_enable && !capture_ready;
- wire [11:0] sample_input={scaled(audio_left),scaled(audio_right)};
+ wire read_enable=I_de && py>=9'd343 && py<9'd399 &&
+   (!LOCAL_ENABLES || shown_enable) && (px==10'd14 || px==10'd15 || (in_x && advance));
+ wire write_sample=audio_valid && sample_div==3'd4 && capture_enable && !capture_ready;
+ wire [11:0] raw_sample={scaled(audio_left),scaled(audio_right)};
+ reg [11:0] history1,history2;
+ reg history_valid;
+ // Display-only causal [1,2,1]/4 FIR; replicate the first endpoint.
+ // Arithmetic rounding keeps negative samples symmetric to within 1px.
+ function [5:0] smooth;
+  input signed [5:0] a,b,c;
+  reg signed [7:0] total;
+  begin
+   total={{2{a[5]}},a}+{{1{b[5]}},b,1'b0}+{{2{c[5]}},c}+8'sd2;
+   smooth=total>>>2;
+  end
+ endfunction
+ wire [11:0] sample_input=history_valid ?
+   {smooth(history2[11:6],history1[11:6],raw_sample[11:6]),
+    smooth(history2[5:0],history1[5:0],raw_sample[5:0])} : raw_sample;
  reg [11:0] sample_read;
  always @(posedge clk) begin
-  // One active-pixel lookahead warms the RAM at panel_left-1.
-  if(read_enable) sample_read<=samples[{display_bank,next_index}];
+  if(read_enable) sample_read<=samples[{display_bank,read_index}];
   if(!rst && write_sample) samples[{!display_bank,wr}]<=sample_input;
  end
- wire [11:0] current_sample=sample_read;
+ reg [11:0] segment_start;
  wire sample_valid=display_valid;
- // Previous PIXEL register joins adjacent samples at sample boundaries.
- // Invalid/line boundaries cannot draw phantom segments from unfilled RAM.
- reg [11:0] previous_sample;
+ // Exact quarter-step interpolation: ((4-t)*a+t*b+2)>>2.
+ // Rows are 4..52; pair_sum<=104 and weighted<=210 cannot overflow.
+ wire [5:0] start_row [0:1];
+ wire [5:0] end_row [0:1];
+ wire [5:0] interpolated_row [0:1];
+ assign start_row[0]=6'd28-segment_start[11:6];
+ assign start_row[1]=6'd28-segment_start[5:0];
+ assign end_row[0]=6'd28-sample_read[11:6];
+ assign end_row[1]=6'd28-sample_read[5:0];
+ genvar channel;
+ generate for(channel=0;channel<2;channel=channel+1) begin : g_line
+  wire [6:0] pair_sum={1'b0,start_row[channel]}+{1'b0,end_row[channel]};
+  wire [5:0] heavier=phase[1] ? end_row[channel] : start_row[channel];
+  wire [7:0] weighted={1'b0,pair_sum}+{1'b0,heavier,1'b0}+8'd2;
+  wire [6:0] midpoint=pair_sum+7'd1;
+  assign interpolated_row[channel]=phase==0 ? start_row[channel] :
+    phase==2 ? midpoint[6:1] : weighted[7:2];
+ end endgenerate
+ wire [5:0] left_row=interpolated_row[0];
+ wire [5:0] right_row=interpolated_row[1];
+ reg [5:0] previous_left_row,previous_right_row;
  reg previous_valid;
  wire [5:0] relative_y=py[5:0]-6'd23;
- wire signed [6:0] left_row=7'sd28-$signed({current_sample[11],current_sample[11:6]});
- wire signed [6:0] right_row=7'sd28-$signed({current_sample[5],current_sample[5:0]});
- wire signed [6:0] previous_left_row=7'sd28-$signed({previous_sample[11],previous_sample[11:6]});
- wire signed [6:0] previous_right_row=7'sd28-$signed({previous_sample[5],previous_sample[5:0]});
- wire [6:0] left_low=previous_valid && previous_left_row<left_row ? previous_left_row : left_row;
- wire [6:0] left_high=previous_valid && previous_left_row>left_row ? previous_left_row : left_row;
- wire [6:0] right_low=previous_valid && previous_right_row<right_row ? previous_right_row : right_row;
- wire [6:0] right_high=previous_valid && previous_right_row>right_row ? previous_right_row : right_row;
- wire left_hit=sample_valid && {1'b0,relative_y}>=left_low && {1'b0,relative_y}<=left_high;
- wire right_hit=sample_valid && {1'b0,relative_y}>=right_low && {1'b0,relative_y}<=right_high;
+ // Test membership between the two rows without selecting min/max buses.
+ wire left_hit=sample_valid && ((relative_y==left_row) || (previous_valid &&
+   ((relative_y>=previous_left_row && relative_y<=left_row) ||
+    (relative_y<=previous_left_row && relative_y>=left_row))));
+ wire right_hit=sample_valid && ((relative_y==right_row) || (previous_valid &&
+   ((relative_y>=previous_right_row && relative_y<=right_row) ||
+    (relative_y<=previous_right_row && relative_y>=right_row))));
  function [7:0] mix_channel;
   input [7:0] base,tint;
   input [2:0] level;
@@ -115,7 +147,8 @@ module pcm_wave_overlay #(parameter ADAPTIVE_LAYOUT=0,LOCAL_ENABLES=0,DYNAMIC_CO
   if(rst) begin
    wr<=0;sample_div<=0;display_bank<=0;display_valid<=0;capture_ready<=0;
    x<=0;y<=0;de_d<=0;vs_d<=0;frame_arm<=1;
-   shown_enable<=0;frame_opacity<=1;index<=0;phase<=0;previous_sample<=0;previous_valid<=0;
+   shown_enable<=0;frame_opacity<=1;index<=0;phase<=0;previous_valid<=0;
+   history_valid<=0;
    frame_left_color<=24'hE8EEF4;frame_right_color<=24'h9DECF5;
    O_rgb<=0;O_hs<=0;O_vs<=0;O_de<=0;O_wave_hit<=0;
   end else begin
@@ -134,20 +167,21 @@ module pcm_wave_overlay #(parameter ADAPTIVE_LAYOUT=0,LOCAL_ENABLES=0,DYNAMIC_CO
    end
    if(!I_de || !in_x) begin index<=0;phase<=0;end
    else begin
-    if(advance) index<=index+7'd1;
-    if(phase==5'd18) phase<=0;
-    else phase<=phase+5'd1;
+    if(advance) index<=index+8'd1;
+    if(advance) phase<=0;
+    else phase<=phase+2'd1;
    end
    previous_valid<=I_de && box && sample_valid;
-   if(I_de && box) previous_sample<=current_sample;
+   if(!capture_enable || (snapshot && capture_ready)) history_valid<=0;
+   else if(write_sample) history_valid<=1;
    if(!capture_enable) begin wr<=0;capture_ready<=0;display_valid<=0;sample_div<=0;end
    else if(snapshot && capture_ready) begin
     display_bank<=!display_bank;display_valid<=1;capture_ready<=0;wr<=0;sample_div<=0;
    end else if(audio_valid && !capture_ready) begin
-    if(sample_div==3'd5) begin
+    if(sample_div==3'd4) begin
      sample_div<=0;
-     if(wr==7'd127) capture_ready<=1;
-     else wr<=wr+7'd1;
+     if(wr==8'd151) capture_ready<=1;
+     else wr<=wr+8'd1;
     end else sample_div<=sample_div+3'd1;
    end
    if(shown_enable && I_de && box) begin
@@ -157,6 +191,16 @@ module pcm_wave_overlay #(parameter ADAPTIVE_LAYOUT=0,LOCAL_ENABLES=0,DYNAMIC_CO
     else if(left_hit) O_rgb<=left_color;
     else if(right_hit) O_rgb<=right_color;
    end
+  end
+ end
+ // Private sample/line history is overwritten before its validity flag can
+ // expose it. Avoid reset multiplexers on data that need no reset value.
+ always @(posedge clk) if(!rst) begin
+  if(I_de && (px==15 || (box && advance))) segment_start<=sample_read;
+  if(I_de && box) begin previous_left_row<=left_row;previous_right_row<=right_row;end
+  if(write_sample) begin
+   history1<=raw_sample;
+   history2<=history_valid ? history1 : raw_sample;
   end
  end
 endmodule

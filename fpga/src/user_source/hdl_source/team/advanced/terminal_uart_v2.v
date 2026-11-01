@@ -289,6 +289,10 @@ reg [bounded_timeout_width(IDLE_LIMIT,1)-1:0] idle_ticks;
             decimal3 = {hundreds, tens, ones};
         end
     endfunction
+    // STATUS page/count are consumed on distinct read_remaining cycles.
+    wire [8:0] q_decimal_input = (read_remaining==2) ?
+        ({2'b0,payload_read_byte[6:0]}+9'd1) : {1'b0,payload_read_byte};
+    wire [23:0] q_decimal_digits = decimal3(q_decimal_input);
     function [7:0] hexchar;
         input [3:0] n;
         begin hexchar = n < 10 ? 48+n : 55+n; end
@@ -553,8 +557,8 @@ reg [bounded_timeout_width(IDLE_LIMIT,1)-1:0] idle_ticks;
             if(read_pending) begin
                 active_payload<=payload_read_byte;
                 if(active_kind==STATUS) case(read_remaining)
-                    2: q_page<=decimal3({2'b0,payload_read_byte[6:0]}+9'd1);
-                    1: q_count<=decimal3({1'b0,payload_read_byte});
+                    2: q_page<=q_decimal_digits;
+                    1: q_count<=q_decimal_digits;
                     default: begin end
                 endcase
             end

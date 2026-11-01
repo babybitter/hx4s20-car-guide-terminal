@@ -152,23 +152,55 @@ module pcm_spectrum_overlay #(parameter GUARDED_HEIGHTS=0) (
     wire in_body=py>=9'd343 && py<9'd399 && py>=bar_top && height!=0;
     // Music-Spectrum README reference: HSL S=.85, L=.6, 128 hue steps.
     // Fixed endpoints 66/240 give L=.6, S=.853 (8-bit quantization).
-    // Six continuous ramps cover the FULL rainbow. A narrow shift/add ramp
-    // replaces a 128x24 color ROM, divider or general multiplier.
+    // Six continuous ramps cover the FULL rainbow. A five-input truth table
+    // plus an exact +87 offset replaces the wider ramp arithmetic.
     function [23:0] rainbow;
         input [6:0] hue;
         reg [9:0] wheel;
         reg [5:0] fraction;
-        reg [7:0] triple,ramp;
-        reg [9:0] correction;
+        reg [7:0] ramp;
         reg [7:0] rise,fall;
         begin
             wheel={1'b0,hue,2'b0}+{2'b0,hue,1'b0};
             fraction=wheel[6:1];
-            // Exact round(87*f/32) = 3*f - floor((9*f+15)/32).
-            // f<=63: triple<=189; correction<=582.
-            triple={1'b0,fraction,1'b0}+{2'b0,fraction};
-            correction={1'b0,fraction,3'b0}+{4'b0,fraction}+10'd15;
-            ramp=triple-{3'b0,correction[9:5]};
+            // R(f)=floor((87*f+16)/32). For f=u+32*b, R(f)=R(u)+87*b.
+            // The 32-entry combinational table is exact, with no new RAM.
+            case(fraction[4:0])
+                5'd0: ramp=8'd0;
+                5'd1: ramp=8'd3;
+                5'd2: ramp=8'd5;
+                5'd3: ramp=8'd8;
+                5'd4: ramp=8'd11;
+                5'd5: ramp=8'd14;
+                5'd6: ramp=8'd16;
+                5'd7: ramp=8'd19;
+                5'd8: ramp=8'd22;
+                5'd9: ramp=8'd24;
+                5'd10: ramp=8'd27;
+                5'd11: ramp=8'd30;
+                5'd12: ramp=8'd33;
+                5'd13: ramp=8'd35;
+                5'd14: ramp=8'd38;
+                5'd15: ramp=8'd41;
+                5'd16: ramp=8'd44;
+                5'd17: ramp=8'd46;
+                5'd18: ramp=8'd49;
+                5'd19: ramp=8'd52;
+                5'd20: ramp=8'd54;
+                5'd21: ramp=8'd57;
+                5'd22: ramp=8'd60;
+                5'd23: ramp=8'd63;
+                5'd24: ramp=8'd65;
+                5'd25: ramp=8'd68;
+                5'd26: ramp=8'd71;
+                5'd27: ramp=8'd73;
+                5'd28: ramp=8'd76;
+                5'd29: ramp=8'd79;
+                5'd30: ramp=8'd82;
+                5'd31: ramp=8'd84;
+                default: ramp=8'bx;
+            endcase
+            ramp=ramp+(fraction[5] ? 8'd87 : 8'd0);
             rise=8'd66+ramp;fall=8'd240-ramp;
             case(wheel[9:7])
                 3'd0:rainbow={8'd240,rise,8'd66};

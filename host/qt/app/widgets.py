@@ -1,10 +1,88 @@
 """Small, dependency-light presentation widgets for the Qt workbench."""
 from PySide6.QtCore import QEvent, QEasingCurve, Property, QPropertyAnimation, QRectF, QSize, Qt
-from PySide6.QtGui import QColor, QFont, QImage, QPainter, QPainterPath, QPen, QPixmap
+from PySide6.QtGui import QColor, QFont, QImage, QPainter, QPen, QPixmap
 from PySide6.QtWidgets import (
-    QApplication, QFrame, QGraphicsOpacityEffect, QLabel, QPushButton, QSizePolicy,
-    QStackedWidget, QVBoxLayout,
+    QApplication, QComboBox, QFrame, QGraphicsOpacityEffect,
+    QLabel, QPushButton, QSizePolicy, QSpinBox, QStackedWidget, QVBoxLayout,
 )
+
+
+class ClickWheelComboBox(QComboBox):
+    """A combo whose wheel changes only follow an explicit click.
+
+    Qt's default combo wheel behavior can change the current item while the
+    pointer merely passes over a control. StrongFocus preserves Tab and
+    keyboard operation; the click latch keeps a Tab focused combo protected
+    until the user deliberately clicks it. Ignoring a locked wheel lets the
+    surrounding scroll area consume it. The popup view is a separate widget,
+    so its own wheel navigation remains unchanged.
+    """
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self._wheel_unlocked = False
+        self.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.MouseButton.LeftButton:
+            self._wheel_unlocked = True
+        super().mousePressEvent(event)
+
+    def focusOutEvent(self, event):
+        # Our popup can also take focus with OtherFocusReason. Keep the click
+        # active within that interaction, but relock for unrelated popups.
+        if not self.view().isVisible():
+            self._wheel_unlocked = False
+        super().focusOutEvent(event)
+
+    def changeEvent(self, event):
+        if event.type() == QEvent.Type.EnabledChange and not self.isEnabled():
+            self._wheel_unlocked = False
+        super().changeEvent(event)
+
+    def wheelEvent(self, event):
+        if not self._wheel_unlocked or not self.hasFocus():
+            event.ignore()
+            return
+        super().wheelEvent(event)
+
+
+class ClickWheelSpinBox(QSpinBox):
+    """Spin box counterpart to :class:`ClickWheelComboBox`."""
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self._wheel_unlocked = False
+        self.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
+        self.lineEdit().installEventFilter(self)
+
+    def eventFilter(self, watched, event):
+        # The editor consumes its clicks before mousePressEvent sees them.
+        if (watched is self.lineEdit()
+                and event.type() == QEvent.Type.MouseButtonPress
+                and event.button() == Qt.MouseButton.LeftButton):
+            self._wheel_unlocked = True
+        return super().eventFilter(watched, event)
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.MouseButton.LeftButton:
+            self._wheel_unlocked = True
+        super().mousePressEvent(event)
+
+    def focusOutEvent(self, event):
+        self._wheel_unlocked = False
+        super().focusOutEvent(event)
+
+    def changeEvent(self, event):
+        if event.type() == QEvent.Type.EnabledChange and not self.isEnabled():
+            self._wheel_unlocked = False
+        super().changeEvent(event)
+
+    def wheelEvent(self, event):
+        if not self._wheel_unlocked or not self.hasFocus():
+            event.ignore()
+            return
+        super().wheelEvent(event)
 
 
 class AnimatedStack(QStackedWidget):

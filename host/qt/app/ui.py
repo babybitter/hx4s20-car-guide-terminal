@@ -5,20 +5,20 @@ import json
 import time
 
 from PySide6.QtCore import Qt, QObject, Signal, QThread, QTimer, QRunnable, QThreadPool
-from PySide6.QtGui import QFont
 from PySide6.QtWidgets import (QMainWindow, QWidget, QFrame, QLabel, QPushButton,
-    QVBoxLayout, QHBoxLayout, QGridLayout, QFormLayout, QComboBox, QSpinBox,
+    QVBoxLayout, QHBoxLayout, QGridLayout, QComboBox,
     QPlainTextEdit, QLineEdit, QListWidget, QSplitter, QScrollArea, QCheckBox,
     QProgressBar, QFileDialog, QTableWidget, QTableWidgetItem, QHeaderView, QTabWidget, QApplication)
 
-from protocol import Session, FEATURE_AUDIO, FEATURE_ZOOM_OUT, metric_text
+from protocol import Session, FEATURE_ZOOM_OUT, metric_text
 from sequence import validate_sequence, MAX_JSON_BYTES
 from local_preview import LocalPreview, PREVIEW_NOTICE
 from subtitle_bitmap import render_text, preview_image, default_font
 from .audio_labels import MODES, ZOOM_MODES, CLIP_TEXT, LOAD_ERRORS, FEATURE_NAMES
 from .backend import BackendWorker
 from .presets import PRESETS
-from .widgets import AnimatedStack, PresetCard, MetricCard, ImagePreview
+from .widgets import (AnimatedStack, PresetCard, MetricCard, ImagePreview,
+    ClickWheelComboBox, ClickWheelSpinBox)
 from .appearance import AppearanceController
 
 TRANSITIONS = ['直接切换', '黑场淡变', '横擦', '竖擦', '棋盘遮罩', '双图混合', '向左滑动', '向上滑动']
@@ -277,8 +277,9 @@ class MainWindow(QMainWindow):
             row.addWidget(self.action(title,cmd))
         box.addLayout(row)
         row = QHBoxLayout()
-        self.page_spin = QSpinBox()
+        self.page_spin = ClickWheelSpinBox()
         self.page_spin.setRange(1,128)
+        self.page_spin.setToolTip('点击后滚轮调节，失焦锁定。')
         row.addWidget(label('指定页面', 'muted'))
         row.addWidget(self.page_spin)
         self.select_page_button = button('切换到此页', lambda: self.dispatch({'action':'command','command':f'I{self.page_spin.value():03d}'}))
@@ -483,9 +484,10 @@ class MainWindow(QMainWindow):
         layout.addWidget(label('参数检查器','subtitle'))
         layout.addWidget(label('手动请求  /  板端实际值','muted'))
         layout.addWidget(label('下拉框为请求值；下方数值来自回读。','muted',True))
+        layout.addWidget(label('点击后滚轮调节，失焦锁定。','muted',True))
         for code,(title,values) in PARAMETERS.items():
             layout.addWidget(label(f'{title}  ·  {code}','subtitle'))
-            combo = QComboBox()
+            combo = ClickWheelComboBox()
             combo.addItems(values)
             if code == 'Y': combo.setCurrentIndex(1)
             combo.activated.connect(lambda i,c=code:self.dispatch({'action':'command','command':f'{c}{i}'}))

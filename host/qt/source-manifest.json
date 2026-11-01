@@ -55,15 +55,15 @@
       "path": "app/ui.py",
       "source": "HX4S20_QtConsole/app/ui.py",
       "source_sha256": "932490462201484d8d9c8aec9ecd66340f2d5131f6f2201505f1e4a036c42d25",
-      "sha256": "2f42ff34e267eab840b40c7ae700ae28392df4c80cee92e5e11d6336b4588063",
+      "sha256": "dce42c06ad9e91fa1eb933798fac6ec774a535ff11ad40ccfa5adbe316cc71a7",
       "modified_from_source": true
     },
     {
       "path": "app/widgets.py",
       "source": "HX4S20_QtConsole/app/widgets.py",
       "source_sha256": "6cb94c2a2df4d6ed79abe92c7abf86c791b80578c87b3abe8cee2fc3099f440a",
-      "sha256": "6cb94c2a2df4d6ed79abe92c7abf86c791b80578c87b3abe8cee2fc3099f440a",
-      "modified_from_source": false
+      "sha256": "3bbbd220953a90439ceb13ca4b1e192f6bb14a4a786c739630a9ea5d134ec00f",
+      "modified_from_source": true
     },
     {
       "path": "assets/app.ico",

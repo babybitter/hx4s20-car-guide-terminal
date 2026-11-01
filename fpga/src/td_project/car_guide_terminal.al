@@ -727,6 +727,7 @@
             </File>
             <File Path="../user_source/hdl_source/team/audio_visual/audio_color_theme.v">
                 <FileInfo>
+                    <Attr Name="AutoExcluded" Val="true"/>
                     <Attr Name="UsedInSyn" Val="true"/>
                     <Attr Name="UsedInP&amp;R" Val="true"/>
                     <Attr Name="BelongTo" Val="design_1"/>
