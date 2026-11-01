@@ -138,12 +138,13 @@ wire        sample_tick;
 wire signed [23:0] tone_left,tone_right,stream_pcm;
 wire use_stream_pcm,music_active,fallback_allowed;
 wire [20:0] audio_position_samples;
-wire [39:0] spectrum_heights;
+wire [159:0] spectrum_heights;
 wire [2:0] spectrum_dominant;
 wire spectrum_silence,spectrum_valid,spectrum_overflow,spectrum_overrun;
 wire spectrum_invalid=spectrum_overflow || spectrum_overrun;
 wire [23:0] left_wave_color,right_wave_color,spectrum_rgb;
 wire spectrum_hs,spectrum_vs,spectrum_de;
+wire effect_wave_hit;
 wire [79:0] audio_status;
 wire audio_loaded_sd,audio_write_mode,audio_writer_abort;
 wire [3:0] audio_load_fault;
@@ -503,10 +504,10 @@ terminal_video_chain #(.ADAPTIVE_LAYOUT(1),.LOCAL_ENABLES(1),.DYNAMIC_COLOR(1)) 
     .subtitle(subtitle),.subtitle_length(bitmap_active?6'd0:subtitle_length),.audio_valid(audio_valid),
     .audio_left(audio_left_data),.audio_right(audio_right_data),
     .O_rgb(effect_rgb),.O_hs(effect_hs),.O_vs(effect_vs),.O_de(effect_de),.half_layout(half_layout_frame),.zoom_setting(zoom_setting),
-    .left_wave_color(left_wave_color),.right_wave_color(right_wave_color)
+    .left_wave_color(left_wave_color),.right_wave_color(right_wave_color),.O_wave_hit(effect_wave_hit)
 );
 
-// Sparse frequency responses of ACTUAL post-volume PCM. Saturation/overrun
+// 32 frequency responses of ACTUAL post-volume PCM. Saturation/overrun
 // suppresses the analysis display only; it cannot stop HDMI/audio or video.
 audio_band_analyzer u_spectrum(.clk(video_clk),.rst(rst_video),.sample_tick(audio_valid),
  .pcm_postvolume(audio_left_data),.band_heights(spectrum_heights),.dominant_band(spectrum_dominant),
@@ -518,7 +519,7 @@ audio_color_theme u_audio_color(.clk(video_clk),.rst(rst_video),.audio_valid(aud
 pcm_spectrum_overlay u_spectrum_overlay(.clk(video_clk),.rst(rst_video),
  .enable(effects_enabled || waveform_enabled || music_active),.half_layout(half_layout_frame),
  .band_heights(spectrum_heights),.silence(spectrum_silence || spectrum_invalid),.opacity(opacity_level),
- .I_rgb(effect_rgb),.I_hs(effect_hs),.I_vs(effect_vs),.I_de(effect_de),
+ .I_rgb(effect_rgb),.I_hs(effect_hs),.I_vs(effect_vs),.I_de(effect_de),.I_wave_hit(effect_wave_hit),
  .O_rgb(spectrum_rgb),.O_hs(spectrum_hs),.O_vs(spectrum_vs),.O_de(spectrum_de));
 
 // Two synchronized video registers; bitmap publication only in vertical blank.

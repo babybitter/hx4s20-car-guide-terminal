@@ -9,5 +9,8 @@
   "device": "EG4S20BG256",
   "origin": "User GUI build of car_guide_terminal before requested UI changes",
   "board_feedback": "User explicitly reports this project tested with no problems on 2026-11-01",
-  "feedback_limits": "Exact stress duration not specified"
+  "feedback_limits": "Exact stress duration not specified",
+  "repository_baseline_commit": "a1bd4d9483cc09614f3218cb1332af7740057c92",
+  "corresponds_to_current_ui_sources": false,
+  "usage": "Historical baseline firmware; compile fpga/src/td_project/car_guide_terminal.al for the current UI"
 }

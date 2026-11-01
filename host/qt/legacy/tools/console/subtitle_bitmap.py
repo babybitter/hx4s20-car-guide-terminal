@@ -14,6 +14,11 @@ import unicodedata
 from protocol import line_command, parse_status
 
 CELL = 16
+DISPLAY_CELL = 21
+VIEW_WIDTH = 608
+SCROLL_GAP = 32
+FOREGROUND = (0xE5, 0xE7, 0xEB)
+UNDERLINE = (0x36, 0xD5, 0xE3)
 CELLS = 40
 PAYLOAD_BYTES = 1280
 CHUNK_BYTES = 16
@@ -25,16 +30,13 @@ ERRORS = {1: 'busy', 2: 'no begin', 3: 'chunk order', 4: 'CRC',
 def normalize_text(text):
     if not isinstance(text, str):
         raise ValueError('字幕必须是文本')
-    text = text.replace('\r\n', '\n').replace('\t', ' ')
+    text = text.replace('\r\n', ' ').replace('\r', ' ').replace('\n', ' ').replace('\t', ' ')
     for ch in text:
-        if ch != '\n' and (unicodedata.category(ch).startswith('C') or
-                           unicodedata.category(ch) in ('Zl', 'Zp')):
+        if (unicodedata.category(ch).startswith('C') or
+                unicodedata.category(ch) in ('Zl', 'Zp')):
             raise ValueError(f'拒绝未定义控制/格式字符 U+{ord(ch):04X}')
-    lines = text.split('\n')
-    if len(lines) > 2:
-        raise ValueError('字幕最多两行')
-    if sum(map(len, lines)) > CELLS:
-        raise ValueError('字幕最多40个字符（空格计数，换行不计数）')
+    if len(text) > CELLS:
+        raise ValueError('单行字幕最多40个字符（空格及换行转换的空格均计数）')
     return text
 
 
@@ -50,9 +52,9 @@ class Bitmap:
 
     def __post_init__(self):
         if (len(self.lengths) != 2 or any(type(n) is not int or not 0 <= n <= 40 for n in self.lengths)
-                or sum(self.lengths) > 40 or not isinstance(self.data, bytes)
+                or self.lengths[1] != 0 or not isinstance(self.data, bytes)
                 or len(self.data) != PAYLOAD_BYTES):
-            raise ValueError('位图必须为40格/1280字节，最多两行共40字符')
+            raise ValueError('位图必须为40格/1280字节，单行最多40字符，len1必须为0')
         if any(self.data[sum(self.lengths) * 32:]):
             raise ValueError('未使用的字格必须全零')
 
@@ -79,9 +81,7 @@ def font_coverage(path, index):
 def render_text(text, font_path=None, font_index=0):
     from PIL import Image, ImageDraw, ImageFont
     text = normalize_text(text)
-    lines = text.split('\n')
-    if len(lines) == 1:
-        lines.append('')
+    lines = (text, '')
     font_path = str(Path(font_path or default_font()).resolve())
     coverage = font_coverage(font_path, font_index)
     missing = sorted({ch for ch in ''.join(lines) if ord(ch) not in coverage})
@@ -109,17 +109,37 @@ def render_text(text, font_path=None, font_index=0):
     return Bitmap(text, tuple(map(len, lines)), bytes(data))
 
 
-def preview_image(bitmap):
+def preview_image(bitmap, scroll_pixels=None, background=(32, 40, 52)):
+    """640x36 subtitle band (screen y404..439), matching RTL pixel for pixel.
+
+    The wire bitmap remains 16x16; floor(p*16/21) expands each display cell.
+    Default is a static frame with the first cell at x16. Explicit scroll
+    starts offscreen right at 0 and wraps only after the complete text exits.
+    """
     from PIL import Image
-    image = Image.new('1', (640, 32))
-    slot = 0
-    for line, count in enumerate(bitmap.lengths):
-        for cell in range(count):
-            for y in range(16):
-                word = int.from_bytes(bitmap.data[slot*32+y*2:slot*32+y*2+2], 'big')
-                for x in range(16):
-                    image.putpixel((cell*16+x, line*16+y), (word >> (15-x)) & 1)
-            slot += 1
+    image = Image.new('RGB', (640, 36), background)
+    width = bitmap.lengths[0] * DISPLAY_CELL
+    scroll = (VIEW_WIDTH if scroll_pixels is None else scroll_pixels) % (VIEW_WIDTH + width + SCROLL_GAP)
+    words = [int.from_bytes(bitmap.data[i:i+2], 'big') for i in range(0, PAYLOAD_BYTES, 2)]
+
+    def ink(sx, sy):
+        if not 0 <= sx < width or not 0 <= sy < DISPLAY_CELL:
+            return False
+        cell, col = divmod(sx, DISPLAY_CELL)
+        row, bit = sy * CELL // DISPLAY_CELL, col * CELL // DISPLAY_CELL
+        return bool(words[cell*CELL+row] & (1 << (15-bit)))
+
+    shadow = tuple(c >> 1 for c in background)
+    for y in range(7, 30):
+        for x in range(16, 624):
+            sx = x + scroll - 624
+            if ink(sx-2, y-9):
+                image.putpixel((x, y), shadow)
+            if ink(sx, y-7):
+                image.putpixel((x, y), FOREGROUND)
+    for y in (34, 35):
+        for x in range(16, 624):
+            image.putpixel((x, y), UNDERLINE)
     return image
 
 

@@ -208,6 +208,22 @@ class QtWindowTests(unittest.TestCase):
             self.wait_for(lambda:'字体缺字' in self.window.subtitle_info.text())
         self.assertIsNone(self.window.subtitle_bitmap)
 
+    def test_subtitle_single_line_normalization_and_styled_preview(self):
+        self.window.subtitle_text.setPlainText('欢迎\n乘车\n下一站')
+        self.window.subtitle_timer.stop()
+        self.window.render_subtitle()
+        self.wait_for(lambda:self.window.subtitle_bitmap is not None)
+        result = self.window.subtitle_bitmap
+        self.assertEqual(result.text, '欢迎 乘车 下一站')
+        self.assertEqual(result.lengths, (9, 0))
+        self.assertIn('21×21', self.window.subtitle_info.text())
+        self.assertIn('单行', self.window.subtitle_info.text())
+        self.assertIn('1.3px/帧', self.window.subtitle_info.text())
+        self.assertIn('转为空格', self.window.subtitle_info.text())
+        preview = self.window.subtitle_image._original.toImage()
+        self.assertEqual((preview.width(), preview.height()), (640, 36))
+        self.assertEqual(preview.pixelColor(16, 34).name(), '#36d5e3')
+
     def test_motion_switch_finishes_opacity_and_window_worker_closes(self):
         self.window.motion.setChecked(True)
         self.window.nav.setCurrentRow(1)

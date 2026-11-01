@@ -55,8 +55,8 @@
       "path": "app/ui.py",
       "source": "HX4S20_QtConsole/app/ui.py",
       "source_sha256": "932490462201484d8d9c8aec9ecd66340f2d5131f6f2201505f1e4a036c42d25",
-      "sha256": "932490462201484d8d9c8aec9ecd66340f2d5131f6f2201505f1e4a036c42d25",
-      "modified_from_source": false
+      "sha256": "2f42ff34e267eab840b40c7ae700ae28392df4c80cee92e5e11d6336b4588063",
+      "modified_from_source": true
     },
     {
       "path": "app/widgets.py",
@@ -285,8 +285,8 @@
       "path": "legacy/tools/console/subtitle_bitmap.py",
       "source": "HX4S20_QtConsole/legacy/tools/console/subtitle_bitmap.py",
       "source_sha256": "cef75100d2e1c041efc733fc10e74f187c1aa386d9ca4b0904f5e3fa87612ae5",
-      "sha256": "cef75100d2e1c041efc733fc10e74f187c1aa386d9ca4b0904f5e3fa87612ae5",
-      "modified_from_source": false
+      "sha256": "bb73e18c8101268a29dd379705cd65173a436fe1bcb67c82b148a3644f2f1db2",
+      "modified_from_source": true
     },
     {
       "path": "legacy/tools/console/subtitle_cli.py",
@@ -334,8 +334,8 @@
       "path": "legacy/tools/console/tests/test_subtitle_bitmap.py",
       "source": "HX4S20_QtConsole/legacy/tools/console/tests/test_subtitle_bitmap.py",
       "source_sha256": "2c785d3960432838d3d76eff86012d9f8dc740c7253aa97258a66f86a6c08888",
-      "sha256": "2c785d3960432838d3d76eff86012d9f8dc740c7253aa97258a66f86a6c08888",
-      "modified_from_source": false
+      "sha256": "e3cee1a342cee90a33126a2b5ad7b9320c344597c98c7539ec63efe475685f44",
+      "modified_from_source": true
     },
     {
       "path": "legacy/tools/console/tests/test_v2_protocol.py",
@@ -425,8 +425,8 @@
       "path": "tests/test_ui.py",
       "source": "HX4S20_QtConsole/tests/test_ui.py",
       "source_sha256": "a57c522b482d175a52514c666dd433e2ef20156ae0f7ab330b62cd7516ab7203",
-      "sha256": "a57c522b482d175a52514c666dd433e2ef20156ae0f7ab330b62cd7516ab7203",
-      "modified_from_source": false
+      "sha256": "8b7e47e60e62c7a7b35661ca1cefab05e13fd295ddd1191b63138af6d9460b69",
+      "modified_from_source": true
     },
     {
       "path": "tests/verify_release.py",

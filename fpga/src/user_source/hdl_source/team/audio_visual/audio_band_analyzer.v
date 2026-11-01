@@ -1,7 +1,8 @@
 `timescale 1ns/1ps
-// Isolated S21 state-RAM candidate. Numerical interface unchanged; TD mapping pending.
+// 32 real Goertzel bins share one DSP datapath and the existing state BRAM.
 // clk=25MHz, sample_tick=48kHz, post-volume signed 24-bit mono PCM.
-// 6:1 boxcar -> 8kHz; 128-point rectangular Goertzel window (16ms).
+// 6:1 boxcar -> 8kHz; 128-point rectangular window (16ms).
+// The same 9K state block now stores 64 x 18 bits instead of 16 x 18 bits.
 module audio_band_analyzer #(
     parameter [23:0] SILENCE_PEAK24 = 24'd32768
 ) (
@@ -9,7 +10,7 @@ module audio_band_analyzer #(
     input wire rst,
     input wire sample_tick,
     input wire signed [23:0] pcm_postvolume,
-    output reg [39:0] band_heights,
+    output reg [159:0] band_heights,
     output reg [2:0] dominant_band,
     output reg silence,
     output reg valid,
@@ -19,7 +20,7 @@ module audio_band_analyzer #(
     localparam [2:0] IDLE=0, REC_LOAD=1, REC_OPERANDS=2, REC_WAIT=3,
                      ENERGY=4, PUBLISH=5, REC_STORE=6, REC_WRITE=7;
     reg [2:0] state;
-    reg [2:0] band_index;
+    reg [4:0] band_index;
     reg [3:0] energy_phase;
     reg [2:0] decim_count;
     reg signed [10:0] decim_sum;
@@ -30,16 +31,16 @@ module audio_band_analyzer #(
     reg window_silent;
     // Exactly one synchronous read and one write port; even=s1, odd=s2.
     // No reset/clear loop on storage or read register: preserve BRAM inference.
-    (* ram_style = "bram" *) reg signed [17:0] state_mem [0:15];
+    (* ram_style = "bram" *) reg signed [17:0] state_mem [0:63];
     reg signed [17:0] state_read;
     // Invalid entries are logically zero after reset and after each window.
-    reg [7:0] state_valid;
+    reg [31:0] state_valid;
     // Recurrence result awaiting its write; reused as energy s1 afterwards.
     reg signed [17:0] work_state;
     reg signed [15:0] energy_b;
-    wire [2:0] next_band = band_index + 3'd1;
+    wire [4:0] next_band = band_index + 5'd1;
     reg state_read_enable, state_write_enable;
-    reg [3:0] state_read_address, state_write_address;
+    reg [5:0] state_read_address, state_write_address;
     reg signed [17:0] state_write_data;
 
     always @(*) begin
@@ -57,20 +58,20 @@ module audio_band_analyzer #(
                     // Old s1 still resides in the shared multiplier operand.
                     state_write_enable=1; state_write_address={band_index,1'b1};
                     state_write_data=mul_a;
-                    if(band_index!=7 || last_sample) begin
+                    if(band_index!=31 || last_sample) begin
                         state_read_enable=1;
-                        state_read_address={(band_index==7 ? 3'd0 : next_band),1'b0};
+                        state_read_address={(band_index==31 ? 5'd0 : next_band),1'b0};
                     end
                 end
                 REC_WRITE: begin
                     state_write_enable=1; state_write_address={band_index,1'b0};
                     state_write_data=work_state;
-                    if(band_index!=7 || last_sample) begin
+                    if(band_index!=31 || last_sample) begin
                         state_read_enable=1;
-                        state_read_address={(band_index==7 ? 3'd0 : next_band),1'b1};
+                        state_read_address={(band_index==31 ? 5'd0 : next_band),1'b1};
                     end
                 end
-                ENERGY: if(band_index!=7) begin
+                ENERGY: if(band_index!=31) begin
                     // Current energy no longer needs s1 after phase9.
                     if(energy_phase==10 || energy_phase==11) begin
                         state_read_enable=1;
@@ -95,21 +96,46 @@ module audio_band_analyzer #(
     reg signed [37:0] energy_sum;
     reg [35:0] energy_hold;
     reg [35:0] maximum_energy;
-    reg [2:0] winner;
-    reg [39:0] heights_work;
+    reg [4:0] winner;
+    reg [159:0] heights_work;
 
     function signed [17:0] coefficient;
-        input [2:0] index;
+        input [4:0] index;
         begin
             case(index)
-                0: coefficient=18'sd130441; // 125Hz, k=2
-                1: coefficient=18'sd128553; // 250Hz, k=4
-                2: coefficient=18'sd121095; // 500Hz, k=8
-                3: coefficient=18'sd108982; // 750Hz, k=12
-                4: coefficient=18'sd92682;  // 1000Hz, k=16
-                5: coefficient=18'sd50159;  // 1500Hz, k=24
-                6: coefficient=18'sd0;      // 2000Hz, k=32
-                7: coefficient=-18'sd92682; // 3000Hz, k=48
+                5'd0: coefficient=18'sd130914; // 62.5Hz, k=1
+                5'd1: coefficient=18'sd130441; // 125Hz, k=2
+                5'd2: coefficient=18'sd129653; // 187.5Hz, k=3
+                5'd3: coefficient=18'sd128553; // 250Hz, k=4
+                5'd4: coefficient=18'sd127144; // 312.5Hz, k=5
+                5'd5: coefficient=18'sd125428; // 375Hz, k=6
+                5'd6: coefficient=18'sd123410; // 437.5Hz, k=7
+                5'd7: coefficient=18'sd121095; // 500Hz, k=8
+                5'd8: coefficient=18'sd118488; // 562.5Hz, k=9
+                5'd9: coefficient=18'sd115595; // 625Hz, k=10
+                5'd10: coefficient=18'sd112424; // 687.5Hz, k=11
+                5'd11: coefficient=18'sd108982; // 750Hz, k=12
+                5'd12: coefficient=18'sd105278; // 812.5Hz, k=13
+                5'd13: coefficient=18'sd101320; // 875Hz, k=14
+                5'd14: coefficient=18'sd97118; // 937.5Hz, k=15
+                5'd15: coefficient=18'sd92682; // 1000Hz, k=16
+                5'd16: coefficient=18'sd83151; // 1125Hz, k=18
+                5'd17: coefficient=18'sd72820; // 1250Hz, k=20
+                5'd18: coefficient=18'sd61787; // 1375Hz, k=22
+                5'd19: coefficient=18'sd50159; // 1500Hz, k=24
+                5'd20: coefficient=18'sd38048; // 1625Hz, k=26
+                5'd21: coefficient=18'sd25571; // 1750Hz, k=28
+                5'd22: coefficient=18'sd12847; // 1875Hz, k=30
+                5'd23: coefficient=18'sd0; // 2000Hz, k=32
+                5'd24: coefficient=-18'sd25571; // 2250Hz, k=36
+                5'd25: coefficient=-18'sd50159; // 2500Hz, k=40
+                5'd26: coefficient=-18'sd72820; // 2750Hz, k=44
+                5'd27: coefficient=-18'sd92682; // 3000Hz, k=48
+                5'd28: coefficient=-18'sd108982; // 3250Hz, k=52
+                5'd29: coefficient=-18'sd121095; // 3500Hz, k=56
+                5'd30: coefficient=-18'sd128553; // 3750Hz, k=60
+                5'd31: coefficient=-18'sd130914; // 3937.5Hz, k=63
+                default: coefficient=18'sd0;
             endcase
         end
     endfunction
@@ -129,13 +155,17 @@ module audio_band_analyzer #(
         integer j;
         begin
             energy_height=0;
-            for(j=6;j<=21;j=j+1)
-                if(energy[j]) energy_height=((j-6)<<1) | energy[j-1];
-            if(|energy[35:22]) energy_height=5'd31;
+            // Half-scale input gives four times less energy. Shift the log
+            // reference down two bits to retain useful low-volume sensitivity.
+            for(j=4;j<=19;j=j+1)
+                if(energy[j]) energy_height=((j-4)<<1) | energy[j-1];
+            if(|energy[35:20]) energy_height=5'd31;
         end
     endfunction
 
-    wire signed [7:0] pcm8 = pcm_postvolume[23:16];
+    // k=1 needs twice the recurrence headroom of the previous 125Hz minimum.
+    // Signed 7-bit input keeps full-scale k=1 inside the existing 18-bit RAM.
+    wire signed [7:0] pcm8 = {pcm_postvolume[23],pcm_postvolume[23:17]};
     wire signed [10:0] decim_total=decim_sum+{{3{pcm8[7]}},pcm8};
     wire [23:0] pcm_abs=pcm_postvolume[23] ? (~pcm_postvolume+24'd1) : pcm_postvolume;
     wire [23:0] peak_with_sample=(pcm_abs>frame_peak) ? pcm_abs : frame_peak;
@@ -176,8 +206,10 @@ module audio_band_analyzer #(
     // Both energies are unsigned36; signed38 subtraction cannot overflow.
     // Strictly positive keeps the original lower-index winner on ties.
     wire energy_greater=!alu_result[37] && (|alu_result);
-    wire [5:0] height_bit={band_index,2'b00}+{3'b000,band_index};
-    wire [4:0] old_height=band_heights[height_bit +: 5];
+    // A 32-entry rotation replaces a 32:1 old-height selector and decoded
+    // writes. After all 32 updates bin0 is back in bits[4:0]; the public
+    // display bus stays unchanged until PUBLISH, so there is no partial frame.
+    wire [4:0] old_height=heights_work[4:0];
     wire [4:0] target_height=window_silent ? 5'd0 : energy_height(energy_hold);
     wire [4:0] decayed_height=(old_height>5'd2) ? old_height-5'd2 : 5'd0;
     wire [4:0] next_height=(target_height>decayed_height) ? target_height : decayed_height;
@@ -220,7 +252,7 @@ module audio_band_analyzer #(
                         // Commit s1 while fetching next s2. No read/write
                         // address collision and no vendor forwarding assumption.
                         state_valid[band_index]<=1;
-                        if(band_index==7) begin
+                        if(band_index==31) begin
                             band_index<=0;
                             if(last_sample) begin
                                 work_state<=state_read;
@@ -252,16 +284,16 @@ module audio_band_analyzer #(
                             10: begin end
                             11: begin
                                 energy_hold<=energy_difference[37] ? 36'd0 : energy_difference[35:0];
-                                if(band_index!=7) work_state<=state_read;
+                                if(band_index!=31) work_state<=state_read;
                             end
                             12: begin
-                                heights_work[height_bit +: 5]<=next_height;
+                                heights_work<={next_height,heights_work[159:5]};
                                 if(energy_greater) begin
                                     maximum_energy<=energy_hold; winner<=band_index;
                                 end
                                 state_valid[band_index]<=0;
                                 energy_phase<=0;
-                                if(band_index==7) state<=PUBLISH;
+                                if(band_index==31) state<=PUBLISH;
                                 else band_index<=band_index+1'b1;
                             end
                             default: begin state<=IDLE; overrun_sticky<=1; end
@@ -269,7 +301,7 @@ module audio_band_analyzer #(
                     end
                     PUBLISH: begin
                         band_heights<=heights_work;
-                        dominant_band<=window_silent ? 3'd0 : winner;
+                        dominant_band<=window_silent ? 3'd0 : winner[4:2];
                         silence<=window_silent; valid<=1; state<=IDLE;
                     end
                     default: begin state<=IDLE; overrun_sticky<=1; end

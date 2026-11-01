@@ -570,14 +570,14 @@ module advanced_video_overlay #(parameter HALF_ZOOM_ENABLE=0) (
     wire [10:0] scroll_text_x = scroll_cycle - SCROLL_TEXT_START;
     wire [5:0] scroll_slot = scroll_text_x[9:4];
     wire [3:0] scroll_col = scroll_text_x[3:0];
-    wire scroll_text_region = (y_pos >= 10'd387) && (y_pos < 10'd408);
+    wire scroll_text_region = (y_pos >= 10'd411) && (y_pos < 10'd432);
     wire [2:0] scroll_row =
-        (y_pos < 10'd390) ? 3'd0 :
-        (y_pos < 10'd393) ? 3'd1 :
-        (y_pos < 10'd396) ? 3'd2 :
-        (y_pos < 10'd399) ? 3'd3 :
-        (y_pos < 10'd402) ? 3'd4 :
-        (y_pos < 10'd405) ? 3'd5 : 3'd6;
+        (y_pos < 10'd414) ? 3'd0 :
+        (y_pos < 10'd417) ? 3'd1 :
+        (y_pos < 10'd420) ? 3'd2 :
+        (y_pos < 10'd423) ? 3'd3 :
+        (y_pos < 10'd426) ? 3'd4 :
+        (y_pos < 10'd429) ? 3'd5 : 3'd6;
     // Two live 20:1 byte selectors replace two independent 40:1 selectors.
     // At the original S0 boundary both consumers see this cycle's text bus.
     wire [159:0] scroll_even_text, scroll_odd_text;
@@ -615,14 +615,14 @@ module advanced_video_overlay #(parameter HALF_ZOOM_ENABLE=0) (
     wire [10:0] scroll_shadow_text_x = scroll_shadow_cycle - SCROLL_TEXT_START;
     wire [5:0] scroll_shadow_slot = scroll_shadow_text_x[9:4];
     wire [3:0] scroll_shadow_col = scroll_shadow_text_x[3:0];
-    wire scroll_shadow_region = (y_pos >= 10'd389) && (y_pos < 10'd410);
+    wire scroll_shadow_region = (y_pos >= 10'd413) && (y_pos < 10'd434);
     wire [2:0] scroll_shadow_row =
-        (y_pos < 10'd392) ? 3'd0 :
-        (y_pos < 10'd395) ? 3'd1 :
-        (y_pos < 10'd398) ? 3'd2 :
-        (y_pos < 10'd401) ? 3'd3 :
-        (y_pos < 10'd404) ? 3'd4 :
-        (y_pos < 10'd407) ? 3'd5 : 3'd6;
+        (y_pos < 10'd416) ? 3'd0 :
+        (y_pos < 10'd419) ? 3'd1 :
+        (y_pos < 10'd422) ? 3'd2 :
+        (y_pos < 10'd425) ? 3'd3 :
+        (y_pos < 10'd428) ? 3'd4 :
+        (y_pos < 10'd431) ? 3'd5 : 3'd6;
     wire [7:0] scroll_shadow_glyph_char =
         (scroll_shadow_slot < scroll_text_len && scroll_shadow_slot < SCROLL_TEXT_SLOTS) ?
         (scroll_shadow_slot[0] ? scroll_odd_char : scroll_even_char) : 8'h20;
@@ -632,11 +632,11 @@ module advanced_video_overlay #(parameter HALF_ZOOM_ENABLE=0) (
         (scroll_shadow_col < 4'd6) ? 3'd1 :
         (scroll_shadow_col < 4'd9) ? 3'd2 :
         (scroll_shadow_col < 4'd12) ? 3'd3 : 3'd4;
-    wire scroll_shadow_pixel = scroll_shadow_region && scroll_shadow_active &&
+    wire scroll_shadow_pixel = x_pos >= 11'd2 && scroll_shadow_region && scroll_shadow_active &&
                                (scroll_shadow_slot < SCROLL_TEXT_SLOTS) &&
                                (scroll_shadow_col < 4'd15);
 
-    // Top text/shadow occupy y=10..25; scroll text/shadow y=387..409.
+    // Top text/shadow occupy y=10..25; 21px scroll text/shadow y=411..433.
     // Select the entire owner (INCLUDING its shadow tail) before the S0 ROM
     // read edge. Ports A/B retain independent text/shadow addresses. Do not
     // OR glyph addresses/data or select using a delayed/current output pixel.
@@ -676,8 +676,8 @@ module advanced_video_overlay #(parameter HALF_ZOOM_ENABLE=0) (
     wire [23:0] meter_bg_rgb = blend25_rgb(transition_rgb, 24'h061923);
     wire top_band = (y_pos < 10'd36);
     wire top_edge = (y_pos < 10'd2);
-    wire bottom_band = (y_pos >= 10'd380) && (y_pos < 10'd416);
-    wire bottom_edge = (y_pos >= 10'd414) && (y_pos < 10'd416);
+    wire bottom_band = (y_pos >= 10'd404) && (y_pos < 10'd440);
+    wire bottom_edge = (y_pos >= 10'd438) && (y_pos < 10'd440);
     wire side_border = ((x_pos < 11'd2) || (x_pos >= 11'd638));
     reg [23:0] rgb_out_next;
 
@@ -850,11 +850,11 @@ module advanced_video_overlay #(parameter HALF_ZOOM_ENABLE=0) (
             end else if (stage_bottom_band) begin
                 rgb_out_next = stage_osd_band_rgb;
                 if (stage_scroll_shadow_pixel)
-                    rgb_out_next = 24'h02070A;
+                    rgb_out_next = (stage_osd_band_rgb >> 1) & 24'h7F7F7F;
                 if (stage_scroll_text_pixel)
-                    rgb_out_next = 24'hFFE066;
+                    rgb_out_next = 24'hE5E7EB;
                 if (stage_bottom_edge)
-                    rgb_out_next = 24'h22D3EE;
+                    rgb_out_next = 24'h36D5E3;
             end else if (stage_side_border) begin
                 rgb_out_next = stage_side_border_rgb;
             end

@@ -21,7 +21,8 @@ module terminal_video_chain #(parameter ADAPTIVE_LAYOUT=0,LOCAL_ENABLES=0,DYNAMI
  output wire O_hs,O_vs,O_de,
  input wire half_layout,
  input wire [1:0] zoom_setting,
- input wire [23:0] left_wave_color,right_wave_color
+ input wire [23:0] left_wave_color,right_wave_color,
+ output wire O_wave_hit
 );
  reg [2:0] hs_delay,vs_delay,de_delay;
  wire [23:0] effect_rgb;
@@ -43,5 +44,5 @@ module terminal_video_chain #(parameter ADAPTIVE_LAYOUT=0,LOCAL_ENABLES=0,DYNAMI
   .opacity_level(opacity_level),.I_rgb(effect_rgb),
   .I_hs(hs_delay[2]),.I_vs(vs_delay[2]),.I_de(de_delay[2]),.audio_valid(audio_valid),
   .audio_left(audio_left),.audio_right(audio_right),.O_rgb(O_rgb),.O_hs(O_hs),.O_vs(O_vs),.O_de(O_de),.half_layout(half_layout),
-  .left_wave_color(left_wave_color),.right_wave_color(right_wave_color));
+  .left_wave_color(left_wave_color),.right_wave_color(right_wave_color),.O_wave_hit(O_wave_hit));
 endmodule

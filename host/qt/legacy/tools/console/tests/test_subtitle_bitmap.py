@@ -6,7 +6,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from subtitle_bitmap import (Bitmap, normalize_text, render_text, preview_image,
     crc16, upload_frames, parse_subtitle_status, UploadClient, UploadError,
-    default_font, SerialLink)
+    default_font, SerialLink, FOREGROUND, UNDERLINE)
 from protocol import line_command, parse_hardware, Session
 
 CAP = 'Q P=001 C=004 A=0 READY=1 ERR=0 R=1 VER=1 CAP=NAMPIBCFTVWRESQHXZDGUJKOY'
@@ -57,46 +57,75 @@ class FakeBoard:
 
 class TextTests(unittest.TestCase):
     def test_control_normalization_and_character_count(self):
-        self.assertEqual(normalize_text('中文\tA\r\n下一站'), '中文 A\n下一站')
-        self.assertEqual(normalize_text('中'*20+'\n'+'文'*20), '中'*20+'\n'+'文'*20)
-        self.assertEqual(normalize_text('\n'), '\n')
-        for bad in ('\x1b[2J', '\0', '\r', 'a\x7fb', '\x85', '\u2028', '\u200b',
-                    '\u202e', '\ud800', '\ufeff', 'a\nb\nc', '中'*41):
+        self.assertEqual(normalize_text('中文\tA\r\n下一站'), '中文 A 下一站')
+        self.assertEqual(normalize_text('中'*20+'\n'+'文'*19), '中'*20+' '+'文'*19)
+        self.assertEqual(normalize_text('\r\n\r\n\n\r'), '    ')
+        self.assertEqual(normalize_text('a\nb\nc'), 'a b c')
+        for bad in ('\x1b[2J', '\0', 'a\x7fb', '\x85', '\u2028', '\u200b',
+                    '\u202e', '\ud800', '\ufeff', '中'*41, '中'*20+'\n'+'文'*20):
             with self.subTest(text=repr(bad)), self.assertRaises(ValueError): normalize_text(bad)
 
     def test_arbitrary_common_chinese_uses_windows_font(self):
-        text = '龟鹤鹦鹉鹭鹰鳞鲸鲨鲤龚龛龠黛黔黯麓麟黎黏\n歡迎乘坐上海地鐵下一站人民廣場'
+        text = '龟鹤鹦鹉鹭鹰鳞鲸鲨鲤龚龛龠黛黔黯麓麟黎黏歡迎乘坐上海地鐵下一站人民廣場'
         bitmap = render_text(text)
         self.assertEqual(len(bitmap.data), 1280)
-        self.assertEqual(bitmap.lengths, (20, 15))
+        self.assertEqual(bitmap.lengths, (35, 0))
         for index in range(sum(bitmap.lengths)):
             self.assertTrue(any(bitmap.data[index*32:index*32+32]), index)
         self.assertFalse(any(bitmap.data[sum(bitmap.lengths)*32:]))
-        self.assertEqual(preview_image(bitmap).size, (640, 32))
+        self.assertEqual(preview_image(bitmap).size, (640, 36))
 
     def test_missing_glyph_rejected_instead_of_tofu(self):
         with self.assertRaisesRegex(ValueError, '字体缺字'): render_text('中', 'C:/Windows/Fonts/arial.ttf')
 
     def test_bitmap_packing_and_padding(self):
-        image = render_text('中\n文')
+        image = render_text('中 文')
         self.assertEqual(image, render_text('中\r\n文'))
+        self.assertEqual(image, render_text('中\n文'))
+        self.assertEqual(image, render_text('中\r文'))
         self.assertEqual(render_text('中\t文'), render_text('中 文'))
         preview = preview_image(image)
-        for cell, rowbase in ((0, 0), (1, 16)):
-            for y in range(16):
-                actual = sum(bool(preview.getpixel((x, rowbase+y))) << (15-x) for x in range(16))
-                expected = int.from_bytes(image.data[cell*32+y*2:cell*32+y*2+2], 'big')
-                self.assertEqual(actual, expected)
+        for cell in range(3):
+            for y in range(21):
+                sy = y*16//21
+                word = int.from_bytes(image.data[cell*32+sy*2:cell*32+sy*2+2], 'big')
+                for x in range(21):
+                    self.assertEqual(preview.getpixel((16+cell*21+x, 7+y)) == FOREGROUND,
+                                     bool(word & (1 << (15-x*16//21))))
         self.assertEqual(render_text('').data, bytes(1280))
         with self.assertRaises(ValueError): Bitmap('', (0, 0), b'\xff'*1280)
         with self.assertRaises(ValueError): Bitmap('', (41, 0), bytes(1280))
+        with self.assertRaisesRegex(ValueError, 'len1'): Bitmap('中\n文', (1, 1), bytes(1280))
+
+    def test_style_clipping_empty_text_and_complete_scroll_cycle(self):
+        bitmap = Bitmap('中', (1, 0), b'\xff'*32+bytes(1248))
+        base, shadow = (103, 151, 207), (51, 75, 103)
+        image = preview_image(bitmap, background=base)
+        for y in range(36):
+            for x in range(640):
+                expected = base
+                if 18 <= x < 39 and 9 <= y < 30: expected = shadow
+                if 16 <= x < 37 and 7 <= y < 28: expected = FOREGROUND
+                if 16 <= x < 624 and y >= 34: expected = UNDERLINE
+                self.assertEqual(image.getpixel((x, y)), expected, (x, y))
+        empty = preview_image(render_text(''), background=base)
+        self.assertEqual(preview_image(bitmap, 0, base), empty)
+        self.assertEqual(preview_image(bitmap, 661, base), empty)
+        self.assertEqual(preview_image(bitmap, 1, base).getpixel((623, 7)), FOREGROUND)
+        self.assertEqual(preview_image(bitmap, 629, base).getpixel((16, 9)), shadow)
+        self.assertEqual(preview_image(bitmap, 631, base), empty)
+        long = Bitmap('中'*40, (40, 0), b'\xff'*1280)
+        self.assertEqual(preview_image(long, 1448, base).getpixel((16, 7)), base)
+        self.assertEqual(preview_image(long, 1447, base).getpixel((16, 7)), FOREGROUND)
+        self.assertEqual(preview_image(long, 1480, base), empty)
+        self.assertEqual(len(upload_frames(long, 0)), 82)
 
     def test_crc_and_wire_never_contain_text_controls(self):
         self.assertEqual(crc16(b'123456789'), 0x29b1)
         bitmap = render_text('行一\r\n行二\t空格')
         frames = upload_frames(bitmap, 0xabcd)
         self.assertEqual(len(frames), 82)
-        self.assertEqual(frames[0], f'OBABCD0205{bitmap.crc:04X}\r\n'.encode())
+        self.assertEqual(frames[0], f'OBABCD0800{bitmap.crc:04X}\r\n'.encode())
         self.assertEqual(frames[-1], b'OCABCD\r\n')
         for frame in frames:
             self.assertTrue(frame.endswith(b'\r\n'))
@@ -105,10 +134,10 @@ class TextTests(unittest.TestCase):
         assembled = b''.join(bytes.fromhex(f[4:-2].decode()) for f in frames[1:-1])
         self.assertEqual(assembled, bitmap.data)
 
-    def test_crc_covers_line_layout_not_only_bitmap(self):
-        data = render_text('中文').data
-        one = Bitmap('中文', (2, 0), data)
-        two = Bitmap('中\n文', (1, 1), data)
+    def test_crc_covers_length_not_only_bitmap(self):
+        data = bytes(1280)
+        one = Bitmap('', (0, 0), data)
+        two = Bitmap(' ', (1, 0), data)
         self.assertNotEqual(one.crc, two.crc)
 
     def test_legacy_ascii_unchanged(self):

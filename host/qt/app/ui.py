@@ -357,8 +357,10 @@ class MainWindow(QMainWindow):
 
     def subtitle_page(self):
         page, box = self.page('字幕工作室', '中文位图与旧式 ASCII 字幕统一管理，共用当前串口连接。')
-        box.addWidget(label('中文位图 · 两行 / 最多40字符', 'subtitle'))
-        self.subtitle_text = QPlainTextEdit('欢迎乘坐本次列车\n下一站：人民广场')
+        box.addWidget(label('中文位图 · 单行 / 最多40字符 / 与英文同高21px', 'subtitle'))
+        self.subtitle_text = QPlainTextEdit('欢迎乘坐本次列车 下一站：人民广场')
+        self.subtitle_text.setPlaceholderText('单行字幕；粘贴的换行和Tab自动转为空格，空格也计入40字符。')
+        self.subtitle_text.setToolTip('换行自动转为空格；21×21字格从右侧进入、向左完整移出后循环。')
         self.subtitle_text.setMaximumHeight(110)
         box.addWidget(self.subtitle_text)
         row = QHBoxLayout()
@@ -736,7 +738,9 @@ class MainWindow(QMainWindow):
         else:
             self.subtitle_bitmap = result
             self.subtitle_image.set_pil_image(preview_image(result).convert('RGB'))
-            self.subtitle_info.setText(f'实际发送位图 · 行字符数 {result.lengths} · 1280字节 · CRC16 {result.crc:04X}\nTab归一为空格、CRLF归一；拒绝缺字与未定义控制字符。')
+            self.subtitle_info.setText(f'单行 {result.lengths[0]}/40字符 · 21×21字格（与英文同高）· 1280字节 / 80块 · CRC16 {result.crc:04X}\n'
+                '预览为左对齐静态截帧：灰白字、右下2px半透明黑影、底部2px青线；板端从右进左出循环，速率1.3px/帧。\n'
+                'CRLF、CR、LF与Tab均转为空格并计入字符数；拒绝缺字与未定义控制字符。')
         self.update_enabled()
 
     def upload_subtitle(self):

@@ -8,7 +8,15 @@
   "renamed_project": "car_guide_terminal",
   "metadata_changes": "AL filename and internal project name, compile.tcl project variable and messages only",
   "docs_excluded_by_user": true,
-  "historical_manifest_note": "s47-inputs.json is ancestral seal, source-manifest.json identifies this repository baseline",
+  "historical_manifest_note": "s47-inputs.json is the immutable ancestral seal; source-manifest.json identifies the current source files",
   "baseline": "User-tested car_guide_terminal before compact UI update",
-  "portable_al": "Current GUI compile order and settings retained; absolute project Path changed to dot and XML ampersands escaped"
+  "portable_al": "Current GUI compile order and settings retained; absolute project Path changed to dot and XML ampersands escaped",
+  "current_source_revision": {
+    "name": "compact-ui-spectrum32",
+    "date": "2026-11-02",
+    "base_repository_commit": "a1bd4d9483cc09614f3218cb1332af7740057c92",
+    "changes": "40px footer; single 21px Chinese/English ticker; 32 independent Goertzel bins; compact rainbow bars with stereo PCM overlay; Qt single-line subtitle upload",
+    "pin_and_timing_constraints_modified": false,
+    "tf_assets_modified": false
+  }
 }
