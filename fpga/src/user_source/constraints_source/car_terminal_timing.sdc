@@ -2,6 +2,11 @@
 # Keep physical master relationships and all datapath timing checks.
 create_clock -name clk -period 20 -waveform {0 10} [get_ports {clk}]
 create_generated_clock -name sd_card_clk -source [get_ports {clk}] -master_clock clk -multiply_by 2 [get_pins {sys_pll_m0/pll_inst.clkc[0]}]
+# Reserve extra implementation margin on the 100MHz media-control domain.
+# 0.250ns is stricter than TD's implicit 0.100ns setup uncertainty; it is an
+# optimization guard band, not a measured PLL-jitter value. Hold, clock period,
+# physical phase and all functional timing paths remain unchanged.
+set_clock_uncertainty -setup 0.250 [get_clocks {sd_card_clk}]
 create_generated_clock -name ext_mem_clk -source [get_ports {clk}] -master_clock clk -divide_by 1 [get_pins {sys_pll_m0/pll_inst.clkc[1]}]
 create_generated_clock -name sdram_device_clk -source [get_ports {clk}] -master_clock clk -divide_by 1 -phase 153 [get_pins {sys_pll_m0/pll_inst.clkc[2]}]
 create_generated_clock -name video_clk -source [get_ports {clk}] -master_clock clk -divide_by 2 [get_pins {video_pll_m0/pll_inst.clkc[0]}]

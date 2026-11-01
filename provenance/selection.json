@@ -12,11 +12,19 @@
   "baseline": "User-tested car_guide_terminal before compact UI update",
   "portable_al": "Current GUI compile order and settings retained; absolute project Path changed to dot and XML ampersands escaped",
   "current_source_revision": {
-    "name": "compact-ui-spectrum32",
+    "name": "wide-spectrum63-frame-snapshot",
     "date": "2026-11-02",
-    "base_repository_commit": "a1bd4d9483cc09614f3218cb1332af7740057c92",
-    "changes": "40px footer; single 21px Chinese/English ticker; 32 independent Goertzel bins; compact rainbow bars with stereo PCM overlay; Qt single-line subtitle upload",
-    "pin_and_timing_constraints_modified": false,
-    "tf_assets_modified": false
+    "base_repository_commit": "d5c92a3e09b611cb864a67eb53907abe6c0a48f7",
+    "changes": "45px footer; 608x56 spectrum/wave panel; 63 real positive frequency bins; 128-step animated HSL rainbow; frame-boundary PCM double buffering; guarded double-bank BRAM spectrum snapshot without redundant publication bank; fixed high-contrast stereo traces replace duplicate score-color lookup; HDMI encoded-word load one serial cycle earlier",
+    "pin_constraints_modified": false,
+    "timing_constraints_modified": true,
+    "tf_assets_modified": false,
+    "timing_margin": "100MHz sd_card_clk adds 0.250ns setup uncertainty to TD default 0.100ns: report effective total 0.350ns; stricter optimization guard band, not measured jitter; hold/frequency/phase/false paths unchanged",
+    "physical_strategy": {
+      "pr_strategy": 5,
+      "reason": "Retain baseline timing strategy; strategy4 experiment rejected"
+    },
+    "uart_private_buffer_optimization": "Remove redundant reset/clear on fixed-length hexadecimal receive history; protocol and public reset behavior unchanged",
+    "qt_protocol_modified": false
   }
 }

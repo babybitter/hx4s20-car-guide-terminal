@@ -4,7 +4,7 @@
 module subtitle_bitmap_overlay #(
     parameter integer ACTIVE_WIDTH = 640,
     parameter integer MARGIN_X = 16,
-    parameter integer TOP_Y = 411,
+    parameter integer TOP_Y = 406,
     parameter integer SCROLL_GAP = 32
 )(
     input wire clk, rst, blank_tick, enable, legacy_select,

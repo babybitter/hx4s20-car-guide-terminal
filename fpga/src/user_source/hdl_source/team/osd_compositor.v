@@ -31,7 +31,7 @@ module osd_compositor #(parameter INDEPENDENT_TITLE=0,parameter USE_SYNC_FONT=0)
     wire [8:0] y_now = !de_prev && frame_arm ? 9'd0 :
                        !de_prev ? y_count + 1'b1 : y_count;
     wire bar_area = I_de && x_now < 10'd640 &&
-                    y_now >= 9'd440 && y_now < 9'd480;
+                    y_now >= 9'd435 && y_now < 9'd480;
     // page_id is zero-based; the catalog supplies a count in 1..128.
     // Four-page callers explicitly connect page_count=8'd4.
     wire [7:0] page_number = {1'b0, page_id} + 8'd1;
@@ -194,9 +194,9 @@ module osd_compositor #(parameter INDEPENDENT_TITLE=0,parameter USE_SYNC_FONT=0)
 
         if (bar_area) begin
             base_color = BAR_BG;
-            // 40px footer: keep the original clear 32px glyphs, with 4px padding.
-            if (y_now >= 9'd444 && y_now < 9'd476) begin
-                glyph_row = y_now - 9'd444;
+            // 45px footer: original 32px glyphs at y441..472, padding 6/7px.
+            if (y_now >= 9'd441 && y_now < 9'd473) begin
+                glyph_row = y_now - 9'd441;
                 if (x_now >= 10'd32 && x_now < 10'd160) begin
                     glyph_enable = 1'b1;
                     glyph_id = title_glyph(INDEPENDENT_TITLE?title_id:page_id, (x_now - 10'd32) >> 5);

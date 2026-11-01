@@ -101,11 +101,11 @@ reg [bounded_timeout_width(IDLE_LIMIT,1)-1:0] idle_ticks;
     always @(posedge clk or posedge rst) begin
         if(rst) begin
             command_head<=0; command_sub<=0;
-            decimal_value<=0; decimal_ok<=1; hex_ok<=1; hex_payload<=0;
+            decimal_value<=0; decimal_ok<=1; hex_ok<=1;
         end else if(accept_printable) begin
             if(used==0) begin
                 command_head<=rx_byte[6:0]; command_sub<=0;
-                decimal_value<=0; decimal_ok<=1; hex_ok<=1; hex_payload<=0;
+                decimal_value<=0; decimal_ok<=1; hex_ok<=1;
             end else begin
                 if(used==1) command_sub<=rx_byte[6:0];
                 if(command_head=="I" || command_head=="K") begin
@@ -113,11 +113,19 @@ reg [bounded_timeout_width(IDLE_LIMIT,1)-1:0] idle_ticks;
                     decimal_ok<=decimal_ok && rx_decimal;
                 end
                 if(command_head=="J" || (command_head=="O" && used>=2)) begin
-                    hex_payload<={hex_payload[131:0],unhex(rx_byte)};
                     hex_ok<=hex_ok && upper_hex(rx_byte);
                 end
             end
         end
+    end
+
+    // Private shift history needs no reset or command clear. Exact admitted
+    // lengths overwrite every consumed bit: J/OB 48, OC 16, OD 136.
+    // Keep reset inhibition so bytes observed during reset cannot shift.
+    always @(posedge clk) begin
+        if(!rst && accept_printable && used!=0 &&
+           (command_head=="J" || (command_head=="O" && used>=2)))
+            hex_payload<={hex_payload[131:0],unhex(rx_byte)};
     end
 
     // S pending storage is private and zero-padded at the first accepted byte.

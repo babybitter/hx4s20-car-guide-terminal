@@ -137,12 +137,10 @@ reg         audio_valid;
 wire        sample_tick;
 wire signed [23:0] tone_left,tone_right,stream_pcm;
 wire use_stream_pcm,music_active,fallback_allowed;
-wire [20:0] audio_position_samples;
-wire [159:0] spectrum_heights;
-wire [2:0] spectrum_dominant;
-wire spectrum_silence,spectrum_valid,spectrum_overflow,spectrum_overrun;
+wire [314:0] spectrum_heights;
+wire spectrum_silence,spectrum_valid,spectrum_overflow,spectrum_overrun,spectrum_heights_ready;
 wire spectrum_invalid=spectrum_overflow || spectrum_overrun;
-wire [23:0] left_wave_color,right_wave_color,spectrum_rgb;
+wire [23:0] spectrum_rgb;
 wire spectrum_hs,spectrum_vs,spectrum_de;
 wire effect_wave_hit;
 wire [79:0] audio_status;
@@ -494,7 +492,7 @@ story_raster #(.HALF_ZOOM_ENABLE(1)) u_raster(.pixel_clk(video_clk),.mem_clk(ext
 // 首图提交前黑屏；提交后一直显示当前显示缓冲区内容
 assign vout_data = display_valid ? vout_data_raw : 24'd0;
 
-terminal_video_chain #(.ADAPTIVE_LAYOUT(1),.LOCAL_ENABLES(1),.DYNAMIC_COLOR(1)) u_effect_chain (
+terminal_video_chain #(.ADAPTIVE_LAYOUT(1),.LOCAL_ENABLES(1),.DYNAMIC_COLOR(0)) u_effect_chain (
     .clk(video_clk),.rst(rst_video),.effects_enabled(effects_enabled || legacy_active),.waveform_enabled(waveform_enabled),
     .waveform_auto_enabled(effects_enabled || music_active),.opacity_level(opacity_level),
     .I_rgb(vout_data),.I_hs(hs),.I_vs(vs),.I_de(de),.page_id(display_page),
@@ -504,21 +502,21 @@ terminal_video_chain #(.ADAPTIVE_LAYOUT(1),.LOCAL_ENABLES(1),.DYNAMIC_COLOR(1)) 
     .subtitle(subtitle),.subtitle_length(bitmap_active?6'd0:subtitle_length),.audio_valid(audio_valid),
     .audio_left(audio_left_data),.audio_right(audio_right_data),
     .O_rgb(effect_rgb),.O_hs(effect_hs),.O_vs(effect_vs),.O_de(effect_de),.half_layout(half_layout_frame),.zoom_setting(zoom_setting),
-    .left_wave_color(left_wave_color),.right_wave_color(right_wave_color),.O_wave_hit(effect_wave_hit)
+    .left_wave_color(24'hE8EEF4),.right_wave_color(24'h9DECF5),.O_wave_hit(effect_wave_hit)
 );
 
-// 32 frequency responses of ACTUAL post-volume PCM. Saturation/overrun
+// 63 positive-frequency responses of ACTUAL post-volume PCM. Saturation/overrun
 // suppresses the analysis display only; it cannot stop HDMI/audio or video.
-audio_band_analyzer u_spectrum(.clk(video_clk),.rst(rst_video),.sample_tick(audio_valid),
- .pcm_postvolume(audio_left_data),.band_heights(spectrum_heights),.dominant_band(spectrum_dominant),
+audio_band_analyzer #(.ATOMIC_OUTPUT(0)) u_spectrum(.clk(video_clk),.rst(rst_video),.sample_tick(audio_valid),
+ .pcm_postvolume(audio_left_data),.band_heights(spectrum_heights),.dominant_band(),
+ .heights_ready(spectrum_heights_ready),
  .silence(spectrum_silence),.valid(spectrum_valid),.overflow_sticky(spectrum_overflow),.overrun_sticky(spectrum_overrun));
-audio_color_theme u_audio_color(.clk(video_clk),.rst(rst_video),.audio_valid(audio_valid),
- .music_active(music_active),.position_samples(audio_position_samples),.dominant(spectrum_dominant),
- .silence(spectrum_silence || spectrum_invalid),.left_wave_color(left_wave_color),.right_wave_color(right_wave_color),
- .note_active(),.midi_note());
-pcm_spectrum_overlay u_spectrum_overlay(.clk(video_clk),.rst(rst_video),
- .enable(effects_enabled || waveform_enabled || music_active),.half_layout(half_layout_frame),
- .band_heights(spectrum_heights),.silence(spectrum_silence || spectrum_invalid),.opacity(opacity_level),
+// Frequency colors live in the full rainbow spectrum. Fixed high-contrast
+// stereo traces remain legible over every hue; no duplicate score/color ROM.
+pcm_spectrum_overlay #(.GUARDED_HEIGHTS(1)) u_spectrum_overlay(.clk(video_clk),.rst(rst_video),
+ .enable((effects_enabled || waveform_enabled || music_active) && !spectrum_invalid),.half_layout(half_layout_frame),
+ .band_heights(spectrum_heights),.silence(spectrum_silence),.opacity(opacity_level),
+ .heights_ready(spectrum_heights_ready),
  .I_rgb(effect_rgb),.I_hs(effect_hs),.I_vs(effect_vs),.I_de(effect_de),.I_wave_hit(effect_wave_hit),
  .O_rgb(spectrum_rgb),.O_hs(spectrum_hs),.O_vs(spectrum_vs),.O_de(spectrum_de));
 
@@ -644,7 +642,7 @@ terminal_audio_engine #(.FEATURES(8'h1f)) u_audio_engine(.pixel_clk(video_clk),.
  .sequence_version(sequence_status[31:16]),.subtitle_version(sub_status[31:16]),.error_code(public_error),
  .expected_bytes(audio_expected_bytes),.expected_crc(audio_expected_crc),.pcm(stream_pcm),.use_pcm(use_stream_pcm),
  .music_active(music_active),.fallback_allowed(fallback_allowed),.audio_status(audio_status),.rd_demand(audio_demand),.rd_lock(audio_read_lock),.rd_grant(audio_read_grant),
- .position_samples(audio_position_samples),
+ .position_samples(),
  .App_rd_en(audio_read_en),.App_rd_addr(audio_read_addr),.Sdr_rd_en(audio_return),.Sdr_rd_dout(Sdr_rd_dout),
  .Sdr_init_done(Sdr_init_done),.Sdr_init_ref_vld(refresh_read_block),.Sdr_busy(Sdr_busy),.zoom_setting(zoom_setting));
 assign audio_left_raw=use_stream_pcm?stream_pcm:(fallback_allowed?tone_left:24'sd0);

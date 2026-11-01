@@ -19,7 +19,6 @@ module lane_lvds_10_1 #(
     reg      S_odd_even_2d;  
     reg      S_load_en;      
     reg      S_load_en_1d;   
-    reg      S_load_en_2d;   
     reg[9:0] S_shift_data;   
     reg[1:0] S_oddr_data;    
 
@@ -39,14 +38,16 @@ module lane_lvds_10_1 #(
     always @(posedge I_serial_clk) begin
         S_load_en    <= S_odd_even_1d ^ S_odd_even_2d;
         S_load_en_1d <= S_load_en;
-        S_load_en_2d <= S_load_en_1d;
     end
 
     always @(posedge I_serial_clk or posedge I_serial_rst) begin
         if(I_serial_rst)
             S_shift_data <= 'd0;
         else
-            if(S_load_en_2d)
+            // All four lanes load one serial cycle (8ns at 125MHz) earlier.
+            // The encoded word is stable here, before the next pixel edge;
+            // loading at that edge can mix adjacent words under bit skew.
+            if(S_load_en_1d)
                 S_shift_data <= I_data_in;
             else 
                 S_shift_data <= S_shift_data << 2;

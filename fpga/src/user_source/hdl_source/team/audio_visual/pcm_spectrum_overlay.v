@@ -1,13 +1,14 @@
 `timescale 1ns/1ps
 `default_nettype none
 // Exactly ONE register on RGB/HS/VS/DE, including bypass/blank/silence.
-// 32 independent analyzer responses, one 5-bit height per physical column.
+// 63 real analyzer bins, one 5-bit height per physical column.
 // NO frequency interpolation, FFT, extra sample memory or peak-history RAM.
 // 640 contiguous active pixels/line, 480 lines/frame; VS changes in vblank.
-module pcm_spectrum_overlay (
+module pcm_spectrum_overlay #(parameter GUARDED_HEIGHTS=0) (
     input wire clk, rst,
     input wire enable, half_layout,
-    input wire [159:0] band_heights,
+    input wire [314:0] band_heights,
+    input wire heights_ready,
     input wire silence,
     // Compatibility input: Y controls the upstream panel BACKGROUND only.
     // Colored columns/caps remain vivid even at Y0; no second alpha blend.
@@ -26,77 +27,167 @@ module pcm_spectrum_overlay (
     // First active pixel snapshot, as in pcm_wave_overlay; both VS polarities
     // and layout changes anywhere in vblank are supported.
     wire snapshot=I_de && !de_d && frame_arm;
-    reg shown_enable,shown_half,shown_silence;
-    reg [159:0] shown_heights;
+    reg shown_enable;
+    // Legacy unguarded callers retain the parallel snapshot. The production
+    // guarded mode uses one BRAM with two 63-word banks instead of 315 FFs.
+    reg [314:0] shown_heights;
+    (* ram_style = "block" *) reg [4:0] height_ram [0:127];
+    reg display_bank,display_valid,copy_active;
+    reg [5:0] copy_index;
+    reg [4:0] height_read;
+    reg [6:0] frame_hue;
+    reg [2:0] hue_div;
     always @(posedge clk or posedge rst) begin
         if(rst) begin
             de_d<=0;vs_d<=0;frame_arm<=1;x<=0;y<=0;
-            shown_enable<=0;shown_half<=0;shown_silence<=1;shown_heights<=0;
+            shown_enable<=0;shown_heights<=0;
+            frame_hue<=0;hue_div<=0;
         end else begin
             de_d<=I_de;vs_d<=I_vs;
             if(vs_d!=I_vs) frame_arm<=1;
             if(I_de) begin x<=px;y<=py;if(!de_d)frame_arm<=0;end
             if(snapshot) begin
-                shown_enable<=enable;shown_half<=half_layout;
-                shown_silence<=silence;shown_heights<=band_heights;
+                shown_enable<=enable;
+                if(!GUARDED_HEIGHTS) shown_heights<=band_heights;
+                // One step per eight active frames; silence pauses the hue,
+                // never the analyzer's gradual height decay. No level tint.
+                if(!silence) begin
+                    hue_div<=hue_div+3'd1;
+                    if(hue_div==3'd7) frame_hue<=frame_hue+7'd1;
+                end
             end
         end
     end
-    wire [9:0] panel_left=shown_half ? 10'd192 : 10'd160;
-    wire [9:0] panel_right=shown_half ? 10'd448 : 10'd480;
+    // half_layout is retained for caller compatibility; geometry is shared.
+    wire [9:0] panel_left=10'd16;
+    wire [9:0] panel_right=10'd624;
     wire in_x=px>=panel_left && px<panel_right;
-    reg [4:0] slot;
+    reg [5:0] slot;
     reg [3:0] phase;
-    // 32 x 10px (7px ink) normal; 32 x 8px (5px ink) half.
-    // Pixel counters replace a divide/modulo-by-10 datapath.
+    reg [5:0] slot_error;
+    // 608 = 63*9 + 41: Bresenham distributes 22 nine-pixel and 41 ten-pixel
+    // slots. Seven ink pixels leave 2/3px gaps; no pixel multiply or divide.
+    wire wide_slot=slot_error>=6'd22;
     always @(posedge clk or posedge rst) begin
-        if(rst) begin slot<=0;phase<=0;end
-        else if(!I_de || !in_x) begin slot<=0;phase<=0;end
-        else if(phase==(shown_half ? 4'd7 : 4'd9)) begin slot<=slot+5'd1;phase<=0;end
+        if(rst) begin slot<=0;phase<=0;slot_error<=0;end
+        else if(!I_de || !in_x) begin slot<=0;phase<=0;slot_error<=0;end
+        else if(phase==(wide_slot ? 4'd9 : 4'd8)) begin
+            slot<=slot+6'd1;phase<=0;
+            slot_error<=wide_slot ? slot_error-6'd22 : slot_error+6'd41;
+        end
         else phase<=phase+4'd1;
     end
-    wire in_slot=phase>=4'd1 && phase<=(shown_half ? 4'd5 : 4'd7);
-    // Static 5-bit lanes infer a 32:1 word mux, rather than a variable bit
-    // offset/shift through the 160-bit snapshot. These wires add no storage.
-    wire [4:0] height_by_slot [0:31];
-    genvar height_slot;
+    wire in_slot=phase>=4'd1 && phase<=4'd7;
+    // Guarded copy takes 63 clocks in the first active line, well before the
+    // visible panel at y343. If the analyzer starts rotating during the copy,
+    // discard the back bank and keep the previous complete displayed frame.
+    always @(posedge clk or posedge rst) begin
+        if(rst) begin
+            display_bank<=0;display_valid<=0;copy_active<=0;copy_index<=0;
+        end else if(GUARDED_HEIGHTS) begin
+            if(snapshot) begin
+                copy_active<=enable && heights_ready;
+                copy_index<=0;
+            end else if(copy_active) begin
+                if(!heights_ready) copy_active<=0;
+                else if(copy_index==6'd62) begin
+                    display_bank<=!display_bank;display_valid<=1;copy_active<=0;
+                end else copy_index<=copy_index+6'd1;
+            end
+        end
+    end
+    wire [314:0] selection_bus=GUARDED_HEIGHTS ? band_heights : shown_heights;
+    wire [5:0] selection_index=GUARDED_HEIGHTS ? copy_index : slot;
+    // Two levels of 5-bit selectors: one word copied per clock, not a barrel
+    // shifter. Production display reads the BRAM only at a slot's blank pixel.
+    wire [4:0] height_group [0:7];
+    genvar group,lane;
     generate
-        for(height_slot=0; height_slot<32; height_slot=height_slot+1) begin : g_height_lanes
-            assign height_by_slot[height_slot]=shown_heights[height_slot*5 +: 5];
+        for(group=0; group<8; group=group+1) begin : g_height_groups
+            wire [4:0] lanes [0:7];
+            for(lane=0; lane<8; lane=lane+1) begin : g_lanes
+                if(group*8+lane<63)
+                    assign lanes[lane]=selection_bus[(group*8+lane)*5 +: 5];
+                else assign lanes[lane]=5'd0;
+            end
+            assign height_group[group]=lanes[selection_index[2:0]];
         end
     endgenerate
-    wire [4:0] h=shown_silence ? 5'd0 : height_by_slot[slot];
-    // floor(27*h/16): monotonic 0..31 -> 0..52px, shifts/subtractions only.
-    wire [9:0] scaled_height={h,5'b0}-{3'b0,h,2'b0}-{5'b0,h};
-    wire [5:0] height=scaled_height[9:4];
-    wire [8:0] bar_top=9'd400-{3'd0,height};
-    wire in_body=py>=9'd344 && py<9'd400 && py>=bar_top && height!=0;
-    // Static spatial rainbow; audio changes actual bar heights. The light
-    // cap is the current top, not an invented or held spectral peak.
-    function [23:0] rainbow;
-        input [4:0] band;
-        reg [2:0] phase;
-        reg [7:0] rise,fall;
+    wire [4:0] selected_height=height_group[selection_index[5:3]];
+    always @(posedge clk) begin
+        if(GUARDED_HEIGHTS && !rst && copy_active && heights_ready && !snapshot)
+            height_ram[{!display_bank,copy_index}]<=selected_height;
+        if(GUARDED_HEIGHTS && shown_enable && I_de && in_x && phase==0)
+            height_read<=height_ram[{display_bank,slot}];
+    end
+    // Trust the analyzer's release envelope, including while silent. Invalid
+    // input is suppressed by the caller's enable, not by abruptly zeroing h.
+    wire [4:0] h=GUARDED_HEIGHTS ? height_read : selected_height;
+    // Exact floor(27*h/16) truth table: five inputs, no wide carry chain.
+    function [5:0] height_pixels;
+        input [4:0] level;
         begin
-            // Four wired ramps, no 32-entry RGB lookup. Adjacent segment
-            // endpoints repeat: 32 columns contain 29 distinct body colors.
-            phase=band[2:0];
-            rise={phase,5'b11111};
-            fall={~phase,5'b11111};
-            case(band[4:3])
-                2'd0:rainbow={rise,8'h1F,8'hFF};
-                2'd1:rainbow={8'hFF,8'h1F,fall};
-                2'd2:rainbow={8'hFF,rise,8'h1F};
-                2'd3:rainbow={fall,8'hFF,8'h1F};
+            case(level)
+                0:height_pixels=0; 1:height_pixels=1;
+                2:height_pixels=3; 3:height_pixels=5;
+                4:height_pixels=6; 5:height_pixels=8;
+                6:height_pixels=10; 7:height_pixels=11;
+                8:height_pixels=13; 9:height_pixels=15;
+                10:height_pixels=16; 11:height_pixels=18;
+                12:height_pixels=20; 13:height_pixels=21;
+                14:height_pixels=23; 15:height_pixels=25;
+                16:height_pixels=27; 17:height_pixels=28;
+                18:height_pixels=30; 19:height_pixels=32;
+                20:height_pixels=33; 21:height_pixels=35;
+                22:height_pixels=37; 23:height_pixels=38;
+                24:height_pixels=40; 25:height_pixels=42;
+                26:height_pixels=43; 27:height_pixels=45;
+                28:height_pixels=47; 29:height_pixels=48;
+                30:height_pixels=50; default:height_pixels=52;
             endcase
         end
     endfunction
-    wire [23:0] color=rainbow(slot);
+    wire [5:0] height=height_pixels(h);
+    wire [8:0] bar_top=9'd399-{3'd0,height};
+    wire in_body=py>=9'd343 && py<9'd399 && py>=bar_top && height!=0;
+    // Music-Spectrum README reference: HSL S=.85, L=.6, 128 hue steps.
+    // Fixed endpoints 66/240 give L=.6, S=.853 (8-bit quantization).
+    // Six continuous ramps cover the FULL rainbow. A narrow shift/add ramp
+    // replaces a 128x24 color ROM, divider or general multiplier.
+    function [23:0] rainbow;
+        input [6:0] hue;
+        reg [9:0] wheel;
+        reg [5:0] fraction;
+        reg [7:0] triple,ramp;
+        reg [9:0] correction;
+        reg [7:0] rise,fall;
+        begin
+            wheel={1'b0,hue,2'b0}+{2'b0,hue,1'b0};
+            fraction=wheel[6:1];
+            // Exact round(87*f/32) = 3*f - floor((9*f+15)/32).
+            // f<=63: triple<=189; correction<=582.
+            triple={1'b0,fraction,1'b0}+{2'b0,fraction};
+            correction={1'b0,fraction,3'b0}+{4'b0,fraction}+10'd15;
+            ramp=triple-{3'b0,correction[9:5]};
+            rise=8'd66+ramp;fall=8'd240-ramp;
+            case(wheel[9:7])
+                3'd0:rainbow={8'd240,rise,8'd66};
+                3'd1:rainbow={fall,8'd240,8'd66};
+                3'd2:rainbow={8'd66,8'd240,rise};
+                3'd3:rainbow={8'd66,fall,8'd240};
+                3'd4:rainbow={rise,8'd66,8'd240};
+                default:rainbow={8'd240,8'd66,fall};
+            endcase
+        end
+    endfunction
+    wire [6:0] hue=frame_hue+{slot,1'b0};
+    wire [23:0] color=rainbow(hue);
     wire [23:0] cap_color={1'b1,color[23:17],1'b1,color[15:9],1'b1,color[7:1]};
     wire [23:0] tint=py==bar_top ? cap_color : color;
-    // Silence, gaps and unfilled bar area never darken the panel again.
+    // Gaps and unfilled bar area never darken the panel again.
     // The registered actual-wave mask has absolute priority over spectrum.
-    wire draw=I_de && shown_enable && in_x && in_slot && in_body && !I_wave_hit;
+    wire draw=I_de && shown_enable && (!GUARDED_HEIGHTS || display_valid)
+              && in_x && in_slot && in_body && !I_wave_hit;
     always @(posedge clk or posedge rst) begin
         if(rst) begin O_rgb<=0;O_hs<=0;O_vs<=0;O_de<=0;end
         else begin

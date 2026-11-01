@@ -110,7 +110,9 @@ def render_text(text, font_path=None, font_index=0):
 
 
 def preview_image(bitmap, scroll_pixels=None, background=(32, 40, 52)):
-    """640x36 subtitle band (screen y404..439), matching RTL pixel for pixel.
+    """640x36 subtitle band (screen y399..434), matching RTL pixel for pixel.
+
+    Screen glyph y406..426, shadow y408..428, cyan underline y433..434.
 
     The wire bitmap remains 16x16; floor(p*16/21) expands each display cell.
     Default is a static frame with the first cell at x16. Explicit scroll
