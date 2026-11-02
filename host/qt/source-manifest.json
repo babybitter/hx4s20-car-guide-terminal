@@ -55,7 +55,7 @@
       "path": "app/ui.py",
       "source": "HX4S20_QtConsole/app/ui.py",
       "source_sha256": "932490462201484d8d9c8aec9ecd66340f2d5131f6f2201505f1e4a036c42d25",
-      "sha256": "dce42c06ad9e91fa1eb933798fac6ec774a535ff11ad40ccfa5adbe316cc71a7",
+      "sha256": "e7b9d27ef0ab20fb75c35cd653dacc9f7169683cb439f5b5939a70b3d06d9341",
       "modified_from_source": true
     },
     {
@@ -355,7 +355,7 @@
       "path": "README.md",
       "source": "HX4S20_QtConsole/README.md",
       "source_sha256": "4df48776163e607b4de530be48f19f7f91173cea3698502b79991b0d8a06cd2a",
-      "sha256": "6b8cced4d70fe4695c21690cd99dd7509cea5f70dcc7d20cddc070be3b7afd45",
+      "sha256": "d946e044f070b8664caabaf8e5c23c691ab0bcef4da5e631e6a3e4e61deea3a3",
       "modified_from_source": true
     },
     {
@@ -418,8 +418,8 @@
       "path": "tests/test_integration.py",
       "source": "HX4S20_QtConsole/tests/test_integration.py",
       "source_sha256": "1bf462a6f73fa58f426c94cee6e654ebfb660c0a27f7ffdf58a3d12f5263373c",
-      "sha256": "1bf462a6f73fa58f426c94cee6e654ebfb660c0a27f7ffdf58a3d12f5263373c",
-      "modified_from_source": false
+      "sha256": "294f4e3b3eb066a521b7ff97aaaa45002c841aed2b6634cc11c07cd3344cda85",
+      "modified_from_source": true
     },
     {
       "path": "tests/test_ui.py",
@@ -476,6 +476,14 @@
       "source_sha256": "0cd4d3add94f10136b0b9b7e65be944110da8970e17f334fb24c78132a452352",
       "sha256": "0cd4d3add94f10136b0b9b7e65be944110da8970e17f334fb24c78132a452352",
       "modified_from_source": false
+    },
+    {
+      "path": "tests/test_ports.py",
+      "source": "host/qt/tests/test_ports.py",
+      "source_sha256": "d5b0de454b1836a678b8c8631da9898248ec9b7a18941b33615d3764067af00b",
+      "sha256": "d5b0de454b1836a678b8c8631da9898248ec9b7a18941b33615d3764067af00b",
+      "modified_from_source": false,
+      "origin": "Added in formal repository for automatic COM selection"
     }
   ]
 }

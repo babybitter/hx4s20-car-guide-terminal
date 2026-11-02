@@ -11,6 +11,13 @@
   "historical_manifest_note": "s47-inputs.json is the immutable ancestral seal; source-manifest.json identifies the current source files",
   "baseline": "User-tested car_guide_terminal before compact UI update",
   "portable_al": "Current GUI compile order and settings retained; absolute project Path changed to dot and XML ampersands escaped",
+  "host_source_revision": {
+    "name": "automatic-com-port-picker",
+    "date": "2026-11-02",
+    "base_repository_commit": "7e17964ce1652df93fd344e96a111ee5c7720983",
+    "changes": "Background OS serial-port enumeration; device-labelled dropdown with explicit user selection; disconnected hotplug refresh; stable active selection and connection; no protocol changes",
+    "fpga_modified": false
+  },
   "current_source_revision": {
     "name": "smooth-wave-click-wheel",
     "date": "2026-11-02",

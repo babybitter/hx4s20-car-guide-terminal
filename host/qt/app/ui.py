@@ -2,6 +2,8 @@
 from dataclasses import asdict
 from pathlib import Path
 import json
+from queue import Empty, SimpleQueue
+import threading
 import time
 
 from PySide6.QtCore import Qt, QObject, Signal, QThread, QTimer, QRunnable, QThreadPool
@@ -73,6 +75,15 @@ class FileTask(QRunnable):
             result = exc
         self.signals.done.emit(self.token, result)
 
+def collect_ports(token, scan, results):
+    # OS enumeration has no cancellation API. A daemon owns only a plain queue,
+    # never a Qt object, so a stuck driver cannot hold the window/process open.
+    try:
+        result = scan()
+    except Exception as exc:
+        result = exc
+    results.put((token, result))
+
 class MainWindow(QMainWindow):
     request = Signal(dict)
     shutdown = Signal()
@@ -96,6 +107,10 @@ class MainWindow(QMainWindow):
         self.table_loading = False
         self.story_sync_error = None
         self.closing = False
+        self._port_scan_active = False
+        self._port_scan_token = 0
+        self._port_rows = []
+        self._port_results = SimpleQueue()
         self.setWindowTitle('HX4S20 · Terminal Studio')
         self.resize(1560, 960)
         self.setMinimumSize(1080, 700)
@@ -111,6 +126,14 @@ class MainWindow(QMainWindow):
         self.thread.start()
         self.build()
         self.appearance.error.connect(lambda message: self.notify(message, True))
+        self.port_timer = QTimer(self)
+        self.port_timer.setInterval(2000)
+        self.port_timer.timeout.connect(self.refresh_ports)
+        self.port_result_timer = QTimer(self)
+        self.port_result_timer.setInterval(50)
+        self.port_result_timer.timeout.connect(self.poll_ports)
+        if not demo:
+            self.port_timer.start()
         self.refresh_ports()
         self.update_enabled()
         self.subtitle_timer = QTimer(self)
@@ -146,17 +169,23 @@ class MainWindow(QMainWindow):
             self.nav.addItem(f'{i+1:02d}    {text}')
         side.addWidget(self.nav, 1)
         side.addWidget(label('设备连接', 'subtitle'))
-        self.port_combo = QComboBox()
-        self.port_combo.setEditable(True)
-        self.port_combo.setPlaceholderText('选择或输入 COM 端口')
+        self.port_combo = ClickWheelComboBox()
+        self.port_combo.setPlaceholderText('选择 COM 端口')
+        self.port_combo.setAccessibleName('可用串口')
+        self.port_combo.setMaxVisibleItems(12)
+        self.port_combo.view().setMinimumWidth(320)
+        self.port_combo.currentIndexChanged.connect(lambda: self.update_enabled())
         side.addWidget(self.port_combo)
+        self.port_status = label('正在检测串口…', 'muted', True)
+        side.addWidget(self.port_status)
         self.profile_combo = QComboBox()
         self.profile_combo.addItem('完整控制 · effects', 'effects')
         self.profile_combo.addItem('基础控制 · control', 'control')
         self.profile_combo.setCurrentIndex(0 if self.session.profile == 'effects' else 1)
         self.profile_combo.currentIndexChanged.connect(self.profile_changed)
         side.addWidget(self.profile_combo)
-        side.addWidget(button('刷新串口', self.refresh_ports))
+        self.port_refresh_button = button('刷新串口', self.refresh_ports)
+        side.addWidget(self.port_refresh_button)
         self.connect_button = button('连接设备', self.toggle_connection, 'primary')
         side.addWidget(self.connect_button)
         side.addWidget(label('115200 · 8N1\n单连接 / 严格应答匹配', 'muted', True))
@@ -515,22 +544,100 @@ class MainWindow(QMainWindow):
             self.session = Session(self.profile_combo.currentData())
             self.update_enabled()
 
-    def refresh_ports(self):
+    @staticmethod
+    def enumerate_ports():
+        """Read OS device metadata only; never open or probe any serial port."""
         from serial.tools import list_ports
-        current = self.port_combo.currentText()
-        ports = sorted(p.device for p in list_ports.comports()) if not self.demo else []
-        self.port_combo.clear()
-        self.port_combo.addItems(ports)
-        if current: self.port_combo.setCurrentText(current)
+        rows = {}
+        for port in list_ports.comports():
+            device = (port.device or '').strip()
+            if not device:
+                continue
+            description = (port.description or '').strip()
+            if description.lower() == 'n/a':
+                description = ''
+            description = description.removesuffix(f' ({device})')
+            title = f'{device} · {description}' if description else device
+            details = '\n'.join(str(v) for v in
+                (title, getattr(port, 'manufacturer', None), getattr(port, 'hwid', None)) if v)
+            identity = tuple(getattr(port, field, None) for field in
+                ('vid', 'pid', 'serial_number', 'location', 'hwid'))
+            rows[device.casefold()] = (device, title, details, identity)
+        def order(row):
+            name = row[0].upper()
+            return (0, int(name[3:])) if name.startswith('COM') and name[3:].isdigit() else (1, name)
+        return sorted(rows.values(), key=order)
+
+    def refresh_ports(self):
+        if self.demo:
+            self.port_status.setText('预览模式不检测串口')
+            return
+        if (self.closing or self.connected or self.busy or self._port_scan_active
+                or self.port_combo.view().isVisible()):
+            return
+        self._port_scan_active = True
+        self._port_scan_token += 1
+        self.port_refresh_button.setEnabled(False)
+        threading.Thread(target=collect_ports, args=(self._port_scan_token,
+            self.enumerate_ports, self._port_results), daemon=True,
+            name='serial-port-discovery').start()
+        self.port_result_timer.start()
+
+    def poll_ports(self):
+        try:
+            token, result = self._port_results.get_nowait()
+        except Empty:
+            return
+        self.port_result_timer.stop()
+        self.ports_refreshed(token, result)
+
+    def ports_refreshed(self, token, result):
+        if token != self._port_scan_token:
+            return
+        self._port_scan_active = False
+        if self.closing:
+            return
+        # A scan started before a click/connection must not change that choice.
+        if self.connected or self.busy or self.port_combo.view().isVisible():
+            self.update_enabled()
+            return
+        failed = isinstance(result, Exception)
+        rows = [] if failed else result
+        if rows != self._port_rows:
+            selected = self.port_combo.currentData()
+            identity = self.port_combo.currentData(Qt.UserRole + 1)
+            self.port_combo.blockSignals(True)
+            self.port_combo.clear()
+            for device, title, details, hardware in rows:
+                self.port_combo.addItem(title, device)
+                self.port_combo.setItemData(self.port_combo.count()-1, details, Qt.ToolTipRole)
+                self.port_combo.setItemData(self.port_combo.count()-1, hardware, Qt.UserRole + 1)
+            # Keep a surviving choice. A removed port never silently becomes another.
+            index = self.port_combo.findData(selected) if selected else -1
+            if index >= 0 and self.port_combo.itemData(index, Qt.UserRole + 1) != identity:
+                index = -1
+            self.port_combo.setCurrentIndex(index)
+            self.port_combo.blockSignals(False)
+            self._port_rows = rows
+        if failed:
+            self.port_status.setText('串口检测失败，请点击刷新')
+            self.port_status.setToolTip(str(result))
+        elif rows:
+            self.port_status.setText(f'发现 {len(rows)} 个串口，请选择')
+            self.port_status.setToolTip('未连接时每2秒自动更新；只检测端口，不自动连接。')
+        else:
+            self.port_status.setText('未检测到串口，请连接USB数据线')
+            self.port_status.setToolTip('插入设备后自动更新，也可点击“刷新串口”。')
+        self.update_enabled()
 
     def toggle_connection(self):
         if self.demo: return
         if self.connected:
             self.dispatch({'action':'disconnect'})
-        elif self.port_combo.currentText().strip():
-            self.dispatch({'action':'connect','port':self.port_combo.currentText().strip(),'profile':self.profile_combo.currentData()})
+        elif self.port_combo.currentData():
+            self.dispatch({'action':'connect','port':self.port_combo.currentData(),'profile':self.profile_combo.currentData()})
         else:
-            self.notify('请选择串口或输入 COM 端口。',True)
+            self.notify('请从下拉列表选择 COM 端口；未找到时连接USB数据线并刷新。',True)
 
     def dispatch(self,request):
         if self.demo:
@@ -597,8 +704,11 @@ class MainWindow(QMainWindow):
             return available and self.session.allowed(key)
         for w,cmd in self.actions: w.setEnabled(allowed(cmd))
         for code,w in self.controls.items(): w.setEnabled(allowed(code))
-        self.connect_button.setEnabled(not self.demo and not self.busy)
+        self.connect_button.setEnabled(bool(not self.demo and not self.busy and
+            (self.connected or self.port_combo.currentData())))
         self.port_combo.setEnabled(not self.connected and not self.busy and not self.demo)
+        self.port_refresh_button.setEnabled(not self.connected and not self.busy and
+            not self.demo and not self._port_scan_active)
         self.profile_combo.setEnabled(not self.connected and not self.busy)
         self.select_page_button.setEnabled(allowed('I'))
         self.page_spin.setEnabled(allowed('I'))
@@ -867,6 +977,8 @@ class MainWindow(QMainWindow):
     def closeEvent(self,event):
         if not self.closing:
             self.closing=True
+            self.port_timer.stop()
+            self.port_result_timer.stop()
             self.worker.cancel_event.set()
             self.shutdown.emit()
         if not self.thread.wait(1800):

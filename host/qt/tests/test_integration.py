@@ -47,7 +47,10 @@ class QtIntegrationTests(unittest.TestCase):
         cls.app.setQuitOnLastWindowClosed(False)
 
     def setUp(self):
-        self.port_guard=patch('serial.tools.list_ports.comports',return_value=[])
+        from serial.tools.list_ports_common import ListPortInfo
+        fake_port = ListPortInfo('FAKE-SOFTWARE-ONLY')
+        fake_port.description = 'Software UART'
+        self.port_guard=patch('serial.tools.list_ports.comports',return_value=[fake_port])
         self.serial_guard=patch('serial.Serial',side_effect=AssertionError('Physical serial forbidden'))
         self.port_guard.start()
         self.serial_guard.start()
@@ -56,7 +59,8 @@ class QtIntegrationTests(unittest.TestCase):
         self.window.show()
         self.port=FakePort()
         self.window.worker.serial_factory=lambda **kwargs:self.port
-        self.window.port_combo.setCurrentText('FAKE-SOFTWARE-ONLY')
+        self.wait_for(lambda:not self.window._port_scan_active)
+        self.window.port_combo.setCurrentIndex(self.window.port_combo.findData('FAKE-SOFTWARE-ONLY'))
 
     def tearDown(self):
         self.window.subtitle_timer.stop()
