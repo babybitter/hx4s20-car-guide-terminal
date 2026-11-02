@@ -55,7 +55,7 @@
       "path": "app/ui.py",
       "source": "HX4S20_QtConsole/app/ui.py",
       "source_sha256": "932490462201484d8d9c8aec9ecd66340f2d5131f6f2201505f1e4a036c42d25",
-      "sha256": "e7b9d27ef0ab20fb75c35cd653dacc9f7169683cb439f5b5939a70b3d06d9341",
+      "sha256": "f0ba77a87d984d78c196110eaf2609495ab4ad38f4d8e640d83189dd411a0eae",
       "modified_from_source": true
     },
     {
@@ -355,7 +355,7 @@
       "path": "README.md",
       "source": "HX4S20_QtConsole/README.md",
       "source_sha256": "4df48776163e607b4de530be48f19f7f91173cea3698502b79991b0d8a06cd2a",
-      "sha256": "d946e044f070b8664caabaf8e5c23c691ab0bcef4da5e631e6a3e4e61deea3a3",
+      "sha256": "9d726478d9bf0e43db711df7bdd1be8ec7535380df4ad4dd492bbd2ae3d2b5f7",
       "modified_from_source": true
     },
     {
@@ -418,14 +418,14 @@
       "path": "tests/test_integration.py",
       "source": "HX4S20_QtConsole/tests/test_integration.py",
       "source_sha256": "1bf462a6f73fa58f426c94cee6e654ebfb660c0a27f7ffdf58a3d12f5263373c",
-      "sha256": "294f4e3b3eb066a521b7ff97aaaa45002c841aed2b6634cc11c07cd3344cda85",
+      "sha256": "34723bde4799733c43f1ac607e92e8ce8b811927174e4a7900d7ab67eefe4a11",
       "modified_from_source": true
     },
     {
       "path": "tests/test_ui.py",
       "source": "HX4S20_QtConsole/tests/test_ui.py",
       "source_sha256": "a57c522b482d175a52514c666dd433e2ef20156ae0f7ab330b62cd7516ab7203",
-      "sha256": "8b7e47e60e62c7a7b35661ca1cefab05e13fd295ddd1191b63138af6d9460b69",
+      "sha256": "40e3ebf04448547716a2a882f19d6e5c1b915512e0735a5e2cf1c3e3f648b6ff",
       "modified_from_source": true
     },
     {

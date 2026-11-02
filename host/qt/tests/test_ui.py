@@ -108,6 +108,74 @@ class QtWindowTests(unittest.TestCase):
             self.assertEqual(self.window.controls[key].currentIndex(), value)
         self.assertEqual(old_actual, {k:v.text() for k,v in self.window.actual_labels.items()})
 
+    def test_inspector_stays_put_while_focused_parameters_are_disabled(self):
+        self.inject_state(audio=audio_snapshot())
+        self.pump()
+        scroll = self.window.splitter.widget(1)
+        bar = scroll.verticalScrollBar()
+        self.assertGreater(bar.maximum(), 0)
+        for code in ('B', 'X', 'D', 'V', 'G'):
+            with self.subTest(parameter=code):
+                combo = self.window.controls[code]
+                scroll.ensureWidgetVisible(combo)
+                combo.setFocus(Qt.FocusReason.TabFocusReason)
+                self.pump()
+                self.assertTrue(combo.hasFocus())
+                before = bar.value()
+                positions = []
+                bar.valueChanged.connect(positions.append)
+                try:
+                    self.window.on_event({'kind':'busy', 'busy':True})
+                    self.pump()
+                    self.assertFalse(combo.isEnabled())
+                    self.window.show_state()
+                    self.window.on_event({'kind':'busy', 'busy':False})
+                    self.pump()
+                    self.assertTrue(combo.isEnabled())
+                    self.assertEqual(bar.value(), before)
+                    # A jump followed by restoration is still visible flicker.
+                    self.assertTrue(all(p == before for p in positions), positions)
+                finally:
+                    bar.valueChanged.disconnect(positions.append)
+
+    def test_inspector_disconnect_and_capability_loss_do_not_scroll(self):
+        for disconnect in (False, True):
+            with self.subTest(disconnect=disconnect):
+                self.inject_state(audio=audio_snapshot())
+                scroll = self.window.splitter.widget(1)
+                combo = self.window.controls['F']
+                scroll.ensureWidgetVisible(combo)
+                combo.setFocus(Qt.FocusReason.TabFocusReason)
+                self.pump()
+                before = scroll.verticalScrollBar().value()
+                if disconnect:
+                    self.window.on_event({'kind':'connection', 'connected':False, 'text':'断开'})
+                else:
+                    self.inject_state(profile='control')
+                self.pump()
+                self.assertFalse(combo.isEnabled())
+                self.assertEqual(scroll.verticalScrollBar().value(), before)
+
+    def test_enabled_parameter_keeps_keyboard_focus_and_scrolling_is_not_locked(self):
+        self.inject_state(audio=audio_snapshot())
+        scroll = self.window.splitter.widget(1)
+        combo = self.window.controls['B']
+        scroll.ensureWidgetVisible(combo)
+        combo.setFocus(Qt.FocusReason.TabFocusReason)
+        self.pump()
+        self.window.show_state()
+        self.window.update_enabled()
+        self.assertTrue(combo.hasFocus())
+        QTest.keyClick(combo, Qt.Key.Key_Tab)
+        self.assertTrue(self.window.controls['C'].hasFocus())
+        self.window.on_event({'kind':'busy', 'busy':True})
+        bar = scroll.verticalScrollBar()
+        target = bar.maximum() // 2
+        bar.setValue(target)
+        self.window.on_event({'kind':'busy', 'busy':False})
+        self.pump()
+        self.assertEqual(bar.value(), target)
+
     def test_capability_gate_and_s19_dynamic_periods_and_zoom(self):
         self.inject_state()
         self.assertEqual(self.window.controls['Z'].count(), 2)

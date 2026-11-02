@@ -36,6 +36,8 @@ python -m venv .venv
 
 未连接时每2秒自动刷新设备插拔变化，也可点击“刷新串口”。刷新保留仍存在的选择；拔出所选设备后需要重新选择。程序不会自动连接其他端口。已连接或正在执行操作时暂停刷新列表。预览模式不检测串口。
 
+右侧参数检查器选择参数后立即发送请求，下方显示设备回读值。等待应答和完成确认时保留当前滚动位置，可连续调整附近参数；等待期间仍可滚动查看其他参数。下拉框需点击后才能使用滚轮调整，失焦或提交后重新锁定滚轮，避免误触。
+
 源码版的外观设置保存到 `config/ui_preferences.json`；免安装版保存到 EXE 同目录的 `config/ui_preferences.json`。
 
 故事编排页可导入 `legacy/tools/console/examples/s43_qt_demo.json`，包含八页、每页三秒的转场演示；`s17_transitions.json` 提供另一组转场故事。故事格式由 `legacy/tools/console/sequence.schema.json` 描述。免安装版的示例位于 `_internal/legacy/tools/console/examples/`。

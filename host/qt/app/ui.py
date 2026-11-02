@@ -702,6 +702,19 @@ class MainWindow(QMainWindow):
         def allowed(cmd):
             key = 'AQ' if cmd=='AQ' else cmd[0]
             return available and self.session.allowed(key)
+        # Disabling the focused combo otherwise advances focus through every
+        # remaining parameter; QScrollArea follows it all the way to the bottom.
+        # Clear only a focus that is about to become invalid. Do not restore an
+        # old scrollbar value later: the user may scroll while awaiting a reply.
+        # A closing combo popup can still own application focus while this
+        # window remembers the combo as its focus target. Release both scopes.
+        for focused in (self.focusWidget(), QApplication.focusWidget()):
+            if focused is None:
+                continue
+            for code, control in self.controls.items():
+                if not allowed(code) and (focused is control or control.isAncestorOf(focused)):
+                    focused.clearFocus()
+                    break
         for w,cmd in self.actions: w.setEnabled(allowed(cmd))
         for code,w in self.controls.items(): w.setEnabled(allowed(code))
         self.connect_button.setEnabled(bool(not self.demo and not self.busy and

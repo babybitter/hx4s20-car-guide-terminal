@@ -142,6 +142,38 @@ class QtIntegrationTests(unittest.TestCase):
         self.port=FakePort()
         self.connect_port()
 
+    def test_inspector_popup_confirm_keeps_scroll_and_sends_each_command_once(self):
+        self.connect_port()
+        scroll = self.window.splitter.widget(1)
+        bar = scroll.verticalScrollBar()
+        for code, value in (('X', 1), ('E', 1), ('T', 2), ('X', 2), ('T', 0)):
+            with self.subTest(parameter=code, value=value):
+                combo = self.window.controls[code]
+                scroll.ensureWidgetVisible(combo)
+                QTest.qWait(25)
+                QTest.mouseClick(combo, Qt.MouseButton.LeftButton)
+                self.assertTrue(combo.view().isVisible())
+                before = bar.value()
+                start = len(self.port.commands)
+                positions = []
+                bar.valueChanged.connect(positions.append)
+                try:
+                    QTest.keyClick(combo.view(), Qt.Key.Key_Home)
+                    for _ in range(value):
+                        QTest.keyClick(combo.view(), Qt.Key.Key_Down)
+                    QTest.keyClick(combo.view(), Qt.Key.Key_Return)
+                    self.wait_for(lambda:not self.window.busy and
+                                  f'{code}{value}' in self.port.commands[start:])
+                    QTest.qWait(30)
+                    self.assertEqual(self.port.commands[start:].count(f'{code}{value}'), 1)
+                    self.assertEqual(self.window.actual_labels[code].text(), f'实际：{value}')
+                    self.assertEqual(bar.value(), before)
+                    self.assertTrue(all(p == before for p in positions), positions)
+                    self.assertFalse(combo.view().isVisible())
+                    self.assertFalse(combo._wheel_unlocked)
+                finally:
+                    bar.valueChanged.disconnect(positions.append)
+
     def test_close_during_inflight_command_releases_port_and_thread(self):
         self.port=MissingReplyPort()
         self.connect_port()
